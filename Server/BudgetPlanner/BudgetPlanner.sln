@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner", "BudgetPlanner\BudgetPlanner.csproj", "{668B4AC5-BFB8-4597-A8B3-1B5DF7EBC3BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{668B4AC5-BFB8-4597-A8B3-1B5DF7EBC3BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{668B4AC5-BFB8-4597-A8B3-1B5DF7EBC3BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{668B4AC5-BFB8-4597-A8B3-1B5DF7EBC3BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{668B4AC5-BFB8-4597-A8B3-1B5DF7EBC3BB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
