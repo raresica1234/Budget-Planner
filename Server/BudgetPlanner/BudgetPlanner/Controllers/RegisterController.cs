@@ -1,0 +1,31 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using BudgetPlanner.DTO;
+using BudgetPlanner.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace BudgetPlanner.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class RegisterController : ControllerBase
+    {
+        private readonly IUserService _userService;
+
+        public RegisterController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RegisterUser(RegisterUserDto registerUserDto)
+        {
+            await _userService.RegisterAsync(registerUserDto);
+            
+            return Ok();
+        }
+    }
+}
