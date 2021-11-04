@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -34,7 +33,7 @@ namespace BudgetPlanner.Middlewares
                     _ => (int) HttpStatusCode.InternalServerError
                 };
 
-                string result = JsonSerializer.Serialize(new { message = error.Message });
+                string result = JsonSerializer.Serialize(new {message = error.Message});
                 await response.WriteAsync(result);
             }
         }

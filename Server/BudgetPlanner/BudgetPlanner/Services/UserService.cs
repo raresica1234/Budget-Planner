@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BudgetPlanner.Context;
 using BudgetPlanner.DTO;
 using BudgetPlanner.Exceptions;
 using BudgetPlanner.Models;
@@ -23,9 +22,9 @@ namespace BudgetPlanner.Services
             var user = new User
             {
                 UserName = registerUserDto.Email,
-                Email = registerUserDto.Email,
+                Email = registerUserDto.Email
             };
-            
+
             IdentityResult result = await _userManager.CreateAsync(user, registerUserDto.Password);
 
             if (!result.Succeeded)

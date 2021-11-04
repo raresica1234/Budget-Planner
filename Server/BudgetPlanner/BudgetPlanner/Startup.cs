@@ -1,13 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BudgetPlanner.Context;
 using BudgetPlanner.Middlewares;
 using BudgetPlanner.Models;
 using BudgetPlanner.Services;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +28,7 @@ namespace BudgetPlanner
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<DataContext>()
                 .AddDefaultTokenProviders();
-            
+
             services.AddCors();
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -42,7 +37,7 @@ namespace BudgetPlanner
             });
             services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString(nameof(DataContext))));
-            
+
             services.AddTransient<IUserService, UserService>();
         }
 
