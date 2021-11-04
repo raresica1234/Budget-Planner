@@ -21,10 +21,10 @@ namespace BudgetPlanner.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RegisterUser(RegisterUserDto registerUserDto)
+        public async Task<ActionResult<string>> RegisterUser(RegisterUserDto registerUserDto)
         {
             await _userService.RegisterAsync(registerUserDto);
-            
+
             return Ok();
         }
     }

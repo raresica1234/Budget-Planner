@@ -1,12 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace BudgetPlanner.Models
 {
-    [Index(nameof(Email), IsUnique = true)]
-    public class User : Entity
+    public class User : IdentityUser
     {
-        public string Email { get; init; } = null!;
-        public string Password { get; init; } = null!;
-
     }
 }
