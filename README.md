@@ -15,7 +15,7 @@ And write `update-database`.
 **Note**: Some people have had trouble with opening the project in Visual Studio. In order to open the project navigate to: `Server/BudgetPlanner` and double click on the file named `BudgetPlanner.sln`.
 
 #### Running
-In order to run the project simply click on the run button or press F5.
+In order to run the project make sure you select `BugetPlanner` and not `IIS Express`, and then click run or press F5.
 
 ### Web Client
 #### Installing packages
