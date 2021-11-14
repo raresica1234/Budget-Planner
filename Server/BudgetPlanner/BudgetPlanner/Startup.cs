@@ -29,7 +29,11 @@ namespace BudgetPlanner
                 .AddEntityFrameworkStores<DataContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddCors();
+            services.AddCors(config =>
+                config.AddDefaultPolicy(options =>
+                    options.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

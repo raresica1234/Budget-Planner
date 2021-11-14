@@ -1,0 +1,85 @@
+.container {
+    display: flex;
+    height: 100%;
+    width: 100vw;
+    background-color: #0B0C10;
+
+    .inputsPane {
+        flex-direction: column;
+        justify-content: space-between;
+        box-sizing: border-box;
+        padding: 5rem;
+        display: flex;
+        height: 100%;
+        flex-basis: 40%;
+        background-color: #1F2833;
+
+        .logo {
+            width: 72px;
+            height: 63px;
+        }
+
+        .inputsContainer {
+            display: flex;
+            flex-direction: column;
+
+            .title {
+                color: white;
+                font-size: 2.25rem;
+                margin-bottom: 1em;
+            }
+
+            .input {
+                display: flex;
+                flex-direction: column;
+                margin: 1rem 0;
+
+                .label {
+                    color: white;
+                    font-size: 1.125rem;
+                    margin-bottom: 0.5rem;
+                }
+
+                input {
+                    font-size: 1.125rem;
+                    padding: 0.4rem;
+                    border-radius: 0.5rem;
+                    color: #1F2833;
+                    background-color: #C5C6C7;
+                }
+            }
+
+            button {
+                background-color: #66FCF1;
+                margin-top: 2em;
+                font-size: 1.125rem;
+                color: #0B0C10;
+                border-radius: 0.25rem;
+                font-size: 1.125rem;
+                padding: 0.4em;
+            }
+        }
+
+        .signInContainer {
+            & > span {
+                font-size: 1.125rem;
+                color: white;
+                
+                & > a {
+                    color: #66FCF1;
+
+                    &:visited, &:hover, &:active {
+                        color: #45A29E;
+                    } 
+                }
+            }
+        }
+        
+    }
+
+    .infoPane {
+        display: flex;
+        height: 100%;
+        background-color: #0B0C10;
+    }
+}
