@@ -1,23 +1,38 @@
 import { Box, Button, Container, TextField } from '@mui/material';
+import PropTypes from 'prop-types';
 import React from 'react';
 
-export default function LoginForm() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+async function loginUser(credentials: any) {
+  return fetch('http://localhost:8080/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(credentials)
+  })
+    .then(data => data.json())
+}
+
+export default function LoginForm({ setToken }: any) {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      username: data.get('username'),
-      password: data.get('password'),
+    const username = data.get('username');
+    const password = data.get('password');
+    const token = await loginUser({
+      username,
+      password
     });
+    setToken("test");
   };
 
   return (
     <Container component="main" maxWidth="xs">
       <Box sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+        marginTop: 8,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
       }}>
         <Box component="form" onSubmit={handleSubmit}>
           <TextField
@@ -50,4 +65,8 @@ export default function LoginForm() {
       </Box>
     </Container>
   )
+}
+
+LoginForm.propTypes = {
+  setToken: PropTypes.func.isRequired
 }
