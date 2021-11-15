@@ -10,12 +10,12 @@ namespace BudgetPlanner.Context
         {
         }
 
-		protected override void OnModelCreating(ModelBuilder builder) {
+        protected override void OnModelCreating(ModelBuilder builder) {
             builder.Entity<ListUser>().HasKey(listUser => new { listUser.UserId, listUser.ListId });
-			base.OnModelCreating(builder);
-		}
+            base.OnModelCreating(builder);
+        }
 
-		public DbSet<Item> Items { get; set; }
+        public DbSet<Item> Items { get; set; }
         public DbSet<ListUser> ListUsers { get; set; }
         public DbSet<List> Lists { get; set; }
     }

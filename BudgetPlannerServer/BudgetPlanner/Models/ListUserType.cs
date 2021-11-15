@@ -1,7 +1,7 @@
 ﻿namespace BudgetPlanner.Models {
-	public enum ListUserType {
-		Owner,
-		Contributor,
-		Visitor
-	}
+    public enum ListUserType {
+        Owner,
+        Contributor,
+        Visitor
+    }
 }
