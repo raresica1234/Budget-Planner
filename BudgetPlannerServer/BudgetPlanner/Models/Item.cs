@@ -12,7 +12,7 @@ namespace BudgetPlanner.Models
 
         public double Price { get; set; }
 
-        public Guid ListId { get; set; }
+        public List List { get; set; } = null!;
 
         public DateTime CreatedAt { get; set; }
 

@@ -6,6 +6,10 @@ namespace BudgetPlanner.Context
 {
     public class DataContext : IdentityDbContext<User>
     {
+        public DbSet<Item> Items { get; set; }
+        public DbSet<ListUser> ListUsers { get; set; }
+        public DbSet<List> Lists { get; set; }
+
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
@@ -15,8 +19,5 @@ namespace BudgetPlanner.Context
             base.OnModelCreating(builder);
         }
 
-        public DbSet<Item> Items { get; set; }
-        public DbSet<ListUser> ListUsers { get; set; }
-        public DbSet<List> Lists { get; set; }
     }
 }
