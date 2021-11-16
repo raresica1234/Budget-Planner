@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BudgetPlanner.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211115171846_ListItem")]
+    [Migration("20211116130900_ListItem")]
     partial class ListItem
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,7 +30,7 @@ namespace BudgetPlanner.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ListId")
+                    b.Property<Guid?>("ListId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -44,6 +44,8 @@ namespace BudgetPlanner.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ListId");
 
                     b.ToTable("Items");
                 });
@@ -71,8 +73,8 @@ namespace BudgetPlanner.Migrations
 
             modelBuilder.Entity("BudgetPlanner.Models.ListUser", b =>
                 {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<Guid>("ListId")
                         .HasColumnType("uniqueidentifier");
@@ -81,6 +83,8 @@ namespace BudgetPlanner.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("UserId", "ListId");
+
+                    b.HasIndex("ListId");
 
                     b.ToTable("ListUsers");
                 });
@@ -281,6 +285,34 @@ namespace BudgetPlanner.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("BudgetPlanner.Models.Item", b =>
+                {
+                    b.HasOne("BudgetPlanner.Models.List", "List")
+                        .WithMany()
+                        .HasForeignKey("ListId");
+
+                    b.Navigation("List");
+                });
+
+            modelBuilder.Entity("BudgetPlanner.Models.ListUser", b =>
+                {
+                    b.HasOne("BudgetPlanner.Models.List", "List")
+                        .WithMany("ListUsers")
+                        .HasForeignKey("ListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BudgetPlanner.Models.User", "User")
+                        .WithMany("ListUsers")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("List");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -330,6 +362,16 @@ namespace BudgetPlanner.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("BudgetPlanner.Models.List", b =>
+                {
+                    b.Navigation("ListUsers");
+                });
+
+            modelBuilder.Entity("BudgetPlanner.Models.User", b =>
+                {
+                    b.Navigation("ListUsers");
                 });
 #pragma warning restore 612, 618
         }

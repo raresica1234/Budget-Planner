@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace BudgetPlanner.Models 
@@ -13,5 +14,8 @@ namespace BudgetPlanner.Models
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdatedAt { get; set; }
+
+        public ICollection<User> Users { get; set; }
+        public List<ListUser> ListUsers { get; set; }
     }
 }

@@ -6,11 +6,11 @@ namespace BudgetPlanner.Models
 {
     public class ListUser 
     {
-        [ForeignKey("List")]
         public Guid ListId { get; set; }
+        public List List { get; set; } = null!;
 
-        [ForeignKey("User")]
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
+        public User User { get; set; } = null!;
 
         public ListUserType ListUserType { get; set; }
     }
