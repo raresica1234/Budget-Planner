@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace BudgetPlanner.Models 
+namespace BudgetPlanner.Models
 {
-    public class Item 
+    public class Item
     {
         [Key]
         public Guid Id { get; set; }

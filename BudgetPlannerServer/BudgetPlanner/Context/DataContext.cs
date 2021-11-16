@@ -2,16 +2,20 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace BudgetPlanner.Context {
-    public class DataContext : IdentityDbContext<User> {
+namespace BudgetPlanner.Context
+{
+    public class DataContext : IdentityDbContext<User>
+    {
         public DbSet<Item> Items { get; set; }
         public DbSet<ListUser> ListUsers { get; set; }
         public DbSet<List> Lists { get; set; }
 
-        public DataContext(DbContextOptions<DataContext> options) : base(options) {
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
         }
 
-        protected override void OnModelCreating(ModelBuilder builder) {
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
             builder.Entity<User>()
                 .HasMany(user => user.Lists)
                 .WithMany(list => list.Users)
@@ -26,14 +30,12 @@ namespace BudgetPlanner.Context {
                         .WithMany(user => user.ListUsers)
                         .HasForeignKey(listUser => listUser.UserId),
 
-                    listUser => {
+                    listUser =>
+                    {
                         listUser.HasKey(t => new { t.UserId, t.ListId });
                     }
                 );
-
-
             base.OnModelCreating(builder);
         }
-
     }
 }
