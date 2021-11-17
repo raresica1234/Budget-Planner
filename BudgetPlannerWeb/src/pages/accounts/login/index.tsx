@@ -1,72 +1,60 @@
-import { Box, Button, Container, TextField } from '@mui/material';
-import PropTypes from 'prop-types';
-import React from 'react';
+import styles from "../register/register.module.scss";
+import Logo from "../../../assets/logo.svg";
+import { useContext, useEffect } from "react";
+import { observer } from "mobx-react";
+import { LoginContext } from "./login-store";
+import { Link, useNavigate } from "react-router-dom";
 
-async function loginUser(credentials: any) {
-  return fetch('http://localhost:8080/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(credentials)
-  })
-    .then(data => data.json())
-}
+const Login = (setToken: any) => {
+  const { user, setEmail, setPassword, reset, login } =
+    useContext(LoginContext);
 
-export default function LoginForm({ setToken }: any) {
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const username = data.get('username');
-    const password = data.get('password');
-    const token = await loginUser({
-      username,
-      password
-    });
-    setToken("test");
+  useEffect(() => {
+    return reset;
+  }, [reset]);
+
+  const navigate = useNavigate();
+
+  const onClickNext = async () => {
+    const token = await login();
+    setToken(token);
+    navigate("/");
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Box sx={{
-        marginTop: 8,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}>
-        <Box component="form" onSubmit={handleSubmit}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            autoFocus
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Sign In
-          </Button>
-        </Box>
-      </Box>
-    </Container>
-  )
-}
+    <div className={styles.container}>
+      <div className={styles.inputsPane}>
+        <img className={styles.logo} src={Logo} />
+        <div className={styles.inputsContainer}>
+          <span className={styles.title}>Sign in</span>
+          <div className={styles.input}>
+            <span className={styles.label}>Email</span>
+            <input
+              type="email"
+              value={user.email}
+              onChange={(e) => setEmail(e.target.value)}
+            ></input>
+          </div>
+          <div className={styles.input}>
+            <span className={styles.label}>Password</span>
+            <input
+              type="password"
+              value={user.password}
+              onChange={(e) => setPassword(e.target.value)}
+            ></input>
+          </div>
+          <button onClick={onClickNext}>Next</button>
+        </div>
+        <div className={styles.signInContainer}>
+          <span>
+            Don't have an account? <Link to="/register">Sign up</Link>
+          </span>
+        </div>
+      </div>
 
-LoginForm.propTypes = {
-  setToken: PropTypes.func.isRequired
-}
+      <div className={styles.infoPane}></div>
+    </div>
+  );
+};
+
+export default observer(Login);
