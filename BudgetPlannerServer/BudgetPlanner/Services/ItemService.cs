@@ -1,4 +1,6 @@
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 using BudgetPlanner.Context;
 using BudgetPlanner.DTO;
 using BudgetPlanner.Extensions;
@@ -12,46 +14,35 @@ namespace BudgetPlanner.Services
     {
         private readonly DataContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
-
-        public ItemDetailsDto Update(ItemDto itemUpdateDto)
+        
+        public ItemService(DataContext context, IHttpContextAccessor httpContextAccessor)
         {
-            var itemUpdate = new Item
-            {
-                Id = itemUpdateDto.Id,
-                Name = itemUpdateDto.Name,
-                Price = itemUpdateDto.Price,
-                List = itemUpdateDto.List
-            };
-            
+            _context = context;
+            _httpContextAccessor = httpContextAccessor;
+        }
+        
+        public async Task<ItemDetailsDto> UpdateAsync(ItemDto itemUpdateDto)
+        {
             var initialItem = _context.Items
-                .Where(item => item.Id == itemUpdate.Id)
-                .AsNoTracking()
-                .FirstOrDefault();
+                .FirstOrDefault(item => item.Id == itemUpdateDto.Id && 
+                                        item.List.Users.Any(user => user.Id == _httpContextAccessor.GetUserId()));
             
-            var listForItem = _context.Lists
-                .Where(list => list.Id == itemUpdate.List.Id)
-                .AsNoTracking()
-                .FirstOrDefault();
-            
-            var userForList = _context.Users
-                .Where(user => user.Id == _httpContextAccessor.GetUserId().ToString())
-                .AsNoTracking()
-                .FirstOrDefault();
-            
-            if (initialItem == null || listForItem == null || userForList == null)
+            if (initialItem == null)
                 return null;
-
-            _context.Items.Update(itemUpdate);
-            _context.SaveChanges();
-
+            
+            initialItem.Id = itemUpdateDto.Id;
+            initialItem.Price = itemUpdateDto.Price;
+            initialItem.Name = itemUpdateDto.Name;
+            _context.Items.Update(initialItem);
+            await _context.SaveChangesAsync();
+            
             var itemDetailsDto = new ItemDetailsDto
             {
-                Id = itemUpdate.Id,
-                Name = itemUpdate.Name,
-                Price = itemUpdate.Price,
-                List = itemUpdate.List,
-                CreatedAt = itemUpdate.CreatedAt,
-                UpdatedAt = itemUpdate.UpdatedAt
+                Id = initialItem.Id,
+                Name = initialItem.Name,
+                Price = initialItem.Price,
+                CreatedAt = initialItem.CreatedAt,
+                UpdatedAt = initialItem.UpdatedAt
             };
             
             return itemDetailsDto;

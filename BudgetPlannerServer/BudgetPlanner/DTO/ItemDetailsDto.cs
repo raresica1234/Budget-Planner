@@ -10,9 +10,7 @@ namespace BudgetPlanner.DTO
         public string Name { get; set; } = null!;
 
         public double Price { get; set; }
-
-        public List List { get; set; } = null!;
-
+        
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdatedAt { get; set; }

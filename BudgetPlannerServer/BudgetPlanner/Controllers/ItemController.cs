@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using BudgetPlanner.DTO;
 using BudgetPlanner.Models;
 using BudgetPlanner.Services;
@@ -17,9 +18,9 @@ namespace BudgetPlanner.Controllers
         }
 
         [HttpPut]
-        public IActionResult UpdateItem(ItemDto itemDto)
+        public async Task<IActionResult> UpdateItem(ItemDto itemDto)
         {
-            var updatedItemDto = _itemService.Update(itemDto);
+            var updatedItemDto = await _itemService.UpdateAsync(itemDto);
 
             if (updatedItemDto == null) return NotFound();
             
