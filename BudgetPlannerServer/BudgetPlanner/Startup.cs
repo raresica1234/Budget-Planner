@@ -43,6 +43,7 @@ namespace BudgetPlanner
                 options.UseSqlServer(Configuration.GetConnectionString(nameof(DataContext))));
 
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IItemService, ItemService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
