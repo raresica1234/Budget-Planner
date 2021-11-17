@@ -5,6 +5,13 @@ using BudgetPlanner.DTO;
 using BudgetPlanner.Exceptions;
 using BudgetPlanner.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Text;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace BudgetPlanner.Services
 {
@@ -31,8 +38,50 @@ namespace BudgetPlanner.Services
             {
                 IEnumerable<string> errorList = result.Errors.ToList().Select(error => error.Description);
                 string formattedErrors = string.Join("\n", errorList);
-                throw new ApplicationException(formattedErrors);
+                throw new Exceptions.ApplicationException(formattedErrors);
             }
+        }
+
+        public async Task<LoginResult> LoginAsync(LoginUserDto loginUserDto, IConfiguration configuration){
+            var user = await _userManager.FindByEmailAsync(loginUserDto.Email);
+
+            if(user == null)
+            {
+                return null;
+            }
+
+            var isPasswordCorrect = await _userManager.CheckPasswordAsync(user, loginUserDto.Password);
+            if (!isPasswordCorrect)
+            {
+                return null;
+            }
+
+            var authenticationClaims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
+
+            var authenticationSigningKey = 
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]));
+
+            var token = new JwtSecurityToken(
+                issuer: configuration["JWT:ValidIssuer"],
+                audience: configuration["JWT:ValidAudience"],
+                expires: DateTime.Now.AddMonths(1),
+                claims: authenticationClaims,
+                signingCredentials: new SigningCredentials(
+                    authenticationSigningKey,
+                    SecurityAlgorithms.HmacSha256)
+            );
+
+            return new LoginResult
+            {
+                Id = user.Id,
+                Token = new JwtSecurityTokenHandler().WriteToken(token),
+                Expiration = token.ValidTo
+            };
         }
     }
 }
