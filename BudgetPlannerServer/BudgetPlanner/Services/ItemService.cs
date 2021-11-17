@@ -27,7 +27,6 @@ namespace BudgetPlanner.Services
             if (initialItem == null)
                 return null;
             
-            initialItem.Id = itemUpdateDto.Id;
             initialItem.Price = itemUpdateDto.Price;
             initialItem.Name = itemUpdateDto.Name;
             _context.Items.Update(initialItem);
