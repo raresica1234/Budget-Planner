@@ -32,9 +32,8 @@ namespace BudgetPlanner.Controllers
             var loginResult = await _userService.LoginAsync(loginUserDto);
 
             if (loginResult == null)
-            {
                 return Unauthorized();
-            }
+
             return Ok(loginResult);
         }
     }
