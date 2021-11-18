@@ -3,6 +3,7 @@ using BudgetPlanner.DTO;
 using BudgetPlanner.Extensions;
 using BudgetPlanner.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,10 +25,10 @@ namespace BudgetPlanner.Services
         {
             var userCreatedLists = GetListsForUser(true);
 
-            return Task.FromResult(userCreatedLists);
+            return userCreatedLists;
         }
 
-        private List<ListWithTimestampsDto> GetListsForUser(bool isOwner)
+        private Task<List<ListWithTimestampsDto>> GetListsForUser(bool isOwner)
         {
             var userId = _httpContextAccessor.GetUserId();
 
@@ -35,7 +36,7 @@ namespace BudgetPlanner.Services
                 list.ListUsers.Any(listUser =>
                     listUser.UserId == userId && listUser.ListUserType == ListUserType.Owner == isOwner))
                 .Select(list => new ListWithTimestampsDto(list))
-                .ToList();
+                .ToListAsync();
         }
     }
 }
