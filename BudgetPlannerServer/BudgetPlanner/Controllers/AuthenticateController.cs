@@ -27,7 +27,7 @@ namespace BudgetPlanner.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<string>> LoginUser(LoginUserDto loginUserDto)
+        public async Task<IActionResult> LoginUser(LoginUserDto loginUserDto)
         {
             var loginResult = await _userService.LoginAsync(loginUserDto);
 

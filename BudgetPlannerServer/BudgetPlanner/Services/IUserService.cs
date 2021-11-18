@@ -8,6 +8,7 @@ namespace BudgetPlanner.Services
     public interface IUserService
     {
         Task RegisterAsync(RegisterUserDto registerUserDto);
+
         Task<LoginResult> LoginAsync(LoginUserDto loginUserDto);
     }
 }
