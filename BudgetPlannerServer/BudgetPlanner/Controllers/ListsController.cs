@@ -27,7 +27,7 @@ namespace BudgetPlanner.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GreateList(ListForEditDto listToAdd)
+        public async Task<IActionResult> CreateList(ListForEditDto listToAdd)
         {
             var createdList = await _listService.Create(listToAdd);
 
