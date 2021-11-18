@@ -1,4 +1,5 @@
-﻿using BudgetPlanner.Services;
+﻿using BudgetPlanner.DTO;
+using BudgetPlanner.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -23,6 +24,17 @@ namespace BudgetPlanner.Controllers
             var userCreatedLists = await _listService.GetCreated();
 
             return Ok(userCreatedLists);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GreateList(ListForEditDto listToAdd)
+        {
+            var createdList = await _listService.Create(listToAdd);
+
+            if (createdList == null)
+                return Unauthorized();
+
+            return Ok(createdList);
         }
     }
 }
