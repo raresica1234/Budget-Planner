@@ -22,12 +22,12 @@ namespace BudgetPlanner.Services
 
         public Task<List<ListWithTimestampsDto>> GetCreated()
         {
-            var userCreatedLists = GetForUserType(true);
+            var userCreatedLists = GetListsForUser(true);
 
             return Task.FromResult(userCreatedLists);
         }
 
-        private List<ListWithTimestampsDto> GetForUserType(bool isOwner)
+        private List<ListWithTimestampsDto> GetListsForUser(bool isOwner)
         {
             var userId = _httpContextAccessor.GetUserId();
 
