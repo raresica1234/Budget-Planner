@@ -12,12 +12,10 @@ namespace BudgetPlanner.Controllers
     public class AuthenticateController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly IConfiguration _configuration;
 
-        public AuthenticateController(IUserService userService, IConfiguration configuration)
+        public AuthenticateController(IUserService userService)
         {
             _userService = userService;
-            _configuration = configuration;
         }
 
         [HttpPost("register")]
@@ -31,9 +29,9 @@ namespace BudgetPlanner.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<string>> LoginUser(LoginUserDto loginUserDto)
         {
-            LoginResult loginResult = await _userService.LoginAsync(loginUserDto, _configuration);
+            var loginResult = await _userService.LoginAsync(loginUserDto);
 
-            if(loginResult == null)
+            if (loginResult == null)
             {
                 return Unauthorized();
             }

@@ -18,10 +18,12 @@ namespace BudgetPlanner.Services
     public class UserService : IUserService
     {
         private readonly UserManager<User> _userManager;
+        private readonly IConfiguration _configuration;
 
-        public UserService(UserManager<User> userManager)
+        public UserService(UserManager<User> userManager, IConfiguration configuration)
         {
             _userManager = userManager;
+            _configuration = configuration;
         }
 
         public async Task RegisterAsync(RegisterUserDto registerUserDto)
@@ -42,19 +44,15 @@ namespace BudgetPlanner.Services
             }
         }
 
-        public async Task<LoginResult> LoginAsync(LoginUserDto loginUserDto, IConfiguration configuration){
+        public async Task<LoginResult> LoginAsync(LoginUserDto loginUserDto){
             var user = await _userManager.FindByEmailAsync(loginUserDto.Email);
 
             if(user == null)
-            {
                 return null;
-            }
 
             var isPasswordCorrect = await _userManager.CheckPasswordAsync(user, loginUserDto.Password);
             if (!isPasswordCorrect)
-            {
                 return null;
-            }
 
             var authenticationClaims = new List<Claim>
             {
@@ -64,11 +62,11 @@ namespace BudgetPlanner.Services
             };
 
             var authenticationSigningKey = 
-                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]));
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
             var token = new JwtSecurityToken(
-                issuer: configuration["JWT:ValidIssuer"],
-                audience: configuration["JWT:ValidAudience"],
+                issuer: _configuration["JWT:ValidIssuer"],
+                audience: _configuration["JWT:ValidAudience"],
                 expires: DateTime.Now.AddMonths(1),
                 claims: authenticationClaims,
                 signingCredentials: new SigningCredentials(
