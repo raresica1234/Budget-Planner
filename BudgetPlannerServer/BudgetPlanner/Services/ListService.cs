@@ -23,9 +23,7 @@ namespace BudgetPlanner.Services
 
         public Task<List<ListWithTimestampsDto>> GetCreated()
         {
-            var userCreatedLists = GetListsForUser(true);
-
-            return userCreatedLists;
+            return GetListsForUser(true);
         }
 
         private Task<List<ListWithTimestampsDto>> GetListsForUser(bool isOwner)
