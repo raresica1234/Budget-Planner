@@ -1,0 +1,29 @@
+.mainContainer {
+    width:100%;
+
+    .appBar {
+        background-color: #1F2833;
+
+        .menuIconButton {
+            margin-right: 0.5em;
+        }
+
+        .appTitle {
+            flex-grow: 1;
+        }
+    }
+
+    .tabsBar {
+        background-color: #0B0C10;
+
+        .tab {
+            color: white;
+        }
+    }
+}
+
+
+.logo {
+    width: 48px;
+    height: 42px;
+}
