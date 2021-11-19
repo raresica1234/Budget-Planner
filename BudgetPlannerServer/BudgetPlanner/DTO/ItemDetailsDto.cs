@@ -11,6 +11,8 @@ namespace BudgetPlanner.DTO
 
         public double Price { get; set; }
         
+        public List List { get; set; } = null!;
+
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdatedAt { get; set; }

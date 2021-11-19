@@ -19,6 +19,13 @@ namespace BudgetPlanner.Controllers
             _itemService = itemService;
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddItem(ItemDetailsDto itemDto)
+        {
+            var addedItemDto = await _itemService.AddAsync(itemDto);
+            return Ok(addedItemDto);
+        }
+
         [HttpPut]
         public async Task<IActionResult> UpdateItem(ItemDto itemDto)
         {
