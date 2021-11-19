@@ -1,10 +1,6 @@
 import React from "react";
 import { List as ListModel } from "../../accessors/types";
-import {
-    Link,
-    Link as RouterLink,
-    LinkProps as RouterLinkProps,
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
