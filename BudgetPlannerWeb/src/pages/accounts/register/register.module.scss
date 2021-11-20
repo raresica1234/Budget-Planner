@@ -89,12 +89,12 @@
 
         .serverErrorContainer {
             color: red;
-            opacity: 60%;
+            opacity: 0.6;
             box-sizing: border-box;
             width: 100px;
             height: 30px;
 
-            span{
+            span {
                 color: white;
             }
         }

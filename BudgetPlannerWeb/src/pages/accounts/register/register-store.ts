@@ -5,7 +5,7 @@ import { EMPTY_REGISTER_USER, RegisterUser } from "../../../accessors/types";
 
 export class RegisterStore {
     public user: RegisterUser = EMPTY_REGISTER_USER;
-    public serverError?: string;
+    public serverError: string = "";
 
     constructor() {
         makeAutoObservable(this);
@@ -24,12 +24,16 @@ export class RegisterStore {
     public register = async () => {
         if (this.user.password === this.user.confirmPassword){
             try{
+                if (this.user.password !== this.user.confirmPassword) {
+                    this.serverError = "Passwords do not match!";
+                    return false;
+                }
                 await register(this.user);
-            }
-            catch (error){
-                if (typeof error === 'string'){
-                    console.log(error);
+                return true;
+            } catch (error) {
+                if (typeof error === "string"){
                     this.serverError = error;
+                    return false;
                 }
             }
         }
