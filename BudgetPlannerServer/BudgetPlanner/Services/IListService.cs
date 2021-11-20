@@ -7,5 +7,6 @@ namespace BudgetPlanner.Services
     public interface IListService
     {
         Task<List<ListWithTimestampsDto>> GetCreated();
+        Task<List<ListWithTimestampsDto>> GetShared();
     }
 }

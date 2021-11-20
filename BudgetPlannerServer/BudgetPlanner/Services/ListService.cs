@@ -26,6 +26,11 @@ namespace BudgetPlanner.Services
             return GetListsForUser(true);
         }
 
+        public Task<List<ListWithTimestampsDto>> GetShared()
+        {
+            return GetListsForUser(false);
+        }
+
         private Task<List<ListWithTimestampsDto>> GetListsForUser(bool isOwner)
         {
             var userId = _httpContextAccessor.GetUserId();
