@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using BudgetPlanner.Context;
@@ -18,7 +19,7 @@ namespace BudgetPlanner.Services
             _httpContextAccessor = httpContextAccessor;
         }
         
-        public async Task<ItemDetailsDto> UpdateAsync(ItemDto itemUpdateDto)
+        public async Task<ItemDetailsDto?> UpdateAsync(ItemDto itemUpdateDto)
         {
             var initialItem = _context.Items
                 .FirstOrDefault(item => item.Id == itemUpdateDto.Id && 
@@ -29,6 +30,8 @@ namespace BudgetPlanner.Services
             
             initialItem.Price = itemUpdateDto.Price;
             initialItem.Name = itemUpdateDto.Name;
+            initialItem.UpdatedAt = DateTime.Now;
+
             _context.Items.Update(initialItem);
             await _context.SaveChangesAsync();
             

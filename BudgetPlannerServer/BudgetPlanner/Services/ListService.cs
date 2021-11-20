@@ -32,7 +32,14 @@ namespace BudgetPlanner.Services
 
         public async Task<ListWithTimestampsDto?> Create(ListForEditDto listToAdd)
         {
-            var list = new List { Name = listToAdd.Name };
+            var now = DateTime.Now;
+
+            var list = new List
+            {
+                Name = listToAdd.Name,
+                CreatedAt = now,
+                UpdatedAt = now
+            };
             await _context.Lists.AddAsync(list);
             await _context.SaveChangesAsync();
 
