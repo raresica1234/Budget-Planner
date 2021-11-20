@@ -1,7 +1,5 @@
 ﻿using System.Threading.Tasks;
 using BudgetPlanner.DTO;
-using BudgetPlanner.Models;
-using Microsoft.Extensions.Configuration;
 
 namespace BudgetPlanner.Services
 {
@@ -9,6 +7,6 @@ namespace BudgetPlanner.Services
     {
         Task RegisterAsync(RegisterUserDto registerUserDto);
 
-        Task<LoginResult> LoginAsync(LoginUserDto loginUserDto);
+        Task<string> LoginAsync(LoginUserDto loginUserDto);
     }
 }

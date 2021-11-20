@@ -1,9 +1,7 @@
 using System.Threading.Tasks;
 using BudgetPlanner.DTO;
-using BudgetPlanner.Models;
 using BudgetPlanner.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 
 namespace BudgetPlanner.Controllers
 {

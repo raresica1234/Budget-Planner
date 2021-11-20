@@ -44,7 +44,7 @@ namespace BudgetPlanner.Services
             }
         }
 
-        public async Task<LoginResult> LoginAsync(LoginUserDto loginUserDto){
+        public async Task<string> LoginAsync(LoginUserDto loginUserDto){
             var user = await _userManager.FindByEmailAsync(loginUserDto.Email);
 
             if(user == null)
@@ -74,12 +74,7 @@ namespace BudgetPlanner.Services
                     SecurityAlgorithms.HmacSha256)
             );
 
-            return new LoginResult
-            {
-                Id = user.Id,
-                Token = new JwtSecurityTokenHandler().WriteToken(token),
-                Expiration = token.ValidTo
-            };
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }
