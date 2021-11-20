@@ -1,5 +1,6 @@
 import { List as ListModel } from "../../accessors/types";
-import { Paper, List } from "@mui/material";
+import { Paper, List, Fab } from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
 import ListItemLink from "../ListItemLink";
 
 interface ListListProps {
@@ -16,6 +17,9 @@ const ListsView = ({ lists }: ListListProps) => (
                 />
             ))}
         </List>
+        <Fab color="primary" aria-label="add">
+            <AddIcon />
+        </Fab>
     </Paper>
 );
 
