@@ -2,17 +2,19 @@ using System.Threading.Tasks;
 using BudgetPlanner.DTO;
 using BudgetPlanner.Models;
 using BudgetPlanner.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BudgetPlanner.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
-    public class ItemController : ControllerBase
+    public class ItemsController : ControllerBase
     {
         private readonly IItemService _itemService;
 
-        public ItemController(IItemService itemService)
+        public ItemsController(IItemService itemService)
         {
             _itemService = itemService;
         }
