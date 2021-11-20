@@ -9,10 +9,17 @@ export interface RegisterUser extends User {
 
 export const EMPTY_USER: User = {
     email: "",
-    password: ""
-}
+    password: "",
+};
 
 export const EMPTY_REGISTER_USER: RegisterUser = {
     ...EMPTY_USER,
-    confirmPassword: ""
+    confirmPassword: "",
+};
+
+export interface List {
+    id: string;
+    name: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
