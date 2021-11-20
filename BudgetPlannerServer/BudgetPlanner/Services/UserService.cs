@@ -44,7 +44,7 @@ namespace BudgetPlanner.Services
             }
         }
 
-        public async Task<string> LoginAsync(LoginUserDto loginUserDto){
+        public async Task<string?> LoginAsync(LoginUserDto loginUserDto){
             var user = await _userManager.FindByEmailAsync(loginUserDto.Email);
 
             if(user == null)

@@ -7,6 +7,6 @@ namespace BudgetPlanner.Services
     {
         Task RegisterAsync(RegisterUserDto registerUserDto);
 
-        Task<string> LoginAsync(LoginUserDto loginUserDto);
+        Task<string?> LoginAsync(LoginUserDto loginUserDto);
     }
 }
