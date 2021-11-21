@@ -20,16 +20,19 @@ namespace BudgetPlanner.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddItem(ItemDetailsDto itemDto)
+        public async Task<IActionResult> AddItem(ItemDto itemDto)
         {
             var addedItemDto = await _itemService.AddAsync(itemDto);
+
+            if (addedItemDto == null) return BadRequest();
+            
             return Ok(addedItemDto);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateItem(ItemDto itemDto)
+        public async Task<IActionResult> UpdateItem(ItemUpdateDto itemUpdateDto)
         {
-            var updatedItemDto = await _itemService.UpdateAsync(itemDto);
+            var updatedItemDto = await _itemService.UpdateAsync(itemUpdateDto);
 
             if (updatedItemDto == null) return NotFound();
             
