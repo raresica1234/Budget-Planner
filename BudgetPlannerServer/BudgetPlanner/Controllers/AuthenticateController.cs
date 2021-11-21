@@ -23,5 +23,16 @@ namespace BudgetPlanner.Controllers
 
             return Ok();
         }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginUser(LoginUserDto loginUserDto)
+        {
+            var loginResult = await _userService.LoginAsync(loginUserDto);
+
+            if (loginResult == null)
+                return Unauthorized();
+
+            return Ok(loginResult);
+        }
     }
 }
