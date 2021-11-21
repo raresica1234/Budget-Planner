@@ -1,7 +1,7 @@
 ﻿using BudgetPlanner.Models;
 using System;
 
-namespace BudgetPlanner.DTO
+namespace BudgetPlanner.DTO.Lists
 {
     public class ListWithTimestampsDto
     {

@@ -1,5 +1,4 @@
 using System;
-using BudgetPlanner.Models;
 
 namespace BudgetPlanner.DTO
 {
