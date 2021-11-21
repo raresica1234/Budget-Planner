@@ -22,20 +22,19 @@ export class RegisterStore {
     }
 
     public register = async () => {
-        if (this.user.password === this.user.confirmPassword) {
-            try {
-                await register(this.user);
-                return true;
-            } catch (error) {
-                if (typeof error === "string") {
-                    this.serverError = error;
-                    return false;
-                }
-            }
-        } else {
+        if (this.user.password !== this.user.confirmPassword) {
             this.serverError = "Passwords do not match!";
             return false;
         }
+        
+        try {
+            await register(this.user);
+            return true;
+        } catch (error) {
+            if (typeof error === "string")
+                this.serverError = error;
+        }
+        return false;
     }
 }
 
