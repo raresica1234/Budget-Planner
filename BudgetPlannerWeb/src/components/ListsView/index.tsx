@@ -1,7 +1,7 @@
 import { List as ListModel } from "../../accessors/types";
 import { Paper, List } from "@mui/material";
 import ListItemLink from "../ListItemLink";
-import AddDialog from "../AddDialog";
+import AddListButton from "../AddListButton";
 import styles from "./lists.module.scss";
 
 interface ListListProps {
@@ -18,7 +18,7 @@ const ListsView = ({ lists }: ListListProps) => (
                 />
             ))}
         </List>
-        <div className={styles.addButton} ><AddDialog/></div>
+        <div className={styles.addButton} ><AddListButton/></div>
     </Paper>
 );
 

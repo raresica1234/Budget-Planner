@@ -3,7 +3,7 @@ import { createContext } from "react";
 import { List, EMPTY_LIST } from "../../accessors/types";
 import { addList } from "../../accessors/list-accessor";
 
-export class AddDialogStore {
+export class AddListStore {
     public isOpen: boolean = false;
     public input: string = "";
     public serverError: string = "";
@@ -26,6 +26,8 @@ export class AddDialogStore {
 
     public submitList = async () => {
         var newList: List = EMPTY_LIST;
+
+        console.log(this.input.length);
         if (this.input.length == 0) {
             this.serverError = "Empty list name!";
             this.addListCalled = true;
@@ -50,5 +52,5 @@ export class AddDialogStore {
     };
 }
 
-export const addDialogStore = new AddDialogStore();
-export const AddDialogContext = createContext(addDialogStore);
+export const addListStore = new AddListStore();
+export const AddListContext = createContext(addListStore);
