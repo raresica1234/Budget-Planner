@@ -7,7 +7,7 @@ namespace BudgetPlanner.DTO
     {
         public string Email { get; set; } = null!;
 
-        [Contains(ListUserType.Contributor, ListUserType.Visitor)]
+        [OneOf(ListUserType.Contributor, ListUserType.Visitor)]
         public ListUserType Type { get; set; }
     }
 }
