@@ -13,6 +13,7 @@ const ListsView = ({ lists }: ListListProps) => (
         <List>
             {lists.map((list: ListModel) => (
                 <ListItemLink
+                    key={list.id}
                     redirectUrl={`/lists/${list.id}`}
                     text={list.name}
                 />

@@ -18,12 +18,14 @@ export const EMPTY_REGISTER_USER: RegisterUser = {
 };
 
 export const EMPTY_LIST_EDIT: ListEdit = {
-    name: ""
+    name: "",
+    users: []
 };
 
 export interface ListEdit {
     id?: string;
     name: string;
+    users: [];
 }
 
 export interface List {
@@ -31,4 +33,8 @@ export interface List {
     name: string;
     createdAt: Date;
     updatedAt: Date;
+}
+
+export interface TokenResponse {
+    token: string;
 }

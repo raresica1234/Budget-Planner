@@ -32,7 +32,10 @@ namespace BudgetPlanner.Controllers
             if (loginResult == null)
                 return Unauthorized();
 
-            return Ok(loginResult);
+            return Ok(new
+            {
+                Token = loginResult
+            });
         }
     }
 }
