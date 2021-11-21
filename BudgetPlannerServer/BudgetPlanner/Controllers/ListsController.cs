@@ -1,4 +1,4 @@
-﻿using BudgetPlanner.DTO;
+﻿using BudgetPlanner.DTO.Lists;
 using BudgetPlanner.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +27,7 @@ namespace BudgetPlanner.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateList(ListForEditDto listToAdd)
+        public async Task<IActionResult> CreateList(ListForCreateDto listToAdd)
         {
             var createdList = await _listService.Create(listToAdd);
 

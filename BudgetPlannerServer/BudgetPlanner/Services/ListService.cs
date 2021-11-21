@@ -1,5 +1,6 @@
 ﻿using BudgetPlanner.Context;
 using BudgetPlanner.DTO;
+using BudgetPlanner.DTO.Lists;
 using BudgetPlanner.Extensions;
 using BudgetPlanner.Models;
 using Microsoft.AspNetCore.Http;
@@ -30,7 +31,7 @@ namespace BudgetPlanner.Services
             return GetListsForUser(true);
         }
 
-        public async Task<ListWithTimestampsDto?> Create(ListForEditDto listToAdd)
+        public async Task<ListWithTimestampsDto?> Create(ListForCreateDto listToAdd)
         {
             var now = DateTime.Now;
 
