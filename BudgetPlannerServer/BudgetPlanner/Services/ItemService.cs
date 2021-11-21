@@ -20,24 +20,21 @@ namespace BudgetPlanner.Services
             _httpContextAccessor = httpContextAccessor;
         }
         
-        public async Task<ItemDetailsDto> AddAsync(ItemDto itemDto)
+        public async Task<ItemDetailsDto> AddAsync(ItemCreateDto itemCreateDto)
         {
             var item = new Item
             {
-                Name = itemDto.Name,
-                List = _context.Lists.First(list => list.Id == itemDto.ListId),
-                Price = itemDto.Price,
+                Name = itemCreateDto.Name,
+                List = _context.Lists.First(list => list.Id == itemCreateDto.ListId),
+                Price = itemCreateDto.Price,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now
             };
             
             await _context.Items.AddAsync(item);
             
-            var result = await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
-            if (result == 0) 
-                return null;
-            
             return new ItemDetailsDto
             {
                 Name = item.Name,

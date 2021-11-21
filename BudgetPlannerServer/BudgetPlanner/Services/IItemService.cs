@@ -5,7 +5,7 @@ namespace BudgetPlanner.Services
 {
     public interface IItemService
     { 
-        Task<ItemDetailsDto> AddAsync(ItemDto itemDto);
+        Task<ItemDetailsDto> AddAsync(ItemCreateDto itemCreateDto);
         
         Task<ItemDetailsDto> UpdateAsync(ItemUpdateDto itemUpdateDto);
     }

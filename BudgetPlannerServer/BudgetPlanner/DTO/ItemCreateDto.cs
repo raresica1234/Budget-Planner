@@ -2,7 +2,7 @@ using System;
 
 namespace BudgetPlanner.DTO
 {
-    public class ItemDto
+    public class ItemCreateDto
     {
         public Guid Id { get; set; }
 
