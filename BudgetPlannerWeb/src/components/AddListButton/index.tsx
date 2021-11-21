@@ -1,46 +1,49 @@
-import React, { useContext } from "react";
+import React, { ClassAttributes, PropsWithChildren, useContext } from "react";
 import { AddListContext } from "./addlist-store";
 import { Fab } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import { observer } from "mobx-react";
-import { SuccessDialog } from "../SuccessDialog";
-import { ErrorDialog } from "../ErrorDialog";
+import SuccessDialog from "../SuccessDialog";
+import ErrorDialog from "../ErrorDialog";
 import { AddListDialog } from "../AddListDialog";
 
-const AddListButton  = () => {
+interface AddListButtonProps {
+    className: string;
+}
+
+const AddListButton  = (props: AddListButtonProps) => {
     const {
         isOpen,
         serverError,
-        addedSuccessfully,
         addListCalled,
         setIsOpen,
-        setInput,
+        setName,
         flushOperationResults,
         submitList
     } = useContext(AddListContext);
 
     return (
-        <div>
+        <div className={props.className}>
             <Fab color="primary" aria-label="add" onClick={_ => setIsOpen(true)}>
                 <AddIcon />
             </Fab>
             
             <AddListDialog
             isOpen={isOpen}
-            changeListNameFunction={setInput}
-            onSubmitFunction={submitList}
-            changeIsOpenFunction={setIsOpen}
+            changeListName={setName}
+            onSubmit={submitList}
+            onClose={() => setIsOpen(false)}
             />
 
             <ErrorDialog
-            isOpen={addListCalled && !addedSuccessfully && serverError.length > 0}
+            isOpen={addListCalled && !!serverError}
             message={serverError}
-            onCloseFunction={flushOperationResults}
+            onClose={flushOperationResults}
             />
 
             <SuccessDialog 
-                isOpen={addListCalled && addedSuccessfully} 
-                onCloseFunction={flushOperationResults}
+            isOpen={addListCalled && !serverError} 
+            onClose={flushOperationResults}
             />
         </div>
     )

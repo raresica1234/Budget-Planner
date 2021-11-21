@@ -1,14 +1,13 @@
 import { makeAutoObservable } from "mobx";
 import { createContext } from "react";
-import { List, EMPTY_LIST } from "../../accessors/types";
+import { List, EMPTY_LIST_EDIT, ListEdit } from "../../accessors/types";
 import { addList } from "../../accessors/list-accessor";
 
 export class AddListStore {
     public isOpen: boolean = false;
-    public input: string = "";
+    public list: ListEdit = EMPTY_LIST_EDIT;
     public serverError: string = "";
     public addListCalled: boolean = false;
-    public addedSuccessfully: boolean = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -16,38 +15,30 @@ export class AddListStore {
 
     public setIsOpen = (value: boolean) => this.isOpen = value;
 
-    public setInput = (name: string) => this.input = name;
+    public setName = (name: string) => this.list.name = name;
 
     public flushOperationResults = () => {
         this.addListCalled = false;
         this.serverError = "";
-        this.addedSuccessfully = false;
     }
 
     public submitList = async () => {
-        var newList: List = EMPTY_LIST;
+        
 
-        if (this.input.length == 0) {
+        if (!this.list.name) {
             this.serverError = "Empty list name!";
-            this.addListCalled = true;
-            this.addedSuccessfully = false;
             return;
         } 
         
-        newList.name = this.input;
-        this.addListCalled = true;
-        this.setIsOpen(false);
-
         try {
-            await addList(newList);
-            this.addedSuccessfully = true;
+            await addList(this.list);
         } catch (error) {
             if (typeof error === "string") {
                 this.serverError = error;
-                this.addedSuccessfully = false;
             }
         }
-        
+        this.addListCalled = true;
+        this.setIsOpen(false);
     };
 }
 

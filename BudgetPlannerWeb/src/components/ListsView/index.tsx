@@ -18,7 +18,7 @@ const ListsView = ({ lists }: ListListProps) => (
                 />
             ))}
         </List>
-        <div className={styles.addButton} ><AddListButton/></div>
+        <AddListButton className={styles.addButton}/>
     </Paper>
 );
 

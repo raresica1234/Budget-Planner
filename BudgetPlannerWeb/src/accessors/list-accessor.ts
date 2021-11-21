@@ -1,7 +1,7 @@
 import { BASE_URL } from "./constants";
 import { httpPost } from "./helper-functions";
-import { List } from "./types";
+import { ListEdit } from "./types";
 
 const LIST_URL = `${BASE_URL}Lists`;
 
-export const addList = (list: List) => httpPost(`${LIST_URL}`, list);
+export const addList = (list: ListEdit) => httpPost(LIST_URL, list);

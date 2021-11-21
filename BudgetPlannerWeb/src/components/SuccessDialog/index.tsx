@@ -3,21 +3,23 @@ import { Dialog, DialogTitle, DialogActions, Button } from "@mui/material";
 
 type SuccessDialogProps = PropsWithChildren<{
     isOpen: boolean;
-    onCloseFunction: () => void;
+    onClose: () => void;
 }>
 
-export const SuccessDialog = ({ children, isOpen, onCloseFunction, ...other }: SuccessDialogProps) => (
+const SuccessDialog = ({ isOpen, onClose }: SuccessDialogProps) => (
     <Dialog
     open={isOpen}
-    onClose={onCloseFunction}
+    onClose={onClose}
     aria-labelledby="alert-dialog-title"
     >
         <DialogTitle id="alert-dialog-title">
             Success!
         </DialogTitle>
         <DialogActions>
-            <Button onClick={onCloseFunction}>OK</Button>
+            <Button onClick={onClose}>OK</Button>
         </DialogActions>
     </Dialog>
 
 );
+
+export default SuccessDialog;

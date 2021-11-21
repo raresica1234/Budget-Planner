@@ -3,19 +3,19 @@ import { Dialog, DialogTitle, DialogActions, DialogContent, TextField, Button } 
 
 type AddListDialogProps = PropsWithChildren<{
     isOpen: boolean;
-    changeListNameFunction: (value: string) => void;
-    onSubmitFunction: () => void;
-    changeIsOpenFunction: (value: boolean) => void;
+    changeListName: (value: string) => void;
+    onSubmit: () => void;
+    onClose: () => void;
 }>
 
 export const AddListDialog = ({ 
-    children, 
     isOpen, 
-    changeListNameFunction, 
-    onSubmitFunction, 
-    changeIsOpenFunction, ...other }: AddListDialogProps) => (
+    changeListName, 
+    onSubmit,
+    onClose 
+}: AddListDialogProps) => (
 
-    <Dialog open={isOpen} onClose={_ => changeIsOpenFunction(false)}>
+    <Dialog open={isOpen} onClose={onClose}>
     <DialogTitle>Add a new list</DialogTitle>
     <DialogContent>
         <TextField
@@ -26,12 +26,12 @@ export const AddListDialog = ({
             type="text"
             fullWidth
             variant="standard"
-            onChange={e => changeListNameFunction(e.target.value)}
+            onChange={e => changeListName(e.target.value)}
         />
     </DialogContent>
     <DialogActions>
-        <Button onClick={_ => changeIsOpenFunction(false)}>Cancel</Button>
-        <Button onClick={_ => onSubmitFunction()}>Submit</Button>
+        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={onSubmit}>Submit</Button>
     </DialogActions>
     </Dialog>
 

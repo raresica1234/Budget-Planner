@@ -4,7 +4,7 @@ import AccountRoutes from "./pages/accounts";
 import MainPage from './components/MainView';
 import ListsView from "./components/ListsView";
 
-function App() {
+const App = () => {
     return (
         <BrowserRouter>
             <AccountRoutes />

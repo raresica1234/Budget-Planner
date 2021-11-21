@@ -1,16 +1,16 @@
-import React, { PropsWithChildren, useContext } from "react";
-import { Fab, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Button } from "@mui/material";
+import React, { PropsWithChildren } from "react";
+import { Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Button } from "@mui/material";
 
 type ErrorDialogProps = PropsWithChildren<{
     isOpen: boolean;
     message: string;
-    onCloseFunction: () => void;
+    onClose: () => void;
 }>
 
-export const ErrorDialog = ({ children, isOpen, message, onCloseFunction, ...other }: ErrorDialogProps) => (
+const ErrorDialog = ({ isOpen, message, onClose }: ErrorDialogProps) => (
     <Dialog
         open={isOpen}
-        onClose={onCloseFunction}
+        onClose={onClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
     >
@@ -23,7 +23,9 @@ export const ErrorDialog = ({ children, isOpen, message, onCloseFunction, ...oth
             </DialogContentText>
         </DialogContent>
         <DialogActions>
-            <Button onClick={onCloseFunction}>OK</Button>
+            <Button onClick={onClose}>OK</Button>
         </DialogActions>
     </Dialog>
 );
+
+export default ErrorDialog;
