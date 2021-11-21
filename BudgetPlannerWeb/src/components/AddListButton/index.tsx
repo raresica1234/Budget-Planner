@@ -1,4 +1,4 @@
-import React, { ClassAttributes, PropsWithChildren, useContext } from "react";
+import React, { useContext } from "react";
 import { AddListContext } from "./addlist-store";
 import { Fab } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
@@ -30,7 +30,7 @@ const AddListButton  = (props: AddListButtonProps) => {
             
             <AddListDialog
             isOpen={isOpen}
-            changeListName={setName}
+            onChangeListName={setName}
             onSubmit={submitList}
             onClose={() => setIsOpen(false)}
             />

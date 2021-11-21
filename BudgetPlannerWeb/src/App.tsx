@@ -4,12 +4,11 @@ import AccountRoutes from "./pages/accounts";
 import MainPage from './components/MainView';
 import ListsView from "./components/ListsView";
 
-const App = () => {
-    return (
-        <BrowserRouter>
-            <AccountRoutes />
-        </BrowserRouter>
-    );
-}
+const App = () => (
+    <BrowserRouter>
+        <AccountRoutes />
+    </BrowserRouter>
+);
+
 
 export default App;
