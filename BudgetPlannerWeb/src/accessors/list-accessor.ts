@@ -4,7 +4,4 @@ import { ListEdit } from "./types";
 
 const LIST_URL = `${BASE_URL}lists`;
 
-export const addList = (list: ListEdit) => {
-    console.log(LIST_URL);
-    httpPost(LIST_URL, list);
-}
+export const addList = (list: ListEdit) => httpPost(LIST_URL, list);

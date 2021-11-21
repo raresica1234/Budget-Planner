@@ -2,6 +2,7 @@ using BudgetPlanner.Context;
 using BudgetPlanner.Middlewares;
 using BudgetPlanner.Models;
 using BudgetPlanner.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -9,7 +10,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 namespace BudgetPlanner
 {
@@ -25,9 +28,7 @@ namespace BudgetPlanner
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<DataContext>()
-                .AddDefaultTokenProviders();
+            ConfigureAuthentication(services);
 
             services.AddCors(config =>
                 config.AddDefaultPolicy(options =>
@@ -66,6 +67,33 @@ namespace BudgetPlanner
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+        }
+
+        private void ConfigureAuthentication(IServiceCollection services)
+        {
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<DataContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidAudience = Configuration["JWT:ValidAudience"],
+                    ValidIssuer = Configuration["JWT:ValidIssuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
+                };
+            });
         }
     }
 }
