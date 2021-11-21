@@ -8,6 +8,7 @@ import { observer } from "mobx-react";
 const Register = () => {
     const {
         user,
+        serverError,
         setEmail,
         setPassword,
         setConfirmPassword,
@@ -29,7 +30,7 @@ const Register = () => {
     return (
         <div className={styles.container}>
             <div className={styles.inputsPane}> 
-                <img className={styles.logo} src={Logo}/>
+                <img className={styles.logo} src={Logo} alt={"ATAR"}/>
                 <div className={styles.inputsContainer}>
                     <span className={styles.title}>Sign up</span>
                     <div className={styles.input}>
@@ -52,7 +53,11 @@ const Register = () => {
             </div>
 
             <div className={styles.infoPane}>
-
+                {serverError && (
+                    <div className={styles.serverErrorContainer}>
+                        <span>{serverError}</span>
+                    </div>
+                )}
             </div>
         </div>
     )
