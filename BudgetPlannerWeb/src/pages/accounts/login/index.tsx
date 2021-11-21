@@ -4,8 +4,9 @@ import { useContext, useEffect } from "react";
 import { observer } from "mobx-react";
 import { LoginContext } from "./login-store";
 import { Link, useNavigate } from "react-router-dom";
+import { saveToken } from "../loginToken";
 
-const Login = (setToken: any) => {
+const Login = () => {
   const { user, setEmail, setPassword, reset, login } =
     useContext(LoginContext);
 
@@ -17,7 +18,7 @@ const Login = (setToken: any) => {
 
   const onClickNext = async () => {
     const token = await login();
-    setToken(token);
+    saveToken(token);
     navigate("/");
   };
 
