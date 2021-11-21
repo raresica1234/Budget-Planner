@@ -7,7 +7,7 @@ namespace BudgetPlanner.DTO
     {
         public string Email { get; set; } = null!;
 
-        [OneOf(ListUserType.Contributor, ListUserType.Visitor)]
+        [OneOf(ListUserType.Contributor, ListUserType.Visitor, ErrorMessage = "The user can only be a contributor or visitor!")]
         public ListUserType Type { get; set; }
     }
 }
