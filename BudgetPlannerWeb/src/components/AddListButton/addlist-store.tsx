@@ -23,8 +23,6 @@ export class AddListStore {
     }
 
     public submitList = async () => {
-        
-
         if (!this.list.name) {
             this.serverError = "Empty list name!";
             return;
