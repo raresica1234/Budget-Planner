@@ -36,5 +36,18 @@ namespace BudgetPlanner.Controllers
 
             return Ok(createdList);
         }
+        
+        [HttpPut]
+        public async Task<IActionResult> CreateList(ListForUpdateDto listForUpdate)
+        {
+            ListWithTimestampsDto? updatedList = await _listService.Update(listForUpdate);
+
+            if (updatedList == null)
+            {
+                return Unauthorized();
+            }
+
+            return Ok(updatedList);
+        }
     }
 }

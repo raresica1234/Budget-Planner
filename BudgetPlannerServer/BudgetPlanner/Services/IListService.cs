@@ -9,5 +9,6 @@ namespace BudgetPlanner.Services
         Task<List<ListWithTimestampsDto>> GetCreated();
 
         Task<ListWithTimestampsDto?> Create(ListForCreateDto listToAdd);
+        Task<ListWithTimestampsDto?> Update(ListForUpdateDto listForUpdate);
     }
 }

@@ -54,6 +54,27 @@ namespace BudgetPlanner.Services
             return new ListWithTimestampsDto(list);
         }
 
+        public async Task<ListWithTimestampsDto?> Update(ListForUpdateDto listForUpdate)
+        {
+            List list = await _context.Lists.FindAsync(listForUpdate.Id);
+            list.Name = listForUpdate.Name;
+            
+            _context.Lists.Update(list);
+            _context.ListUsers.RemoveRange(_context.ListUsers.Where(listUser => listUser.ListId == list.Id));
+            
+            IEnumerable<ListUser>? listUsers = await MapUserWithTypeToListUsers(listForUpdate.Users, list.Id);
+            
+            if (listUsers == null)
+            {
+                return null;
+            }
+
+            await _context.ListUsers.AddRangeAsync(listUsers);
+            await _context.SaveChangesAsync();
+
+            return new ListWithTimestampsDto(list);
+        }
+
         private Task<List<ListWithTimestampsDto>> GetListsForUser(bool isOwner)
         {
             var userId = _httpContextAccessor.GetUserId();
