@@ -27,7 +27,6 @@ export class AddListStore {
     public submitList = async () => {
         var newList: List = EMPTY_LIST;
 
-        console.log(this.input.length);
         if (this.input.length == 0) {
             this.serverError = "Empty list name!";
             this.addListCalled = true;
