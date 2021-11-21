@@ -26,7 +26,6 @@ export class AddDialogStore {
 
     public submitList = async () => {
         var newList: List = EMPTY_LIST;
-
         if (this.input.length == 0) {
             this.serverError = "Empty list name!";
             this.addListCalled = true;

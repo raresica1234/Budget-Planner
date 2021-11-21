@@ -3,7 +3,8 @@ import { AddDialogContext } from "./add-dialog-store";
 import { Fab, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Button } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import { observer } from "mobx-react";
-
+import { SuccessDialog } from "../SuccessDialog";
+import { ErrorDialog } from "../ErrorDialog";
 
 const AddDialog  = () => {
     const {
@@ -43,39 +44,16 @@ const AddDialog  = () => {
                 </DialogActions>
             </Dialog>
 
-            {/* //error dialog */}
-            <Dialog
-                open={addListCalled && !addedSuccessfully && (serverError.length > 0)}
-                onClose={flushOperationResults}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">
-                    Error
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        {serverError}
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={flushOperationResults}>OK</Button>
-                </DialogActions>
-            </Dialog>
+            <ErrorDialog
+            isOpen={addListCalled && !addedSuccessfully && serverError.length > 0}
+            message={serverError}
+            onCloseFunction={flushOperationResults}
+            />
 
-            {/* //success dialog */}
-            <Dialog
-                open={addListCalled && addedSuccessfully}
-                onClose={flushOperationResults}
-                aria-labelledby="alert-dialog-title"
-            >
-                <DialogTitle id="alert-dialog-title">
-                    Success!
-                </DialogTitle>
-                <DialogActions>
-                    <Button onClick={flushOperationResults}>OK</Button>
-                </DialogActions>
-            </Dialog>
+            <SuccessDialog 
+                isOpen={addListCalled && addedSuccessfully} 
+                onCloseFunction={flushOperationResults}
+            />
         </div>
     )
 }
