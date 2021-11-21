@@ -1,4 +1,5 @@
 ﻿using BudgetPlanner.Models;
+using BudgetPlanner.Validators;
 
 namespace BudgetPlanner.DTO
 {
@@ -6,6 +7,7 @@ namespace BudgetPlanner.DTO
     {
         public string Email { get; set; } = null!;
 
+        [Contains(ListUserType.Contributor, ListUserType.Visitor)]
         public ListUserType Type { get; set; }
     }
 }
