@@ -1,9 +1,11 @@
 import "./App.scss";
 import { BrowserRouter } from "react-router-dom";
 import AccountRoutes from "./pages/accounts";
+import MainPage from './components/MainView';
 import ListsView from "./components/ListsView";
 
 function App() {
+    /*
 	const lists = [
         {
             id: "1",
@@ -30,11 +32,11 @@ function App() {
             updatedAt: new Date(),
         },
     ];
-
+    */
     return (
         <BrowserRouter>
             {/* <AccountRoutes /> */}
-            <ListsView lists={lists} />
+            <ListsView lists={[]} />
         </BrowserRouter>
     );
 }
