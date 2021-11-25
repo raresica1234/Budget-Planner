@@ -72,5 +72,21 @@ namespace BudgetPlanner.Services
             
             return itemDetailsDto;
         }
+
+        public async Task<bool?> DeleteAsync(GuidDto itemIdDto)
+        {
+            var itemToDelete = _context.Items
+                .FirstOrDefault(item => item.Id == itemIdDto.Id &&
+                                        item.List.Users.Any(user => user.Id == _httpContextAccessor.GetUserId()));
+
+            if (itemToDelete == null)
+                return null;
+
+            _context.Items.Remove(itemToDelete);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
     }
 }

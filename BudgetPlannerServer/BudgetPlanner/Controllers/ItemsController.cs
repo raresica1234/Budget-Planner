@@ -36,5 +36,15 @@ namespace BudgetPlanner.Controllers
             
             return Ok(updatedItemDto);
         }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> DeleteItem(GuidDto itemIdDto)
+        {
+            var deletedItem = await _itemService.DeleteAsync(itemIdDto);
+
+            if (deletedItem == null) return NotFound();
+
+            return Ok();
+        }
     }
 }
