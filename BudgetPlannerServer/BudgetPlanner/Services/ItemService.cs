@@ -22,13 +22,14 @@ namespace BudgetPlanner.Services
         
         public async Task<ItemDetailsDto> AddAsync(ItemCreateDto itemCreateDto)
         {
+            var now = DateTime.Now;
             var item = new Item
             {
                 Name = itemCreateDto.Name,
-                List = _context.Lists.First(list => list.Id == itemCreateDto.ListId),
+                ListId = itemCreateDto.ListId,
                 Price = itemCreateDto.Price,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
+                CreatedAt = now,
+                UpdatedAt = now
             };
             
             await _context.Items.AddAsync(item);
