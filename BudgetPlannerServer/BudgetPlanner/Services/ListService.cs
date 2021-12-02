@@ -44,9 +44,18 @@ namespace BudgetPlanner.Services
             await _context.Lists.AddAsync(list);
             await _context.SaveChangesAsync();
 
-            var listUsers = await MapUserWithTypeToListUsers(listToAdd.Users, list.Id);
-            if (listUsers == null)
+            var userId = _httpContextAccessor.GetUserId();
+            if (userId == null)
                 return null;
+
+            await _context.ListUsers.AddAsync(new ListUser
+            {
+                ListId = list.Id,
+                UserId = userId,
+                ListUserType = ListUserType.Owner
+            });
+            
+            var listUsers = await MapUserWithTypeToListUsers(listToAdd.Users, list.Id);
 
             await _context.ListUsers.AddRangeAsync(listUsers);
             await _context.SaveChangesAsync();
@@ -56,20 +65,35 @@ namespace BudgetPlanner.Services
 
         public async Task<ListWithTimestampsDto?> Update(ListForUpdateDto listForUpdate)
         {
-            List list = await _context.Lists.FindAsync(listForUpdate.Id);
-            list.Name = listForUpdate.Name;
-            
-            _context.Lists.Update(list);
-            _context.ListUsers.RemoveRange(_context.ListUsers.Where(listUser => listUser.ListId == list.Id));
-            
-            IEnumerable<ListUser>? listUsers = await MapUserWithTypeToListUsers(listForUpdate.Users, list.Id);
-            
-            if (listUsers == null)
+            string? userId = _httpContextAccessor.GetUserId();
+
+            if (userId == null)
             {
                 return null;
             }
 
-            await _context.ListUsers.AddRangeAsync(listUsers);
+            List? list = await _context.Lists.FindAsync(listForUpdate.Id);
+
+            if (list == null)
+            {
+                return null;
+            }
+
+            List<ListUser> currentListUsers = await _context.ListUsers.Where(listUser => listUser.ListId == list.Id).ToListAsync();
+            List<ListUser> newListUsers = (await MapUserWithTypeToListUsers(listForUpdate.Users, list.Id)).ToList();
+            
+            // ListUsers from the new list having a UserId that currently does not exist or have a new type
+            IEnumerable<ListUser> listUsersToAdd = newListUsers.Where(newListUser => currentListUsers.All(currentListUser => newListUser.UserId != currentListUser.UserId || newListUser.ListUserType != currentListUser.ListUserType));
+            // ListUsers from the current list having a UserId that does not exist in the new list or have a different type in the new list
+            IEnumerable<ListUser> listUsersToRemove = currentListUsers.Where(currentListUser => newListUsers.All(newListUser => newListUser.UserId != currentListUser.UserId || newListUser.ListUserType != currentListUser.ListUserType));
+
+            _context.ListUsers.RemoveRange(listUsersToRemove);
+            await _context.ListUsers.AddRangeAsync(listUsersToAdd);
+            
+            list.Name = listForUpdate.Name;
+            list.UpdatedAt = DateTime.Now;
+            _context.Lists.Update(list);
+            
             await _context.SaveChangesAsync();
 
             return new ListWithTimestampsDto(list);
@@ -86,29 +110,21 @@ namespace BudgetPlanner.Services
                 .ToListAsync();
         }
 
-        private async Task<IEnumerable<ListUser>?> MapUserWithTypeToListUsers(List<UserWithTypeDto> usersWithType, Guid listId)
+        private async Task<IEnumerable<ListUser>> MapUserWithTypeToListUsers(List<UserWithTypeDto> usersWithType, Guid listId)
         {
-            var userId = _httpContextAccessor.GetUserId();
-            if (userId == null)
-                return null;
-
-            await _context.ListUsers.AddAsync(new ListUser
+            var mappedListUsers = new List<ListUser>();
+            
+            foreach (var user in usersWithType)
             {
-                ListId = listId,
-                UserId = userId,
-                ListUserType = ListUserType.Owner
-            });
+                mappedListUsers.Add(new ListUser
+                {
+                    ListId = listId,
+                    UserId = await _userManager.GetUserIdAsync(user.Email) ?? "",
+                    ListUserType = user.Type
+                });
+            }
 
-            var mapListUsersTask = usersWithType.Select(async (user) => new ListUser
-            {
-                ListId = listId,
-                UserId = await _userManager.GetUserIdAsync(user.Email) ?? "",
-                ListUserType = user.Type
-            });
-            var mappedListUsers = await Task.WhenAll(mapListUsersTask);
-
-            return mappedListUsers.Where(listUser =>
-                !string.IsNullOrWhiteSpace(listUser.UserId));
+            return mappedListUsers;
         }
     }
 }

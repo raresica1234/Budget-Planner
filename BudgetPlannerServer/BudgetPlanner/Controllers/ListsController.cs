@@ -38,7 +38,7 @@ namespace BudgetPlanner.Controllers
         }
         
         [HttpPut]
-        public async Task<IActionResult> CreateList(ListForUpdateDto listForUpdate)
+        public async Task<IActionResult> UpdateList(ListForUpdateDto listForUpdate)
         {
             ListWithTimestampsDto? updatedList = await _listService.Update(listForUpdate);
 
