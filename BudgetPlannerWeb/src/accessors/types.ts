@@ -17,8 +17,17 @@ export const EMPTY_REGISTER_USER: RegisterUser = {
     confirmPassword: "",
 };
 
+export const EMPTY_LIST_EDIT: ListEdit = {
+    name: ""
+};
+
+export interface ListEdit {
+    id?: string;
+    name: string;
+}
+
 export interface List {
-    id: string;
+    id?: string;
     name: string;
     createdAt: Date;
     updatedAt: Date;
