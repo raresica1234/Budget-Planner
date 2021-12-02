@@ -1,6 +1,6 @@
+using System;
 using System.Threading.Tasks;
 using BudgetPlanner.DTO;
-using BudgetPlanner.Models;
 using BudgetPlanner.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -33,18 +33,18 @@ namespace BudgetPlanner.Controllers
             var updatedItemDto = await _itemService.UpdateAsync(itemUpdateDto);
 
             if (updatedItemDto == null) return NotFound();
-            
+
             return Ok(updatedItemDto);
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteItem(GuidDto itemIdDto)
+        [HttpDelete("{itemId}")]
+        public async Task<IActionResult> DeleteItem(Guid itemId)
         {
-            var deletedItem = await _itemService.DeleteAsync(itemIdDto);
+            var isDeleted = await _itemService.DeleteAsync(itemId);
 
-            if (deletedItem == null) return NotFound();
+            if (isDeleted) return Ok();
 
-            return Ok();
+            return NotFound();
         }
     }
 }

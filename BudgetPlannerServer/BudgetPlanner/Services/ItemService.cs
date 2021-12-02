@@ -13,13 +13,13 @@ namespace BudgetPlanner.Services
     {
         private readonly DataContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        
+
         public ItemService(DataContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _httpContextAccessor = httpContextAccessor;
         }
-        
+
         public async Task<ItemDetailsDto> AddAsync(ItemCreateDto itemCreateDto)
         {
             var now = DateTime.Now;
@@ -48,19 +48,19 @@ namespace BudgetPlanner.Services
         public async Task<ItemDetailsDto> UpdateAsync(ItemUpdateDto itemUpdateDto)
         {
             var initialItem = _context.Items
-                .FirstOrDefault(item => item.Id == itemUpdateDto.Id && 
+                .FirstOrDefault(item => item.Id == itemUpdateDto.Id &&
                                         item.List.Users.Any(user => user.Id == _httpContextAccessor.GetUserId()));
-            
+
             if (initialItem == null)
                 return null;
-            
+
             initialItem.Price = itemUpdateDto.Price;
             initialItem.Name = itemUpdateDto.Name;
             initialItem.UpdatedAt = DateTime.Now;
 
             _context.Items.Update(initialItem);
             await _context.SaveChangesAsync();
-            
+
             var itemDetailsDto = new ItemDetailsDto
             {
                 Id = initialItem.Id,
@@ -69,24 +69,23 @@ namespace BudgetPlanner.Services
                 CreatedAt = initialItem.CreatedAt,
                 UpdatedAt = initialItem.UpdatedAt
             };
-            
+
             return itemDetailsDto;
         }
 
-        public async Task<bool?> DeleteAsync(GuidDto itemIdDto)
+        public async Task<bool> DeleteAsync(Guid itemId)
         {
             var itemToDelete = _context.Items
-                .FirstOrDefault(item => item.Id == itemIdDto.Id &&
+                .FirstOrDefault(item => item.Id == itemId &&
                                         item.List.Users.Any(user => user.Id == _httpContextAccessor.GetUserId()));
 
             if (itemToDelete == null)
-                return null;
+                return false;
 
             _context.Items.Remove(itemToDelete);
             await _context.SaveChangesAsync();
 
             return true;
         }
-
     }
 }
