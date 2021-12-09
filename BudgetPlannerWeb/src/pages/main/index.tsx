@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from "react-router";
-import MainView from "./MainView";
+import MainView from "./main-view";
 
 const PageRoutes = () => (
     <Routes>

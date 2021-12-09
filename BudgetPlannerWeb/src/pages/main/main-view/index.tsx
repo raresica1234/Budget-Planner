@@ -14,7 +14,7 @@ import styles from "./main.module.scss";
 import { TabNumberContext } from "./main-store";
 import { observer } from "mobx-react";
 import { TabPanel, tabProps } from "./tabs";
-import ListsView from "../../../components/ListsView";
+import ListsView from "../../../components/lists-view";
 
 const lists = [{
 	id: "1",

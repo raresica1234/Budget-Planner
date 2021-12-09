@@ -1,7 +1,7 @@
 import { List as ListModel } from "../../accessors/types";
 import { Paper, List } from "@mui/material";
-import ListItemLink from "../ListItemLink";
-import AddListButton from "../AddListButton";
+import ListItemLink from "../list-item-link";
+import AddListButton from "../../pages/main/list/add/add-list-button";
 import styles from "./lists.module.scss";
 
 interface ListListProps {
