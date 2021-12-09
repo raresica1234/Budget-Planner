@@ -10,6 +10,6 @@ namespace BudgetPlanner.Services
 
         Task<ItemDetailsDto> UpdateAsync(ItemUpdateDto itemUpdateDto);
 
-        Task<bool> DeleteAsync(GuidDto itemIdDto);
+        Task<bool> DeleteAsync(Guid itemId);
     }
 }
