@@ -14,7 +14,6 @@ export class EditListDialogStore {
 
     public setListEdit = (listEdit?: ListEdit | null) => {
         this.isAdd = !listEdit;
-        console.log("setListEdit", listEdit);
         this.listEdit = listEdit === undefined ? null : listEdit ?? EMPTY_LIST_EDIT;
     }
 
@@ -25,10 +24,8 @@ export class EditListDialogStore {
 
     public sendList = async () => {
         console.log("sendList", this.listEdit);
-        if (!this.listEdit?.name) {
-            toastService.showError("Empty list name!");
+        if (!this.listEdit?.name)
             return false;
-        } 
         
         try {
             await addList(this.listEdit);

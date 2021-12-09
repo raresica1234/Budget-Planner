@@ -2,7 +2,7 @@ import { makeAutoObservable } from "mobx";
 import { createContext } from "react";
 import { login } from "../../../accessors/account-accessor";
 import { EMPTY_USER, User } from "../../../accessors/types";
-import { authenticateStore } from "../../../infrastructure";
+import { authenticateStore, toastService } from "../../../infrastructure";
 
 export class LoginStore {
     public user: User = EMPTY_USER;
@@ -26,7 +26,7 @@ export class LoginStore {
 
             return true;
         } catch {
-
+            toastService.showError("Login failed, wrong email or password!");
         }
         return false;
     }
