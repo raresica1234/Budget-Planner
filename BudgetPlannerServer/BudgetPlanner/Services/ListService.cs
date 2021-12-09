@@ -1,4 +1,4 @@
-﻿using BudgetPlanner.Context;
+using BudgetPlanner.Context;
 using BudgetPlanner.DTO;
 using BudgetPlanner.DTO.Lists;
 using BudgetPlanner.Extensions;
@@ -29,6 +29,11 @@ namespace BudgetPlanner.Services
         public Task<List<ListWithTimestampsDto>> GetCreated()
         {
             return GetListsForUser(true);
+        }
+        
+        public Task<List<ListWithTimestampsDto>> GetShared()
+        {
+            return GetListsForUser(false);
         }
 
         public async Task<ListWithTimestampsDto?> Create(ListForCreateDto listToAdd)

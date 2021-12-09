@@ -14,6 +14,8 @@ namespace BudgetPlanner.Models
 
         public List List { get; set; } = null!;
 
+        public Guid ListId { get; set; }
+
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdatedAt { get; set; }

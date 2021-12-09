@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using BudgetPlanner.Context;
 using BudgetPlanner.DTO;
 using BudgetPlanner.Extensions;
+using BudgetPlanner.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace BudgetPlanner.Services
@@ -19,7 +20,32 @@ namespace BudgetPlanner.Services
             _httpContextAccessor = httpContextAccessor;
         }
         
-        public async Task<ItemDetailsDto?> UpdateAsync(ItemDto itemUpdateDto)
+        public async Task<ItemDetailsDto> AddAsync(ItemCreateDto itemCreateDto)
+        {
+            var now = DateTime.Now;
+            var item = new Item
+            {
+                Name = itemCreateDto.Name,
+                ListId = itemCreateDto.ListId,
+                Price = itemCreateDto.Price,
+                CreatedAt = now,
+                UpdatedAt = now
+            };
+            
+            await _context.Items.AddAsync(item);
+            
+            await _context.SaveChangesAsync();
+
+            return new ItemDetailsDto
+            {
+                Name = item.Name,
+                Price = item.Price,
+                CreatedAt = item.CreatedAt,
+                UpdatedAt = item.UpdatedAt
+            };
+        }
+        
+        public async Task<ItemDetailsDto> UpdateAsync(ItemUpdateDto itemUpdateDto)
         {
             var initialItem = _context.Items
                 .FirstOrDefault(item => item.Id == itemUpdateDto.Id && 

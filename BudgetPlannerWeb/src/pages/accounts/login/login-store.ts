@@ -2,6 +2,7 @@ import { makeAutoObservable } from "mobx";
 import { createContext } from "react";
 import { login } from "../../../accessors/account-accessor";
 import { EMPTY_USER, User } from "../../../accessors/types";
+import { authenticateStore } from "../../../infrastructure";
 
 export class LoginStore {
     public user: User = EMPTY_USER;
@@ -19,7 +20,15 @@ export class LoginStore {
     }
 
     public login = async () => {
-        await login(this.user);
+        try {
+            const token = await login(this.user);
+            authenticateStore.setToken(token);
+
+            return true;
+        } catch {
+
+        }
+        return false;
     }
 }
 

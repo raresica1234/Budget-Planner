@@ -1,4 +1,4 @@
-﻿using BudgetPlanner.DTO.Lists;
+using BudgetPlanner.DTO.Lists;
 using BudgetPlanner.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +24,14 @@ namespace BudgetPlanner.Controllers
             var userCreatedLists = await _listService.GetCreated();
 
             return Ok(userCreatedLists);
+        }
+        
+        [HttpGet("shared")]
+        public async Task<IActionResult> GetUserSharedLists()
+        {
+            var userSharedLists = await _listService.GetShared();
+
+            return Ok(userSharedLists);
         }
 
         [HttpPost]

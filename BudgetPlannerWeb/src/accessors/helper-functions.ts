@@ -1,3 +1,5 @@
+import { getToken } from "../infrastructure";
+
 type httpMethod = "GET" | "POST" | "PUT" | "DELETE"; 
 
 const genericFetch = <T>(method: httpMethod, url: string, body?: any) =>
@@ -6,7 +8,8 @@ const genericFetch = <T>(method: httpMethod, url: string, body?: any) =>
             const response = await fetch(url, {
                 method,
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${getToken()}`
                 },
                 body: JSON.stringify(body)
             });
