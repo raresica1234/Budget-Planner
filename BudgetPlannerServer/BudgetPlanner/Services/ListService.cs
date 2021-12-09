@@ -30,7 +30,12 @@ namespace BudgetPlanner.Services
         {
             return GetListsForUser(true);
         }
-
+        
+        public Task<List<ListWithTimestampsDto>> GetShared()
+        {
+            return GetListsForUser(false);
+        }
+        
         public async Task<ListWithTimestampsDto?> Create(ListForCreateDto listToAdd)
         {
             var now = DateTime.Now;

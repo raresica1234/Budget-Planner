@@ -26,6 +26,14 @@ namespace BudgetPlanner.Controllers
             return Ok(userCreatedLists);
         }
 
+        [HttpGet("shared")]
+        public async Task<IActionResult> GetUserSharedLists()
+        {
+            var userSharedLists = await _listService.GetShared();
+
+            return Ok(userSharedLists);
+        }
+        
         [HttpPost]
         public async Task<IActionResult> CreateList(ListForCreateDto listToAdd)
         {
