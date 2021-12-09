@@ -83,10 +83,10 @@ namespace BudgetPlanner.Services
             {
                 return null;
             }
-
-            List<ListUser> currentListUsers = await _context.ListUsers.Where(listUser => listUser.ListId == list.Id).ToListAsync();
-            List<ListUser> newListUsers = (await MapUserWithTypeToListUsers(listForUpdate.Users, list.Id)).ToList();
             
+            List<ListUser> currentListUsers = await _context.ListUsers.Where(listUser => listUser.ListId == list.Id && listUser.UserId != userId).ToListAsync();
+            List<ListUser> newListUsers = (await MapUserWithTypeToListUsers(listForUpdate.Users, list.Id)).ToList();
+
             // ListUsers from the new list having a UserId that currently does not exist or have a new type
             IEnumerable<ListUser> listUsersToAdd = newListUsers.Where(newListUser => currentListUsers.All(currentListUser => newListUser.UserId != currentListUser.UserId || newListUser.ListUserType != currentListUser.ListUserType));
             // ListUsers from the current list having a UserId that does not exist in the new list or have a different type in the new list
