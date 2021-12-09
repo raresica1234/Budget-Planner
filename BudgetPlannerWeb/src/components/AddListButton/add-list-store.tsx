@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import { createContext } from "react";
-import { List, EMPTY_LIST_EDIT, ListEdit } from "../../accessors/types";
+import { EMPTY_LIST_EDIT, ListEdit } from "../../accessors/types";
 import { addList } from "../../accessors/list-accessor";
 
 export class AddListStore {

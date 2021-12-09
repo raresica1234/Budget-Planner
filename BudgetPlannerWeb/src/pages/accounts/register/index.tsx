@@ -22,10 +22,7 @@ const Register = () => {
         return reset;
     }, [reset]);
 
-    const onClickNext = async () => {
-        await register();
-        navigate("/login");
-    } 
+    const onClickNext = async () => await register() && navigate("/login");
     
     return (
         <div className={styles.container}>
@@ -45,7 +42,11 @@ const Register = () => {
                         <span className={styles.label}>Re-enter password</span>
                         <input type="password" value={user.confirmPassword} onChange={e => setConfirmPassword(e.target.value)}></input>
                     </div>
-                    <button onClick={onClickNext}>Next</button>
+                    <button onClick={onClickNext}>Next</button>{serverError && (
+                    <div className={styles.serverErrorContainer}>
+                        <span>{serverError}</span>
+                    </div>
+                )}
                 </div>
                 <div className={styles.signInContainer}>
                     <span>Already got an account? <Link to="/login">Sign in</Link></span>
@@ -53,11 +54,6 @@ const Register = () => {
             </div>
 
             <div className={styles.infoPane}>
-                {serverError && (
-                    <div className={styles.serverErrorContainer}>
-                        <span>{serverError}</span>
-                    </div>
-                )}
             </div>
         </div>
     )
