@@ -1,4 +1,4 @@
-﻿using BudgetPlanner.DTO.Lists;
+using BudgetPlanner.DTO.Lists;
 using BudgetPlanner.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +25,7 @@ namespace BudgetPlanner.Controllers
 
             return Ok(userCreatedLists);
         }
-
+        
         [HttpGet("shared")]
         public async Task<IActionResult> GetUserSharedLists()
         {
@@ -33,7 +33,7 @@ namespace BudgetPlanner.Controllers
 
             return Ok(userSharedLists);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> CreateList(ListForCreateDto listToAdd)
         {
@@ -43,6 +43,19 @@ namespace BudgetPlanner.Controllers
                 return Unauthorized();
 
             return Ok(createdList);
+        }
+        
+        [HttpPut]
+        public async Task<IActionResult> UpdateList(ListForUpdateDto listForUpdate)
+        {
+            var updatedList = await _listService.Update(listForUpdate);
+
+            if (updatedList == null)
+            {
+                return Unauthorized();
+            }
+
+            return Ok(updatedList);
         }
     }
 }
