@@ -14,6 +14,7 @@ class AuthenticateStore {
     }
 
     public setToken = (token?: string) => {
+        // eslint-disable-next-line
         if (this.isUserLogged = !!token) {
             setToken(token);
         } else {

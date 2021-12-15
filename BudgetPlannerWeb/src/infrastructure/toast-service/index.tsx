@@ -18,7 +18,7 @@ const WrappedToastService = () => (
         maxSnack={3}
         anchorOrigin={{
             vertical: "bottom",
-            horizontal: "right"
+            horizontal: "center"
         }}>
         <ToastService />
     </SnackbarProvider>

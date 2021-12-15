@@ -14,29 +14,9 @@ import styles from "./main.module.scss";
 import { TabNumberContext } from "./main-store";
 import { observer } from "mobx-react";
 import { TabPanel, tabProps } from "./tabs";
-import ListsView from "../../../components/lists-view";
-
-const lists = [{
-	id: "1",
-	name: "Test1",
-	createdAt: new Date(),
-	updatedAt: new Date(),
-}, {
-	id: "2",
-	name: "Test2",
-	createdAt: new Date(),
-	updatedAt: new Date(),
-}, {
-	id: "3",
-	name: "Test3",
-	createdAt: new Date(),
-	updatedAt: new Date(),
-}, {
-	id: "4",
-	name: "Test4",
-	createdAt: new Date(),
-	updatedAt: new Date(),
-}];
+import AddListButton from "../list/add/add-list-button";
+import ListsView from "../list/list/components/lists-view";
+import { CreatedListsViewContext } from "../list/list/created-lists-view-store";
 
 const MainPage = () => {
 	const {
@@ -48,7 +28,7 @@ const MainPage = () => {
 		setTabNumber(newValue);
 	};
 
-	return (
+	return <>
 		<Box className={styles.mainContainer}>
 			<AppBar
 				position="static"
@@ -78,13 +58,14 @@ const MainPage = () => {
 				</Tabs>
 			</Box>
 			<TabPanel value={tabNumber} index={0}>
-				<ListsView lists={lists} />
+				<ListsView listsViewContext={CreatedListsViewContext} />
 			</TabPanel>
 			<TabPanel value={tabNumber} index={1}>
 				Shared lists component here
 			</TabPanel>
 		</Box>
-	);
+        <AddListButton className={styles.addButton} />
+	</>;
 }
 
 export default observer(MainPage);

@@ -22,8 +22,13 @@
     }
 }
 
-
 .logo {
     width: 48px;
     height: 42px;
+}
+
+button.addButton {
+    position: fixed;
+    bottom: 1em;
+    right: 1em;
 }
