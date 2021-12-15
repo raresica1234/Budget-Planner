@@ -8,7 +8,6 @@ import { observer } from "mobx-react";
 const Register = () => {
     const {
         user,
-        serverError,
         setEmail,
         setPassword,
         setConfirmPassword,
@@ -27,26 +26,22 @@ const Register = () => {
     return (
         <div className={styles.container}>
             <div className={styles.inputsPane}> 
-                <img className={styles.logo} src={Logo} alt={"ATAR"}/>
+                <img className={styles.logo} src={Logo} alt="ATAR" />
                 <div className={styles.inputsContainer}>
                     <span className={styles.title}>Sign up</span>
                     <div className={styles.input}>
                         <span className={styles.label}>Email</span>
-                        <input type="email" value={user.email} onChange={e => setEmail(e.target.value)}></input>
+                        <input type="email" value={user.email} onChange={e => setEmail(e.target.value)} />
                     </div>
                     <div className={styles.input}>
                         <span className={styles.label}>Password</span>
-                        <input type="password" value={user.password} onChange={e => setPassword(e.target.value)}></input>
+                        <input type="password" value={user.password} onChange={e => setPassword(e.target.value)} />
                     </div>
                     <div className={styles.input}>
                         <span className={styles.label}>Re-enter password</span>
-                        <input type="password" value={user.confirmPassword} onChange={e => setConfirmPassword(e.target.value)}></input>
+                        <input type="password" value={user.confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
                     </div>
-                    <button onClick={onClickNext}>Next</button>{serverError && (
-                    <div className={styles.serverErrorContainer}>
-                        <span>{serverError}</span>
-                    </div>
-                )}
+                    <button onClick={onClickNext}>Next</button>
                 </div>
                 <div className={styles.signInContainer}>
                     <span>Already got an account? <Link to="/login">Sign in</Link></span>

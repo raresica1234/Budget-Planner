@@ -14,7 +14,6 @@ class AuthenticateStore {
     }
 
     public setToken = (token?: string) => {
-        console.log(this.isUserLogged = !!token);
         if (this.isUserLogged = !!token) {
             setToken(token);
         } else {
