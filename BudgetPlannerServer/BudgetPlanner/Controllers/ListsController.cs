@@ -38,9 +38,9 @@ namespace BudgetPlanner.Controllers
         [HttpGet("{listId}")]
         public async Task<IActionResult> GetListDetails(Guid listId)
         {
-            var listDetail = await _listService.GetDetails(listId);
+            var listDetails = await _listService.GetDetails(listId);
 
-            return Ok(listDetail);
+            return Ok(listDetails);
         }
 
         [HttpPost]
