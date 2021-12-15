@@ -139,17 +139,29 @@ namespace BudgetPlanner.Services
             return mappedListUsers;
         }
 
-        public async Task<ListDetailsDto> GetDetails(Guid listId)
+        public async Task<ListDetailsDto?> GetDetails(Guid listId)
         {
-            List<ItemDetailsDto> itemDtos = await _context.Items.Where(item => item.List.Id == listId)
+            var userId = _httpContextAccessor.GetUserId();
+
+            if (userId == null)
+            {
+                return null;
+            }
+
+            var userDtos = await _context.ListUsers.Where(listuser => listuser.ListId == listId)
+                .Select(listUser => new SimpleUserDto(listUser.User))
+                .ToListAsync();
+
+            if (!userDtos.Exists(user => user.Id == userId))
+            {
+                return null;
+            }
+
+            var itemDtos = await _context.Items.Where(item => item.List.Id == listId)
                 .Select(item => new ItemDetailsDto(item))
                 .ToListAsync();
 
-            double sum = itemDtos.Sum(item => item.Price);
-
-            List<SimpleUserDto> userDtos = await _context.ListUsers.Where(listuser => listuser.ListId == listId)
-                .Select(listUser => new SimpleUserDto(listUser.User))
-                .ToListAsync();
+            var sum = itemDtos.Sum(item => item.Price);
 
             return new ListDetailsDto(itemDtos, sum, userDtos);
         }

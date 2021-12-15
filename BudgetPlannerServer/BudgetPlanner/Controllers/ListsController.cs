@@ -40,6 +40,9 @@ namespace BudgetPlanner.Controllers
         {
             var listDetails = await _listService.GetDetails(listId);
 
+            if (listDetails == null)
+                return Unauthorized();
+
             return Ok(listDetails);
         }
 
