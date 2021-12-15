@@ -141,15 +141,14 @@ namespace BudgetPlanner.Services
 
         public async Task<ListDetailsDto> GetDetails(Guid listId)
         {
-            List<ItemUpdateDto> itemDtos = await _context.Items.Where(item => item.List.Id == listId)
-                .Select(item => new ItemUpdateDto(item.Id, item.Name, item.Price))
+            List<ItemDetailsDto> itemDtos = await _context.Items.Where(item => item.List.Id == listId)
+                .Select(item => new ItemDetailsDto(item))
                 .ToListAsync();
 
-            double sum = 0;
-            itemDtos.ForEach(item => sum += item.Price);
+            double sum = itemDtos.Sum(item => item.Price);
 
             List<SimpleUserDto> userDtos = await _context.ListUsers.Where(listuser => listuser.ListId == listId)
-                .Select(listUser => new SimpleUserDto(listUser.UserId, listUser.User.Email))
+                .Select(listUser => new SimpleUserDto(listUser.User))
                 .ToListAsync();
 
             return new ListDetailsDto(itemDtos, sum, userDtos);

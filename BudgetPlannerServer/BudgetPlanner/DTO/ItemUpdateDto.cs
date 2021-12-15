@@ -15,12 +15,5 @@ namespace BudgetPlanner.DTO
         {
 
         }
-
-        public ItemUpdateDto(Guid id, string name, double price)
-        {
-            Id = id;
-            Name = name;
-            Price = price;
-        }
     }
 }

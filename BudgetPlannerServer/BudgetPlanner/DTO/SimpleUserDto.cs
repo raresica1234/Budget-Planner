@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BudgetPlanner.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,10 +11,10 @@ namespace BudgetPlanner.DTO
         public string Id { get; set; }
         public string Email { get; set; } = null!;
 
-        public SimpleUserDto(string id, string email)
+        public SimpleUserDto(User user)
         {
-            Id = id;
-            Email = email;
+            Id = user.Id;
+            Email = user.Email;
         }
     }
 }

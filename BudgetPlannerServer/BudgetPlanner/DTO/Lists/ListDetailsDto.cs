@@ -7,11 +7,11 @@ namespace BudgetPlanner.DTO.Lists
 {
     public class ListDetailsDto
     {
-        public List<ItemUpdateDto> Items { get; set; } = new ();
+        public List<ItemDetailsDto> Items { get; set; } = new ();
         public double Sum { get; set; }
         public List<SimpleUserDto> Users { get; set; } = new ();
 
-        public ListDetailsDto(List<ItemUpdateDto> items, double sum, List<SimpleUserDto> users)
+        public ListDetailsDto(List<ItemDetailsDto> items, double sum, List<SimpleUserDto> users)
         {
             Items = items;
             Sum = sum;
