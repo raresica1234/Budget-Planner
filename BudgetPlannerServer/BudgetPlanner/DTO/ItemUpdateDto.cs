@@ -10,5 +10,10 @@ namespace BudgetPlanner.DTO
         public string Name { get; set; } = null!;
 
         public double Price { get; set; }
+
+        public ItemUpdateDto()
+        {
+
+        }
     }
 }

@@ -14,5 +14,19 @@ namespace BudgetPlanner.DTO
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdatedAt { get; set; }
+
+        public ItemDetailsDto()
+        {
+
+        }
+
+        public ItemDetailsDto(Item item)
+        {
+            Id = item.Id;
+            Name = item.Name;
+            Price = item.Price;
+            CreatedAt = item.CreatedAt;
+            UpdatedAt = item.UpdatedAt;
+        }
     }
 }
