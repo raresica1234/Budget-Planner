@@ -141,8 +141,8 @@ namespace BudgetPlanner.Services
 
         public async Task<ListDetailsDto> GetDetails(Guid listId)
         {
-            List<ItemDto> itemDtos = await _context.Items.Where(item => item.List.Id == listId)
-                .Select(item => new ItemDto(item.Id, item.Name, item.Price))
+            List<ItemUpdateDto> itemDtos = await _context.Items.Where(item => item.List.Id == listId)
+                .Select(item => new ItemUpdateDto(item.Id, item.Name, item.Price))
                 .ToListAsync();
 
             double sum = 0;

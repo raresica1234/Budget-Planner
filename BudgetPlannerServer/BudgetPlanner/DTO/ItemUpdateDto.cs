@@ -11,12 +11,12 @@ namespace BudgetPlanner.DTO
 
         public double Price { get; set; }
 
-        public ItemDto()
+        public ItemUpdateDto()
         {
 
         }
 
-        public ItemDto(Guid id, string name, double price)
+        public ItemUpdateDto(Guid id, string name, double price)
         {
             Id = id;
             Name = name;
