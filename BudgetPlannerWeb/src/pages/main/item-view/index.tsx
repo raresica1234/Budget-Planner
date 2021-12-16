@@ -1,10 +1,10 @@
 import { Context, useContext, useEffect } from "react";
 import { Box, AppBar, Typography, Toolbar, IconButton, Paper , List, ListItem, ListItemText, LinearProgress} from "@mui/material";
-import { Item as ItemModel } from "../../accessors/types";
+import { Item as ItemModel } from "../../../accessors/types";
 import MenuIcon from "@mui/icons-material/Menu";
 import styles from "./items.module.scss";
 import { useLocation, useParams } from "react-router-dom";
-import Logo from "../../assets/logo.svg";
+import Logo from "../../../assets/logo.svg";
 import { ItemsViewContext } from "./items-view-store";
 import { observer } from "mobx-react";
 
@@ -51,7 +51,7 @@ const ItemsView = () => {
                         <li>
                             <ListItem>
                                 <ListItemText primary={item.name} secondary={item.price}/>
-                                <ListItemText primary={item.createdAt} secondary={item.updatedAt} className={styles.rightSideItem}/>
+                                <ListItemText primary={"Created at: " + new Date(item.createdAt).toLocaleString('en-GB')} secondary={"Updated at: " + new Date(item.updatedAt).toLocaleString('en-GB')} className={styles.rightSideItem}/>
                             </ListItem>
                         </li>
                     ))}

@@ -1,12 +1,12 @@
 import { Navigate, Route, Routes } from "react-router";
-import ItemsView from "../../components/items-view";
+import ItemsView from "./item-view";
 import MainView from "./main-view";
 
 const PageRoutes = () => (
     <Routes>
         <Route path="/" element={<MainView />} />
         <Route path="*" element={<Navigate to="/" />} />
-        <Route path="/lists/*" element = {<ItemsView/>} />
+        <Route path="/list/*" element = {<ItemsView/>} />
     </Routes>
 );
 

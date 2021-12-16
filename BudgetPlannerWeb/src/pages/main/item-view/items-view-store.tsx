@@ -1,6 +1,6 @@
 import { makeAutoObservable, observable, runInAction, action } from "mobx";
-import { Item } from "../../accessors/types";
-import { getListDetails } from "../../accessors/item-accessor";
+import { Item, ListDetails } from "../../../accessors/types";
+import { getListDetails } from "../../../accessors/item-accessor";
 import { createContext } from "react";
 
 export class ItemsViewStore {
@@ -21,13 +21,14 @@ export class ItemsViewStore {
     public fetchListDetails = async (listId: string) => {
         this.isLoading = true;
         
-        const response = await this.fetchListDetailsEndpoint(listId);
+        const response: ListDetails = await this.fetchListDetailsEndpoint(listId);
+
         runInAction(() => {
-            const obj = JSON.parse(response);
-            this.items = obj.items;
-            this.sum = obj.sum;
+            this.items = response.items;
+            this.sum = response.sum;
             this.isLoading = false;
         });
+        
     }
 }
 

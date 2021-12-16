@@ -43,6 +43,12 @@ export interface Item {
     updatedAt: Date;
 }
 
+export interface ListDetails {
+    items: Item[];
+    sum: number;
+    users: [];
+}
+
 export interface TokenResponse {
     token: string;
 }
