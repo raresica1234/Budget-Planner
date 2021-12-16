@@ -7,6 +7,7 @@ const PageRoutes = () => (
         <Route path="/" element={<MainView />} />
         <Route path="/list/:id" element = {<ItemsView/>} />
         <Route path="*" element={<Navigate to="/" />} />
+        <Route path="/lists/*" element = {<ItemsView/>} />
     </Routes>
 );
 
