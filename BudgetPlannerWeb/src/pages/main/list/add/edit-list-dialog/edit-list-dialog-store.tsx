@@ -3,6 +3,7 @@ import { createContext } from "react";
 import { addList } from "../../../../../accessors/list-accessor";
 import { EMPTY_LIST_EDIT, ListEdit } from "../../../../../accessors/types";
 import { toastService } from "../../../../../infrastructure";
+import { createdListsViewStore } from "../../list/created-lists-view-store";
 
 export class EditListDialogStore {
     public listEdit: ListEdit | null = null;
@@ -28,7 +29,9 @@ export class EditListDialogStore {
             return false;
         
         try {
-            await addList(this.listEdit);
+            const newList = await addList(this.listEdit);
+            
+            createdListsViewStore.addList(newList);
         } catch (error) {
             if (typeof error === "string")
                 toastService.showError(error);
@@ -38,7 +41,7 @@ export class EditListDialogStore {
         }
 
         toastService.showSuccess(
-            `List ${this.listEdit.name} was ${this.isAdd ? "added" : "updated"} successfully!`
+            <>List&nbsp;<strong>{this.listEdit.name}</strong>&nbsp;was {this.isAdd ? "added" : "updated"} successfully!</>
         );
         return true;
     };
