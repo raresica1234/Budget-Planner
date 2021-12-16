@@ -1,40 +1,21 @@
-import { Box, AppBar, Typography, Toolbar, IconButton, Paper , List, ListItem, ListItemText} from "@mui/material";
+import { Context, useContext, useEffect } from "react";
+import { Box, AppBar, Typography, Toolbar, IconButton, Paper , List, ListItem, ListItemText, LinearProgress} from "@mui/material";
 import { Item as ItemModel } from "../../accessors/types";
 import MenuIcon from "@mui/icons-material/Menu";
 import styles from "./items.module.scss";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import Logo from "../../assets/logo.svg";
-
-const items = [{
-    id: "1",
-    name: "Test1",
-    price: 10,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-}, {
-    id: "2",
-    name: "Test2",
-    price: 20,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-}, {
-    id: "3",
-    name: "Test3",
-    price: 30,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-}, {
-    id: "4",
-    name: "Test4",
-    price: 99,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-}];
-
+import { ItemsViewContext } from "./items-view-store";
+import { observer } from "mobx-react";
 
 const ItemsView = () => {
-
+    const { isLoading, items, sum, fetchListDetails } = useContext(ItemsViewContext);
     const { listName } = useLocation().state;
+    const { id } = useLocation().state;
+
+    useEffect(() => {
+        fetchListDetails(id);
+    }, [fetchListDetails])
 
     return (
         <Box className={styles.mainContainer}>
@@ -62,25 +43,28 @@ const ItemsView = () => {
 			</Box>
             
             <Paper elevation={0}>
+                {isLoading && (
+                    <LinearProgress />
+                )}
                 <List>
                     {items.map((item: ItemModel) => (
                         <li>
-                        <ListItem>
-                            <ListItemText primary={item.name} secondary={item.price}/>
-                            <ListItemText primary={Date()} className={styles.rightSideItem}/>
-                        </ListItem>
-                    </li>
+                            <ListItem>
+                                <ListItemText primary={item.name} secondary={item.price}/>
+                                <ListItemText primary={item.createdAt} secondary={item.updatedAt} className={styles.rightSideItem}/>
+                            </ListItem>
+                        </li>
                     ))}
                 </List>
             </Paper>
 
             <Box className={styles.sumBar}>
                 <Typography variant="h6" component="div" className={styles.listTitle}>
-                    Cost of all items: 999
+                    Cost of all items: {sum}
                 </Typography>
 			</Box>
         </Box>
     )
 };
 
-export default ItemsView;
+export default observer(ItemsView);
