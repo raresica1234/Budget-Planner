@@ -17,6 +17,7 @@ import { TabPanel, tabProps } from "./tabs";
 import AddListButton from "../list/add/add-list-button";
 import ListsView from "../list/list/components/lists-view";
 import { CreatedListsViewContext } from "../list/list/created-lists-view-store";
+import {SharedListsViewContext} from "../list/list/shared-lists-view-store";
 
 const MainPage = () => {
 	const {
@@ -61,7 +62,7 @@ const MainPage = () => {
 				<ListsView listsViewContext={CreatedListsViewContext} />
 			</TabPanel>
 			<TabPanel value={tabNumber} index={1}>
-				Shared lists component here
+				<ListsView listsViewContext={SharedListsViewContext}/>
 			</TabPanel>
 		</Box>
         <AddListButton className={styles.addButton} />
