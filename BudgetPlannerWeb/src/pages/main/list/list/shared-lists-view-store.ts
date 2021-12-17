@@ -1,7 +1,6 @@
 import ListsViewStore from "./components/lists-view-store";
 import {getSharedLists} from "../../../../accessors/list-accessor";
-import {action, makeObservable} from "mobx";
-import {List} from "../../../../accessors/types";
+import {makeObservable} from "mobx";
 import {createContext} from "react";
 
 export class SharedListsViewStore extends ListsViewStore {
@@ -9,12 +8,9 @@ export class SharedListsViewStore extends ListsViewStore {
 
     constructor() {
         super();
-        makeObservable(this, {
-            addList: action
-        });
+        makeObservable(this, {});
     }
 
-    public addList = (list: List) => this.lists.push(list);
 }
 
 export const sharedListsViewStore = new SharedListsViewStore();
