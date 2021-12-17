@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import Logo from "../../../assets/logo.svg";
 import { ListDetailsViewContext } from "./list-details-view-store";
 import { observer } from "mobx-react";
+import AddItemButton from "./add/add-item";
 
 const ListDetailsView = () => {
     const { isLoading, listName, items, sum, fetchListDetails, reset } = useContext(ListDetailsViewContext);
@@ -67,6 +68,7 @@ const ListDetailsView = () => {
                     Total: {sum}
                 </Typography>
             </Box>
+            <AddItemButton className={styles.addButton} listId={id}/>
         </Box>
     )
 };
