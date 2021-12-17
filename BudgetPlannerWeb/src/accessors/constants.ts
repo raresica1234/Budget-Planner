@@ -1,2 +1,2 @@
-export const BASE_URL = "https://localhost:44361/api/";
+export const BASE_URL = "https://localhost:5001/api/";
 export const LOGIN_TOKEN = "token";

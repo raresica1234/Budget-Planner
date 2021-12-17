@@ -2,7 +2,7 @@ import { BASE_URL } from "./constants";
 import { httpPost } from "./helper-functions";
 import { RegisterUser, TokenResponse, User } from "./types";
 
-const ACCOUNT_URL = `${BASE_URL}authenticate`;
+const ACCOUNT_URL = `${BASE_URL}Authenticate`;
 
 export const register = (user: RegisterUser) => httpPost(`${ACCOUNT_URL}/register`, user);
 
