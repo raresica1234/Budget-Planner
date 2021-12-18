@@ -15,6 +15,12 @@ export class CreatedListsViewStore extends ListsViewStore {
     }
 
     public addList = (list: List) => this.lists.push(list); 
+    
+    public updateList = (list: List) => {
+        let listToUpdateIndex = this.lists.findIndex(element => element.id === list.id);
+
+        this.lists[listToUpdateIndex] = list;
+    }
 }
 
 export const createdListsViewStore = new CreatedListsViewStore();

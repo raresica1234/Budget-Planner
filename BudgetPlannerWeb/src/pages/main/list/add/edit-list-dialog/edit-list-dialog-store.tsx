@@ -1,6 +1,6 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, toJS } from "mobx";
 import { createContext } from "react";
-import { addList } from "../../../../../accessors/list-accessor";
+import { addList, updateList } from "../../../../../accessors/list-accessor";
 import { EMPTY_LIST_EDIT, ListEdit } from "../../../../../accessors/types";
 import { toastService } from "../../../../../infrastructure";
 import { createdListsViewStore } from "../../list/created-lists-view-store";
@@ -15,7 +15,7 @@ export class EditListDialogStore {
 
     public setListEdit = (listEdit?: ListEdit | null) => {
         this.isAdd = !listEdit;
-        this.listEdit = listEdit === undefined ? null : listEdit ?? EMPTY_LIST_EDIT;
+        this.listEdit = listEdit === undefined ? null : toJS(listEdit) ?? EMPTY_LIST_EDIT;
     }
 
     public setName = (name: string) => {
@@ -24,14 +24,15 @@ export class EditListDialogStore {
     }
 
     public sendList = async () => {
-        console.log("sendList", this.listEdit);
-        if (!this.listEdit?.name)
+        if (!this.listEdit?.name) {
+            toastService.showError("The list name cannot be empty!");
             return false;
+        }
         
         try {
-            const newList = await addList(this.listEdit);
-            
-            createdListsViewStore.addList(newList);
+            const apiCall = this.isAdd ? this.handleAdd : this.handleUpdate;
+
+            await apiCall();
         } catch (error) {
             if (typeof error === "string")
                 toastService.showError(error);
@@ -48,6 +49,18 @@ export class EditListDialogStore {
 
     public reset = () => {
         this.listEdit = null;
+    }
+
+    private handleAdd = async () => {
+        const newList = await addList(this.listEdit!!);
+            
+        createdListsViewStore.addList(newList);
+    }
+
+    private handleUpdate = async () => {
+        const updatedList = await updateList(this.listEdit!!);
+            
+        createdListsViewStore.updateList(updatedList);
     }
 }
 

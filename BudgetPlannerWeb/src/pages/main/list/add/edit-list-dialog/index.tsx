@@ -11,7 +11,6 @@ interface Props {
 
 const EditListDialog = ({ list, onClose }: Props) => {
     const {
-        listEdit,
         isAdd,
         setListEdit,
         setName,
@@ -25,7 +24,7 @@ const EditListDialog = ({ list, onClose }: Props) => {
         return reset;
     }, [list, setListEdit, reset]);
 
-    const dialogTitle = isAdd ? "Add a new list" : `Edit ${listEdit?.name} list`;
+    const dialogTitle = isAdd ? "Add a new list" : `Edit ${list?.name} list`;
 
     const handleSubmit = async () => {
         if (await sendList()) onClose();
