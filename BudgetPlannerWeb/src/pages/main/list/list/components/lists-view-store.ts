@@ -1,5 +1,6 @@
 import { action, makeObservable, observable, runInAction } from "mobx";
 import { List } from "../../../../../accessors/types";
+import { toastService } from "../../../../../infrastructure";
 
 abstract class ListsViewStore {
     protected abstract fetchListsEndpoint: () => Promise<List[]>
@@ -18,12 +19,15 @@ abstract class ListsViewStore {
     public fetchLists = async () => {
         this.isLoading = true;
 
-        const lists = await this.fetchListsEndpoint();
+        try {
+            const lists = await this.fetchListsEndpoint();
 
-        runInAction(() => {
-            this.lists = lists;
-            this.isLoading = false;
-        });
+            runInAction(() => this.lists = lists);
+        } catch {
+            toastService.showError("Failed to connect to the server!");
+        } finally {
+            runInAction(() => this.isLoading = false);
+        }
     } 
 }
 

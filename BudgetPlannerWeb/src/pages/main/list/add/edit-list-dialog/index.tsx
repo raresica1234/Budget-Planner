@@ -11,7 +11,6 @@ interface Props {
 
 const EditListDialog = ({ list, onClose }: Props) => {
     const {
-        listEdit,
         isAdd,
         setListEdit,
         setName,
