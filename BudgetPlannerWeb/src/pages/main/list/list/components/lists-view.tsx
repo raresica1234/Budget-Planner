@@ -3,14 +3,12 @@ import ListItemLink from "./list-item-link";
 import ListsViewStore from "./lists-view-store";
 import { Context, useContext, useEffect } from "react";
 import { observer } from "mobx-react";
-import {List as ListModel} from "../../../../../accessors/types";
 
 interface ListListProps<T extends ListsViewStore> {
     listsViewContext: Context<T>;
-    onEdit?: (list: ListModel) => void;
 }
 
-const ListsView = <T extends ListsViewStore>({ listsViewContext, onEdit }: ListListProps<T>) => {
+const ListsView = <T extends ListsViewStore>({ listsViewContext }: ListListProps<T>) => {
     const { isLoading, lists, fetchLists } = useContext(listsViewContext);
 
     useEffect(() => {
@@ -26,9 +24,7 @@ const ListsView = <T extends ListsViewStore>({ listsViewContext, onEdit }: ListL
                 {lists.map(list => (
                     <ListItemLink
                         key={list.id}
-                        onDoubleClickAction = { () => onEdit?(list):list}
-                        redirectUrl={`/list/${list.id}`}
-                        text={list.name}
+                        listItem={list}
                     />
                 ))}
             </List>

@@ -1,23 +1,28 @@
-import { ListItem, ListItemText } from "@mui/material";
-import { Link } from "react-router-dom";
+import { ListItem, ListItemText, ListItemButton, IconButton } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import {List as ListModel} from "../../../../../accessors/types";
+import UpdateListButton from "../../update/update-list-button";
+import EditIcon from "@mui/icons-material/EditSharp";
 
 interface ListItemLinkProps {
-    text: string;
-    redirectUrl: string;
-    onDoubleClickAction?(list: ListModel): any; 
+    listItem: ListModel;
 }
 
-const ListItemLink = ({ text, redirectUrl, onDoubleClickAction }: ListItemLinkProps) => (
-    <li>
-        <ListItem button component={Link} to={redirectUrl}  onDoubleClick={() => onDoubleClickActionTest()}>
-            <ListItemText primary={text} />
-        </ListItem>
-    </li>
-);
+const ListItemLink = ({ listItem }: ListItemLinkProps) => {
+    const navigate = useNavigate();
+
+    return (
+        <li>
+            <ListItem
+                style={{ cursor: "pointer" }}
+                onClick={() => navigate(`/list/${listItem.id}`)}
+                secondaryAction={
+                    <UpdateListButton list={listItem} />
+                }>
+                <ListItemText primary={listItem.name} />
+            </ListItem>
+        </li>
+    );
+}
 
 export default ListItemLink;
-function onDoubleClickActionTest(): void {
-    console.log("Double Clicked");
-}
-

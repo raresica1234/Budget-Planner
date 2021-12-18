@@ -1,38 +1,32 @@
-import { useContext, useEffect } from "react";
-import { Fab } from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
+import { useContext, MouseEvent } from "react";
+import { IconButton } from "@mui/material";
 import { observer } from "mobx-react";
 import { UpdateListButtonContext } from "./update-list-button-store";
-import EditListDialog from "../../add/edit-list-dialog";
-import { ListEdit } from '../../../../../accessors/types';
+import { List } from '../../../../../accessors/types';
+import EditIcon from "@mui/icons-material/EditSharp";
 
 
-interface UpdateListButtonProps {
-    className: string;
+interface Props {
+    list: List;
 }
 
-const UpdateListButton = ({ className }: UpdateListButtonProps) => {
-    const {
-        list,
-        openDialog,
-        closeDialog
-    } = useContext(UpdateListButtonContext);
+const UpdateListButton = ({ list: { id, name } }: Props) => {
+    const { openDialog } = useContext(UpdateListButtonContext);
 
-    useEffect(() => closeDialog, [closeDialog]);
+    const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation();
+        openDialog({
+            id,
+            name,
+            users: []
+        });
+    }
 
-    return <>
-        {/* <Fab
-            color="primary"
-            aria-label="add"
-            onClick={openDialog(list)}
-            className={className}>
-            <AddIcon />
-        </Fab>
-         */}
-        <EditListDialog
-            list={list}
-            onClose={closeDialog} />
-    </>;
+    return (
+        <IconButton edge="end" onClick={handleClick}>
+            <EditIcon />
+        </IconButton>
+    );
 }
 
 export default observer(UpdateListButton);

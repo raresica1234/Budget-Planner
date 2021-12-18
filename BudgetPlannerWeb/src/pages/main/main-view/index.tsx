@@ -18,12 +18,16 @@ import AddListButton from "../list/add/add-list-button";
 import ListsView from "../list/list/components/lists-view";
 import { CreatedListsViewContext } from "../list/list/created-lists-view-store";
 import {SharedListsViewContext} from "../list/list/shared-lists-view-store";
+import EditListDialog from "../list/add/edit-list-dialog";
+import { UpdateListButtonContext } from "../list/update/update-list-button/update-list-button-store";
 
 const MainPage = () => {
 	const {
 		tabNumber,
 		setTabNumber,
 	} = useContext(TabNumberContext);
+
+	const { list, closeDialog } = useContext(UpdateListButtonContext);
 
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		setTabNumber(newValue);
@@ -66,6 +70,7 @@ const MainPage = () => {
 			</TabPanel>
 		</Box>
         <AddListButton className={styles.addButton} />
+		<EditListDialog list={list} onClose={closeDialog} />
 	</>;
 }
 

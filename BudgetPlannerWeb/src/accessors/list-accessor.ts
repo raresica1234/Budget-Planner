@@ -6,7 +6,7 @@ const LIST_URL = `${BASE_URL}lists`;
 
 export const addList = (list: ListEdit) => httpPost<List>(LIST_URL, list);
 
-export const updateList = (list: ListEdit) => httpPut(LIST_URL, list);
+export const updateList = (list: ListEdit) => httpPut<List>(LIST_URL, list);
 
 export const getCreatedLists = () => httpGet<List[]>(`${LIST_URL}/created`);
 
