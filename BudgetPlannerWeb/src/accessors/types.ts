@@ -35,6 +35,21 @@ export interface List {
     updatedAt: Date;
 }
 
+export interface Item {
+    id?: string;
+    name: string;
+    price: number;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface ListDetails {
+    listName: string;
+    items: Item[];
+    sum: number;
+    users: [];
+}
+
 export interface TokenResponse {
     token: string;
 }

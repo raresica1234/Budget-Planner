@@ -1,4 +1,4 @@
-import { ListEdit } from '../../../../../accessors/types';
+import { ListEdit } from '../../../../accessors/types';
 import { makeAutoObservable } from "mobx";
 import { createContext } from "react";
 

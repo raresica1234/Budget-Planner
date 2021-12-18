@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { Dialog, DialogTitle, DialogActions, DialogContent, TextField, Button } from "@mui/material";
-import { ListEdit } from "../../../../../accessors/types";
+import { ListEdit } from "../../../../accessors/types";
 import { EditListDialogContext } from "./edit-list-dialog-store";
 import { observer } from "mobx-react";
 
