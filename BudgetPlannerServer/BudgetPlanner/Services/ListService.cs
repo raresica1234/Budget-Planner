@@ -155,8 +155,9 @@ namespace BudgetPlanner.Services
                 return null;
             }
 
-            var listName = _context.Lists.Where(list => list.Id == listId)
-                .Select(list => list.Name).Single();
+            var list = _context.Lists.FirstOrDefault(list => list.Id == listId);
+            if (list == null)
+                return null;
 
             var userDtos = await _context.ListUsers.Where(listuser => listuser.ListId == listId)
                 .Select(listUser => new SimpleUserDto(listUser.User))
@@ -173,7 +174,7 @@ namespace BudgetPlanner.Services
 
             var sum = itemDtos.Sum(item => item.Price);
 
-            return new ListDetailsDto(listName, itemDtos, sum, userDtos);
+            return new ListDetailsDto(list.Name, itemDtos, sum, userDtos);
         }
     }
 }
