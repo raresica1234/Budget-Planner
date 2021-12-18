@@ -3,7 +3,7 @@ import { createContext } from "react";
 import { setToken, getToken, clearToken } from "..";
 
 class AuthenticateStore {
-    public isUserLogged: boolean = false;
+    public isUserLogged?: boolean = undefined;
 
     constructor() {
         makeAutoObservable(this)

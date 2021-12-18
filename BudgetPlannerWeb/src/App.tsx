@@ -13,6 +13,9 @@ const App = () => {
         initialize();
     }, [initialize]);
 
+    if (isUserLogged === undefined)
+        return null;
+
     return <>
         <BrowserRouter>
             {isUserLogged ? (
