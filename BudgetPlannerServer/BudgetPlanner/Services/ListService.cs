@@ -61,6 +61,7 @@ namespace BudgetPlanner.Services
             });
             
             var listUsers = await MapUserWithTypeToListUsers(listToAdd.Users, list.Id);
+            listUsers = listUsers.Where(listUser => listUser.UserId != userId).ToList();
 
             await _context.ListUsers.AddRangeAsync(listUsers);
             await _context.SaveChangesAsync();
@@ -84,9 +85,9 @@ namespace BudgetPlanner.Services
                 return null;
             }
 
-            var listUser = await _context.ListUsers.FindAsync(userId, listForUpdate.Id);
+            var currentUserListUser = await _context.ListUsers.FindAsync(userId, listForUpdate.Id);
 
-            if (listUser == null || listUser.ListUserType != ListUserType.Owner)
+            if (currentUserListUser is not {ListUserType: ListUserType.Owner})
             {
                 return null;
             }
@@ -95,6 +96,7 @@ namespace BudgetPlanner.Services
                 .Where(listUser => listUser.ListId == list.Id && listUser.UserId != userId)
                 .ToListAsync();
             var newListUsers = await MapUserWithTypeToListUsers(listForUpdate.Users, list.Id);
+            newListUsers = newListUsers.Where(listUser => listUser.UserId != userId).ToList();
 
             // ListUsers from the new list having a UserId that currently does not exist or have a new type
             var listUsersToAdd = newListUsers.Where(newListUser =>
