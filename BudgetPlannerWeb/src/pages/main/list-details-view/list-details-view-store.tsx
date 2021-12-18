@@ -33,10 +33,17 @@ export class ListDetailsViewStore {
         this.sum = 0;
     }
 
-    public addItem = (item: Item) => this.items.push(this.mapItemDates(item));
+    public addItem = (item: Item) => {
+        this.sum += item.price;
+
+        this.items.push(this.mapItemDates(item));
+    }
 
     public updateItem = (item: Item) => {
         let itemToUpdateIndex = this.items.findIndex(element => element.id === item.id);
+
+        this.sum -= this.items[itemToUpdateIndex].price;
+        this.sum += item.price;
 
         this.items[itemToUpdateIndex] = this.mapItemDates(item);
     }
