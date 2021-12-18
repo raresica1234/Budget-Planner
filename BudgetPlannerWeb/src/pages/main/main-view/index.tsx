@@ -63,7 +63,7 @@ const MainPage = () => {
 				</Tabs>
 			</Box>
 			<TabPanel value={tabNumber} index={0}>
-				<ListsView listsViewContext={CreatedListsViewContext} />
+				<ListsView listsViewContext={CreatedListsViewContext} showEdit />
 			</TabPanel>
 			<TabPanel value={tabNumber} index={1}>
 				<ListsView listsViewContext={SharedListsViewContext}/>

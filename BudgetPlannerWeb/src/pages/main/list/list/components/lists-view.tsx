@@ -6,9 +6,10 @@ import { observer } from "mobx-react";
 
 interface ListListProps<T extends ListsViewStore> {
     listsViewContext: Context<T>;
+    showEdit?: boolean;
 }
 
-const ListsView = <T extends ListsViewStore>({ listsViewContext }: ListListProps<T>) => {
+const ListsView = <T extends ListsViewStore>({ listsViewContext, showEdit }: ListListProps<T>) => {
     const { isLoading, lists, fetchLists } = useContext(listsViewContext);
 
     useEffect(() => {
@@ -25,6 +26,7 @@ const ListsView = <T extends ListsViewStore>({ listsViewContext }: ListListProps
                     <ListItemLink
                         key={list.id}
                         listItem={list}
+                        showEdit={showEdit}
                     />
                 ))}
             </List>

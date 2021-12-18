@@ -7,7 +7,6 @@ import { createdListsViewStore } from "../../list/created-lists-view-store";
 
 export class EditListDialogStore {
     public listEdit: ListEdit | null = null;
-    public listName: string = "";
     public isAdd: boolean = false;
 
     constructor() {

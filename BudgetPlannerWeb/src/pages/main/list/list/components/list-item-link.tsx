@@ -5,9 +5,10 @@ import UpdateListButton from "../../update/update-list-button";
 
 interface ListItemLinkProps {
     listItem: ListModel;
+    showEdit?: boolean;
 }
 
-const ListItemLink = ({ listItem }: ListItemLinkProps) => {
+const ListItemLink = ({ listItem, showEdit }: ListItemLinkProps) => {
     const navigate = useNavigate();
 
     return (
@@ -15,9 +16,9 @@ const ListItemLink = ({ listItem }: ListItemLinkProps) => {
             <ListItem
                 style={{ cursor: "pointer" }}
                 onClick={() => navigate(`/list/${listItem.id}`)}
-                secondaryAction={
+                secondaryAction={showEdit && (
                     <UpdateListButton list={listItem} />
-                }>
+                )}>
                 <ListItemText primary={listItem.name} />
             </ListItem>
         </li>
