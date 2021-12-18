@@ -1,7 +1,7 @@
 import { ListEdit } from './../../../../accessors/types';
 import { action, makeObservable } from "mobx";
 import { createContext } from "react";
-import { updateList, getCreatedLists } from "../../../../accessors/list-accessor";
+import { getCreatedLists } from "../../../../accessors/list-accessor";
 import { List } from "../../../../accessors/types";
 import ListsViewStore from "./components/lists-view-store";
 import { toastService } from '../../../../infrastructure';
@@ -18,9 +18,12 @@ export class CreatedListsViewStore extends ListsViewStore {
 
     public addList = (list: List) => this.lists.push(list); 
     
-    public updateList = async (list: ListEdit) => {
-        
-            this.lists.map(el => (el.id === list.id ? Object.assign(el, list) : el))
+    public updateList = (list: List) => {
+        let listToUpdateIndex = this.lists.findIndex(element => element.id === list.id);
+
+        this.lists[listToUpdateIndex] = list;
+
+        // this.lists = this.lists.map(el => (el.id === list.id ? Object.assign(el, list) : el))
     }
 
 }
