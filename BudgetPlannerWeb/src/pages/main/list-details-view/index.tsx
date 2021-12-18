@@ -14,11 +14,8 @@ const ListDetailsView = () => {
     
     useEffect(() => {
         fetchListDetails(id || "");
-    }, [fetchListDetails, id])
-
-    useEffect(() => {
         return () => reset();
-    }, [reset])
+    }, [fetchListDetails, id, reset])
 
     return (
         <Box className={styles.mainContainer}>
