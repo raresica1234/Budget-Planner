@@ -1,8 +1,8 @@
 import { Paper, List, LinearProgress } from "@mui/material";
-import ListItemLink from "./list-item-link";
 import ListsViewStore from "./lists-view-store";
 import { Context, useContext, useEffect } from "react";
 import { observer } from "mobx-react";
+import ListItemLink from "./list-item-link";
 
 interface ListListProps<T extends ListsViewStore> {
     listsViewContext: Context<T>;

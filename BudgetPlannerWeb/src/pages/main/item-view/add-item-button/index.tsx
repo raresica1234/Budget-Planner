@@ -2,19 +2,20 @@ import { useContext } from "react";
 import { Fab } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { observer } from "mobx-react";
-import { AddListButtonContext } from "./add-list-button-store";
-import EditListDialog from "../edit-list-dialog";
+import { AddItemButtonContext } from "./add-item-button-store";
+import EditItemDialog from "../edit-item-dialog";
 
-interface AddListButtonProps {
+interface Props {
+    listId: string;
     className: string;
 }
 
-const AddListButton = ({ className }: AddListButtonProps) => {
+const AddItemButton = ({ listId, className }: Props) => {
     const {
-        list,
+        item,
         openDialog,
         closeDialog
-    } = useContext(AddListButtonContext);
+    } = useContext(AddItemButtonContext);
 
     return <>
         <Fab
@@ -25,10 +26,11 @@ const AddListButton = ({ className }: AddListButtonProps) => {
             <AddIcon />
         </Fab>
 
-        <EditListDialog
-            list={list}
+        <EditItemDialog
+            listId={listId}
+            item={item}
             onClose={closeDialog} />
     </>;
 }
 
-export default observer(AddListButton);
+export default observer(AddItemButton);
