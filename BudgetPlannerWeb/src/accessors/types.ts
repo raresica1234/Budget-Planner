@@ -44,6 +44,7 @@ export interface Item {
 }
 
 export interface ListDetails {
+    listName: string;
     items: Item[];
     sum: number;
     users: [];

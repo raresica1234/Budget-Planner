@@ -1,21 +1,24 @@
-import { Context, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Box, AppBar, Typography, Toolbar, IconButton, Paper, List, ListItem, ListItemText, LinearProgress } from "@mui/material";
 import { Item as ItemModel } from "../../../accessors/types";
 import MenuIcon from "@mui/icons-material/Menu";
-import styles from "./items.module.scss";
-import { useLocation, useParams } from "react-router-dom";
+import styles from "./list-details.module.scss";
+import { useParams } from "react-router-dom";
 import Logo from "../../../assets/logo.svg";
-import { ItemsViewContext } from "./items-view-store";
+import { ListDetailsViewContext } from "./list-details-view-store";
 import { observer } from "mobx-react";
 
-const ItemsView = () => {
-    const { isLoading, items, sum, fetchListDetails } = useContext(ItemsViewContext);
-    const { listName } = useLocation().state;
-    const { id } = useLocation().state;
+const ListDetailsView = () => {
+    const { isLoading, listName, items, sum, fetchListDetails, reset } = useContext(ListDetailsViewContext);
+    const { id } = useParams();
+    
+    useEffect(() => {
+        fetchListDetails(id || "");
+    }, [fetchListDetails, id])
 
     useEffect(() => {
-        fetchListDetails(id);
-    }, [fetchListDetails])
+        return () => reset();
+    }, [reset])
 
     return (
         <Box className={styles.mainContainer}>
@@ -51,7 +54,11 @@ const ItemsView = () => {
                         <li>
                             <ListItem>
                                 <ListItemText primary={item.name} secondary={item.price} />
-                                <ListItemText primary={"Created at: " + new Date(item.createdAt).toLocaleString('en-GB')} secondary={"Updated at: " + new Date(item.updatedAt).toLocaleString('en-GB')} className={styles.rightSideItem} />
+                                <ListItemText 
+                                    primary={`Created at: ${item.createdAt.toLocaleString()}`} 
+                                    secondary={`Updated at: ${item.updatedAt.toLocaleString()}`} 
+                                    className={styles.rightSideItem} 
+                                />
                             </ListItem>
                         </li>
                     ))}
@@ -60,11 +67,11 @@ const ItemsView = () => {
 
             <Box className={styles.sumBar}>
                 <Typography variant="h6" component="div" className={styles.listTitle}>
-                    Cost of all items: {sum}
+                    Total: {sum}
                 </Typography>
             </Box>
         </Box>
     )
 };
 
-export default observer(ItemsView);
+export default observer(ListDetailsView);
