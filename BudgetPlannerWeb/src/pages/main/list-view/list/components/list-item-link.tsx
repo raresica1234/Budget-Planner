@@ -1,7 +1,7 @@
 import { ListItem, ListItemText } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { List as ListModel } from "../../../../../accessors/types";
-import UpdateListButton from "../../update/update-list-button";
+import UpdateListButton from "../../update-list-button";
 
 interface ListItemLinkProps {
     listItem: ListModel;

@@ -2,7 +2,7 @@ import { useContext, MouseEvent } from "react";
 import { IconButton } from "@mui/material";
 import { observer } from "mobx-react";
 import { UpdateListButtonContext } from "./update-list-button-store";
-import { List } from '../../../../../accessors/types';
+import { List } from '../../../../accessors/types';
 import EditIcon from "@mui/icons-material/EditSharp";
 
 

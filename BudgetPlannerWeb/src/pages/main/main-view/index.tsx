@@ -14,12 +14,12 @@ import styles from "./main.module.scss";
 import { TabNumberContext } from "./main-store";
 import { observer } from "mobx-react";
 import { TabPanel, tabProps } from "./tabs";
-import AddListButton from "../list-view/add/add-list-button";
+import AddListButton from "../list-view/add-list-button";
 import ListsView from "../list-view/list/components/lists-view";
 import { CreatedListsViewContext } from "../list-view/list/created-lists-view-store";
-import {SharedListsViewContext} from "../list/list/shared-lists-view-store";
-import EditListDialog from "../list/add/edit-list-dialog";
-import { UpdateListButtonContext } from "../list/update/update-list-button/update-list-button-store";
+import {SharedListsViewContext} from "../list-view/list/shared-lists-view-store";
+import EditListDialog from "../list-view/edit-list-dialog";
+import { UpdateListButtonContext } from "../list-view/update-list-button/update-list-button-store";
 
 const MainPage = () => {
 	const {

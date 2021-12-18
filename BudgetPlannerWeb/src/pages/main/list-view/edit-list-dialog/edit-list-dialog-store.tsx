@@ -1,9 +1,9 @@
 import { makeAutoObservable, toJS } from "mobx";
 import { createContext } from "react";
-import { addList, updateList } from "../../../../../accessors/list-accessor";
-import { EMPTY_LIST_EDIT, ListEdit } from "../../../../../accessors/types";
-import { toastService } from "../../../../../infrastructure";
-import { createdListsViewStore } from "../../list/created-lists-view-store";
+import { addList, updateList } from "../../../../accessors/list-accessor";
+import { EMPTY_LIST_EDIT, ListEdit } from "../../../../accessors/types";
+import { toastService } from "../../../../infrastructure";
+import { createdListsViewStore } from "../list/created-lists-view-store";
 
 export class EditListDialogStore {
     public listEdit: ListEdit | null = null;
