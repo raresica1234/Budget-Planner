@@ -32,6 +32,21 @@ export class ListDetailsViewStore {
         this.items = [];
         this.sum = 0;
     }
+
+    public addItem = (item: Item) => this.items.push(this.mapItemDates(item));
+
+    public updateItem = (item: Item) => {
+        let itemToUpdateIndex = this.items.findIndex(element => element.id === item.id);
+
+        this.items[itemToUpdateIndex] = this.mapItemDates(item);
+    }
+
+    private mapItemDates = (item: Item) => {
+        item.createdAt = new Date(item.createdAt);
+        item.updatedAt = new Date(item.updatedAt);
+
+        return item;
+    }
 }
 
 export const listDetailsViewStore = new ListDetailsViewStore();

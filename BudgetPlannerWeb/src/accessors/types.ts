@@ -53,3 +53,16 @@ export interface ListDetails {
 export interface TokenResponse {
     token: string;
 }
+
+export interface ItemEdit {
+    id?: string;
+    listId: string;
+    name: string;
+    price: number;
+}
+
+export const EMPTY_ITEM_EDIT: ItemEdit = {
+    listId: "",
+    name: "",
+    price: 0
+}
