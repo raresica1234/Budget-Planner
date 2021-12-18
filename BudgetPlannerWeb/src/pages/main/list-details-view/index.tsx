@@ -73,7 +73,7 @@ const ListDetailsView = () => {
                 )}
                 <List>
                     {items.map(item => (
-                        <li>
+                        <li key={item.id}>
                             <ListItem 
                                 style={{ cursor: "pointer" }}
                                 onClick={() => handleItemClick(item)}>
