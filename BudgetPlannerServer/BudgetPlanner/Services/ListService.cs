@@ -84,6 +84,13 @@ namespace BudgetPlanner.Services
                 return null;
             }
 
+            var listUser = await _context.ListUsers.FindAsync(userId, listForUpdate.Id);
+
+            if (listUser == null || listUser.ListUserType != ListUserType.Owner)
+            {
+                return null;
+            }
+
             var currentListUsers = await _context.ListUsers
                 .Where(listUser => listUser.ListId == list.Id && listUser.UserId != userId)
                 .ToListAsync();
