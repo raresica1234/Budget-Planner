@@ -3,7 +3,7 @@ import { List } from "../../../../../accessors/types";
 import { toastService } from "../../../../../infrastructure";
 
 abstract class ListsViewStore {
-    protected abstract fetchListsEndpoint: (searchKeyword?: string) => Promise<List[]>
+    protected abstract fetchListsEndpoint: (searchKeyword: string) => Promise<List[]>
 
     public lists: List[] = []
     public isLoading: boolean = true
