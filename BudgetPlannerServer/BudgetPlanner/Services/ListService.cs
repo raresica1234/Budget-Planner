@@ -26,14 +26,14 @@ namespace BudgetPlanner.Services
             _userManager = userManager;
         }
 
-        public Task<List<ListWithTimestampsDto>> GetCreated()
+        public Task<List<ListWithTimestampsDto>> GetCreated(string searchKeyword)
         {
-            return GetListsForUser(true);
+            return GetListsForUser(true, searchKeyword);
         }
         
-        public Task<List<ListWithTimestampsDto>> GetShared()
+        public Task<List<ListWithTimestampsDto>> GetShared(string searchKeyword)
         {
-            return GetListsForUser(false);
+            return GetListsForUser(false, searchKeyword);
         }
 
         public async Task<ListWithTimestampsDto?> Create(ListForCreateDto listToAdd)
@@ -118,13 +118,15 @@ namespace BudgetPlanner.Services
             return new ListWithTimestampsDto(list);
         }
 
-        private Task<List<ListWithTimestampsDto>> GetListsForUser(bool isOwner)
+        private Task<List<ListWithTimestampsDto>> GetListsForUser(bool isOwner, string searchKeyword)
         {
             var userId = _httpContextAccessor.GetUserId();
+            var lowerKeyword = searchKeyword.ToLower();
 
             return _context.Lists.Where(list =>
                 list.ListUsers.Any(listUser =>
-                    listUser.UserId == userId && listUser.ListUserType == ListUserType.Owner == isOwner))
+                    listUser.UserId == userId && listUser.ListUserType == ListUserType.Owner == isOwner) &&
+                    list.Name.ToLower().Contains(lowerKeyword))
                 .Select(list => new ListWithTimestampsDto(list))
                 .ToListAsync();
         }
