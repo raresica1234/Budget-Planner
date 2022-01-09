@@ -3,7 +3,8 @@ import { Dialog, DialogTitle, DialogActions, DialogContent, TextField, Button } 
 import { ListEdit } from "../../../../accessors/types";
 import { EditListDialogContext } from "./edit-list-dialog-store";
 import { observer } from "mobx-react";
-import styles from "./edit-list.module.scss";
+import UserPicker from "./user-picker";
+import styles from "./edit-list-dialog.module.scss";
 
 interface Props {
     list?: null | ListEdit;
@@ -14,9 +15,12 @@ const EditListDialog = ({ list, onClose }: Props) => {
     const {
         isAdd,
         listEdit,
+        users,
         setListEdit,
         setName,
         sendList,
+        addUser,
+        removeUser,
         reset
     } = useContext(EditListDialogContext);
 
@@ -56,8 +60,14 @@ const EditListDialog = ({ list, onClose }: Props) => {
                             }
                         }}
                         value={listEdit?.name}
-                        onChange={e => setName(e.target.value)}
-                    />
+                        onChange={e => setName(e.target.value)} />
+                    <UserPicker
+                        className={styles.userPicker}
+                        label="Shared with users"
+                        emailSuggestions={users.relevantEmails}
+                        users={listEdit?.users}
+                        onAdd={addUser}
+                        onRemove={removeUser} />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={onClose} className={styles.button}>Cancel</Button>

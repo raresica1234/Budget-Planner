@@ -46,6 +46,17 @@ namespace BudgetPlanner.Controllers
             return Ok(listDetails);
         }
 
+        [HttpGet("users/{listId?}")]
+        public async Task<IActionResult> GetUsers(Guid? listId = null)
+        {
+            var users = await _listService.GetUsers(listId ?? Guid.Empty);
+
+            if (users == null)
+                return Unauthorized();
+
+            return Ok(users);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateList(ListForCreateDto listToAdd)
         {

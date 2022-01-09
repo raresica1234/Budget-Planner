@@ -1,3 +1,4 @@
+using BudgetPlanner.DTO;
 using BudgetPlanner.DTO.Lists;
 using System;
 using System.Collections.Generic;
@@ -16,5 +17,7 @@ namespace BudgetPlanner.Services
         Task<ListWithTimestampsDto?> Update(ListForUpdateDto listForUpdate);
 
         Task<ListDetailsDto?> GetDetails(Guid listId);
+
+        Task<UsersForListDTO?> GetUsers(Guid listId);
     }
 }

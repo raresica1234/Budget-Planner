@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using BudgetPlanner.DTO;
+using BudgetPlanner.DTO.Items;
 
 namespace BudgetPlanner.Services
 {
@@ -8,7 +8,7 @@ namespace BudgetPlanner.Services
     { 
         Task<ItemDetailsDto> AddAsync(ItemCreateDto itemCreateDto);
 
-        Task<ItemDetailsDto> UpdateAsync(ItemUpdateDto itemUpdateDto);
+        Task<ItemDetailsDto?> UpdateAsync(ItemUpdateDto itemUpdateDto);
 
         Task<bool> DeleteAsync(Guid itemId);
     }
