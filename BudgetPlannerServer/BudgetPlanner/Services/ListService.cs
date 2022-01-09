@@ -60,8 +60,7 @@ namespace BudgetPlanner.Services
                 ListUserType = ListUserType.Owner
             });
             
-            var listUsers = await MapUserWithTypeToListUsers(listToAdd.Users, list.Id);
-            listUsers = listUsers.Where(listUser => listUser.UserId != userId).ToList();
+            var listUsers = await MapUserWithTypeToListUsers(listToAdd.Users, list.Id, userId);
 
             await _context.ListUsers.AddRangeAsync(listUsers);
             await _context.SaveChangesAsync();
@@ -95,8 +94,7 @@ namespace BudgetPlanner.Services
             var currentListUsers = await _context.ListUsers
                 .Where(listUser => listUser.ListId == list.Id && listUser.UserId != userId)
                 .ToListAsync();
-            var newListUsers = await MapUserWithTypeToListUsers(listForUpdate.Users, list.Id);
-            newListUsers = newListUsers.Where(listUser => listUser.UserId != userId).ToList();
+            var newListUsers = await MapUserWithTypeToListUsers(listForUpdate.Users, list.Id, userId);
 
             // ListUsers from the new list having a UserId that currently does not exist or have a new type
             var listUsersToAdd = newListUsers.Where(newListUser =>
@@ -131,16 +129,23 @@ namespace BudgetPlanner.Services
                 .ToListAsync();
         }
 
-        private async Task<List<ListUser>> MapUserWithTypeToListUsers(List<UserWithTypeDto> usersWithType, Guid listId)
+        private async Task<List<ListUser>> MapUserWithTypeToListUsers(List<UserWithTypeDto> usersWithType, Guid listId, string currentUserId)
         {
             var mappedListUsers = new List<ListUser>();
             
             foreach (var user in usersWithType)
             {
+                var userId = await _userManager.GetUserIdAsync(user.Email);
+
+                if (userId == null || userId == currentUserId)
+                {
+                    continue;
+                }
+                
                 mappedListUsers.Add(new ListUser
                 {
                     ListId = listId,
-                    UserId = await _userManager.GetUserIdAsync(user.Email) ?? "",
+                    UserId = userId,
                     ListUserType = user.Type
                 });
             }
