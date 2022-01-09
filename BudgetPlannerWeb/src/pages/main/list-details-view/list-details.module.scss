@@ -3,6 +3,7 @@
 
     .appBar {
         background-color: #1F2833;
+        position: static;
 
         .menuIconButton {
             margin-right: 0.5em;
@@ -13,13 +14,28 @@
         }
     }
 
-    .tabsBar {
+    .titleBar {
         background-color: #0B0C10;
 
-        .tab {
+        .listTitle {
             color: white;
+            padding-left: 1em;
         }
+
     }
+
+    .rightSideItem {
+        text-align: right;
+    }
+
+    .sumBar {
+        width: 100%;
+        position: fixed;
+        bottom: 1em;
+        border-top: 1px solid black;
+        text-align: center;
+    }
+
 }
 
 .logo {
@@ -29,7 +45,6 @@
 
 button.addButton {
     position: fixed;
-    bottom: 1em;
-    right: 1em;
+    bottom: 1.5rem;
+    right: 2rem;
 }
-

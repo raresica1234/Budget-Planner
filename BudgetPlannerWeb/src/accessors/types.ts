@@ -35,6 +35,34 @@ export interface List {
     updatedAt: Date;
 }
 
+export interface Item {
+    id?: string;
+    name: string;
+    price: number;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface ListDetails {
+    listName: string;
+    items: Item[];
+    sum: number;
+    users: [];
+}
+
 export interface TokenResponse {
     token: string;
+}
+
+export interface ItemEdit {
+    id?: string;
+    listId: string;
+    name: string;
+    price: number;
+}
+
+export const EMPTY_ITEM_EDIT: ItemEdit = {
+    listId: "",
+    name: "",
+    price: 0
 }

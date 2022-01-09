@@ -1,9 +1,23 @@
 import { BASE_URL } from "./constants";
-import { httpGet, httpPost } from "./helper-functions";
-import { List, ListEdit } from "./types";
+import { httpGet, httpPost, httpPut } from "./helper-functions";
+import { List, ListEdit, ListDetails } from "./types";
 
 const LIST_URL = `${BASE_URL}lists`;
 
 export const addList = (list: ListEdit) => httpPost<List>(LIST_URL, list);
 
+export const updateList = (list: ListEdit) => httpPut<List>(LIST_URL, list);
+
 export const getCreatedLists = () => httpGet<List[]>(`${LIST_URL}/created`);
+
+export const getSharedLists = () => httpGet<List[]>(`${LIST_URL}/shared`);
+
+export const getListDetails = async (listId: string) => {
+    var {listName, items, sum} = await httpGet<ListDetails>(`${LIST_URL}/${listId}`);
+    items.forEach((item) => {
+        item.createdAt = new Date(item.createdAt);
+        item.updatedAt = new Date(item.updatedAt);
+    });
+    
+    return {listName, items, sum};
+}

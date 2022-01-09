@@ -1,6 +1,6 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Fab } from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 import { observer } from "mobx-react";
 import { AddListButtonContext } from "./add-list-button-store";
 import EditListDialog from "../edit-list-dialog";
@@ -15,8 +15,6 @@ const AddListButton = ({ className }: AddListButtonProps) => {
         openDialog,
         closeDialog
     } = useContext(AddListButtonContext);
-
-    useEffect(() => closeDialog, [closeDialog]);
 
     return <>
         <Fab

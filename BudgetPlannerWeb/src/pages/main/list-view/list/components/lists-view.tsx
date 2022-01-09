@@ -1,14 +1,15 @@
 import { Paper, List, LinearProgress } from "@mui/material";
-import ListItemLink from "./list-item-link";
 import ListsViewStore from "./lists-view-store";
 import { Context, useContext, useEffect } from "react";
 import { observer } from "mobx-react";
+import ListItemLink from "./list-item-link";
 
 interface ListListProps<T extends ListsViewStore> {
     listsViewContext: Context<T>;
+    showEdit?: boolean;
 }
 
-const ListsView = <T extends ListsViewStore>({ listsViewContext }: ListListProps<T>) => {
+const ListsView = <T extends ListsViewStore>({ listsViewContext, showEdit }: ListListProps<T>) => {
     const { isLoading, lists, fetchLists } = useContext(listsViewContext);
 
     useEffect(() => {
@@ -24,8 +25,8 @@ const ListsView = <T extends ListsViewStore>({ listsViewContext }: ListListProps
                 {lists.map(list => (
                     <ListItemLink
                         key={list.id}
-                        redirectUrl={`/list/${list.id}`}
-                        text={list.name}
+                        listItem={list}
+                        showEdit={showEdit}
                     />
                 ))}
             </List>

@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { Dialog, DialogTitle, DialogActions, DialogContent, TextField, Button } from "@mui/material";
-import { ListEdit } from "../../../../../accessors/types";
+import { ListEdit } from "../../../../accessors/types";
 import { EditListDialogContext } from "./edit-list-dialog-store";
 import { observer } from "mobx-react";
 
@@ -11,8 +11,8 @@ interface Props {
 
 const EditListDialog = ({ list, onClose }: Props) => {
     const {
-        listEdit,
         isAdd,
+        listEdit,
         setListEdit,
         setName,
         sendList,
@@ -25,7 +25,7 @@ const EditListDialog = ({ list, onClose }: Props) => {
         return reset;
     }, [list, setListEdit, reset]);
 
-    const dialogTitle = isAdd ? "Add a new list" : `Edit ${listEdit?.name} list`;
+    const dialogTitle = isAdd ? "Add a new list" : `Edit ${list?.name} list`;
 
     const handleSubmit = async () => {
         if (await sendList()) onClose();
@@ -43,6 +43,7 @@ const EditListDialog = ({ list, onClose }: Props) => {
                 type="text"
                 fullWidth
                 variant="standard"
+                value={listEdit?.name}
                 onChange={e => setName(e.target.value)}
             />
         </DialogContent>
