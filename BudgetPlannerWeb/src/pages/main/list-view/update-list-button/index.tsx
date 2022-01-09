@@ -24,7 +24,7 @@ const UpdateListButton = ({ list: { id, name } }: Props) => {
 
     return (
         <IconButton edge="end" onClick={handleClick}>
-            <EditIcon />
+            <EditIcon htmlColor="white"/>
         </IconButton>
     );
 }

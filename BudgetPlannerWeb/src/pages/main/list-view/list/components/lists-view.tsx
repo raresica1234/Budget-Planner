@@ -3,6 +3,7 @@ import ListsViewStore from "./lists-view-store";
 import { Context, useContext } from "react";
 import { observer } from "mobx-react";
 import ListItemLink from "./list-item-link";
+import styles from "./lists-view.module.scss";
 
 interface ListListProps<T extends ListsViewStore> {
     listsViewContext: Context<T>;
@@ -13,7 +14,7 @@ const ListsView = <T extends ListsViewStore>({ listsViewContext, showEdit }: Lis
     const { isLoading, lists } = useContext(listsViewContext);
 
     return (
-        <Paper elevation={0}>
+        <Paper elevation={0} className={styles.mainContainer} square>
             {isLoading && (
                 <LinearProgress />
             )}
