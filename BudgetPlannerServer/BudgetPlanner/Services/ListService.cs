@@ -179,7 +179,12 @@ namespace BudgetPlanner.Services
 
             var sum = itemDtos.Sum(item => item.Price);
 
-            return new ListDetailsDto(list.Name, itemDtos, sum, userDtos);
+            var isVisitor = _context.ListUsers.Any(listUser =>
+                listUser.UserId == userId &&
+                listUser.ListId == listId &&
+                listUser.ListUserType == ListUserType.Visitor);
+
+            return new ListDetailsDto(list.Name, itemDtos, sum, userDtos, isVisitor);
         }
 
         public async Task<UsersForListDTO?> GetUsers(Guid listId)

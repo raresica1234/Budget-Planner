@@ -47,7 +47,8 @@ export interface ListDetails {
     listName: string;
     items: Item[];
     sum: number;
-    users: EmailWithRole[];
+    users: [];
+    isVisitor: boolean;
 }
 
 export interface TokenResponse {
