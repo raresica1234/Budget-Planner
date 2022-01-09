@@ -3,6 +3,7 @@ import { Dialog, DialogTitle, DialogActions, DialogContent, TextField, Button } 
 import { ListEdit } from "../../../../accessors/types";
 import { EditListDialogContext } from "./edit-list-dialog-store";
 import { observer } from "mobx-react";
+import styles from "./edit-list.module.scss";
 
 interface Props {
     list?: null| ListEdit;
@@ -33,7 +34,8 @@ const EditListDialog = ({ list, onClose }: Props) => {
 
     return (
         <Dialog open={list !== undefined} onClose={onClose}>
-        <DialogTitle>{dialogTitle}</DialogTitle>
+        <div className={styles.mainContainer}>
+        <DialogTitle className={styles.title}>{dialogTitle}</DialogTitle>
         <DialogContent>
             <TextField
                 autoFocus
@@ -43,14 +45,25 @@ const EditListDialog = ({ list, onClose }: Props) => {
                 type="text"
                 fullWidth
                 variant="standard"
+                InputLabelProps={{
+                    classes: {
+                        root: styles.inputLabel
+                    }
+                }}
+                InputProps={{
+                    classes: {
+                        root: styles.input
+                    }
+                }}
                 value={listEdit?.name}
                 onChange={e => setName(e.target.value)}
             />
         </DialogContent>
         <DialogActions>
-            <Button onClick={onClose}>Cancel</Button>
-            <Button onClick={handleSubmit}>Submit</Button>
+            <Button onClick={onClose} className={styles.button}>Cancel</Button>
+            <Button onClick={handleSubmit} className={styles.button}>Submit</Button>
         </DialogActions>
+        </div>
         </Dialog>
     );
 }
