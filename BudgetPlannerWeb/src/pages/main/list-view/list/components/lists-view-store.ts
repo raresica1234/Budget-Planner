@@ -3,7 +3,7 @@ import { List } from "../../../../../accessors/types";
 import { toastService } from "../../../../../infrastructure";
 
 abstract class ListsViewStore {
-    protected abstract fetchListsEndpoint: () => Promise<List[]>
+    protected abstract fetchListsEndpoint: (searchKeyword: string) => Promise<List[]>
 
     public lists: List[] = []
     public isLoading: boolean = true
@@ -12,15 +12,15 @@ abstract class ListsViewStore {
         makeObservable(this, {
             lists: observable,
             isLoading: observable,
-            fetchLists: action
+            search: action
         });
     }
 
-    public fetchLists = async () => {
+    public search = async (keyword: string) => {
         this.isLoading = true;
 
         try {
-            const lists = await this.fetchListsEndpoint();
+            const lists = await this.fetchListsEndpoint(keyword);
 
             runInAction(() => this.lists = lists);
         } catch {
@@ -28,7 +28,7 @@ abstract class ListsViewStore {
         } finally {
             runInAction(() => this.isLoading = false);
         }
-    } 
+    }
 }
 
 export default ListsViewStore;

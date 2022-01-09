@@ -4,12 +4,28 @@
     .appBar {
         background-color: #1F2833;
 
-        .menuIconButton {
-            margin-right: 0.5em;
-        }
+        .toolbarContainer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-        .appTitle {
-            flex-grow: 1;
+            .searchBar {
+                width: 50%;
+                
+                :global {
+                    label:not(.Mui-focused) {
+                        color: #ddd;
+                    }
+
+                    .MuiFilledInput-underline::before {
+                        border-bottom: 1px solid rgba(255, 255, 255, 0.42);
+                    }
+
+                    input {
+                        color: white;
+                    }
+                }
+            }
         }
     }
 
