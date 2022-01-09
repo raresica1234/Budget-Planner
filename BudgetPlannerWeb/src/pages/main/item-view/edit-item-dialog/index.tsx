@@ -35,7 +35,7 @@ const EditItemDialog = ({ listId, item, onClose }: Props) => {
     }
 
     return (
-        <Dialog open={item !== undefined} onClose={onClose}>
+        <Dialog open={item !== undefined} onClose={onClose} disableScrollLock={true}>
             <div className={styles.mainContainer}>
                 <DialogTitle className={styles.title}>{dialogTitle}</DialogTitle>
                 <DialogContent>
