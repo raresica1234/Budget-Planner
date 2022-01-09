@@ -78,7 +78,7 @@ const ListDetailsView = () => {
                                 style={{ cursor: "pointer" }}
                                 onClick={() => handleItemClick(item)}>
                                 <ListItemText primary={item.name} secondary={item.price} secondaryTypographyProps={{
-                                    classes:{
+                                    classes: {
                                         root: styles.secondaryText
                                     }
                                 }} />
@@ -86,7 +86,7 @@ const ListDetailsView = () => {
                                     primary={`Created at: ${item.createdAt.toLocaleString()}`}
                                     secondary={`Updated at: ${item.updatedAt.toLocaleString()}`}
                                     secondaryTypographyProps={{
-                                        classes:{
+                                        classes: {
                                             root: styles.secondaryText
                                         }
                                     }} 
