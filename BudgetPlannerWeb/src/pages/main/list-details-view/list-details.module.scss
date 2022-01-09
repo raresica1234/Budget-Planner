@@ -2,7 +2,8 @@
     width:100%;
 
     .appBar {
-        background-color: #1F2833;
+        //background-color: #1F2833;
+        background-color: #0B0C10;
         position: static;
 
         .menuIconButton {
@@ -11,6 +12,16 @@
 
         .appTitle {
             flex-grow: 1;
+        }
+    }
+
+    .itemList {
+        background-color: #1F2833;
+        min-height: 100vh;
+        color: white;
+
+        .secondaryText {
+            color: rgb(150, 150, 150);
         }
     }
 
@@ -31,9 +42,11 @@
     .sumBar {
         width: 100%;
         position: fixed;
-        bottom: 1em;
-        border-top: 1px solid black;
+        bottom: 0.5em;
+        border-top: 1px solid white;
         text-align: center;
+        color: white;
+        padding-top: 0.4em;
     }
 
 }
