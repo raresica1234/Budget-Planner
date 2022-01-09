@@ -1,6 +1,6 @@
 import { Paper, List, LinearProgress } from "@mui/material";
 import ListsViewStore from "./lists-view-store";
-import { Context, useContext, useEffect } from "react";
+import { Context, useContext } from "react";
 import { observer } from "mobx-react";
 import ListItemLink from "./list-item-link";
 
@@ -10,11 +10,7 @@ interface ListListProps<T extends ListsViewStore> {
 }
 
 const ListsView = <T extends ListsViewStore>({ listsViewContext, showEdit }: ListListProps<T>) => {
-    const { isLoading, lists, fetchLists } = useContext(listsViewContext);
-
-    useEffect(() => {
-        fetchLists();
-    }, [fetchLists]);
+    const { isLoading, lists } = useContext(listsViewContext);
 
     return (
         <Paper elevation={0}>
