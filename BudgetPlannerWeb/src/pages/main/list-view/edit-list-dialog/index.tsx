@@ -12,6 +12,7 @@ interface Props {
 const EditListDialog = ({ list, onClose }: Props) => {
     const {
         isAdd,
+        listEdit,
         setListEdit,
         setName,
         sendList,
@@ -42,6 +43,7 @@ const EditListDialog = ({ list, onClose }: Props) => {
                 type="text"
                 fullWidth
                 variant="standard"
+                value={listEdit?.name}
                 onChange={e => setName(e.target.value)}
             />
         </DialogContent>

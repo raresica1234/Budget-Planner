@@ -13,6 +13,7 @@ interface Props {
 const EditItemDialog = ({listId, item, onClose }: Props) => {
     const {
         isAdd,
+        itemEdit,
         setItemEdit,
         setName,
         setPrice,
@@ -44,6 +45,7 @@ const EditItemDialog = ({listId, item, onClose }: Props) => {
                 type="text"
                 fullWidth
                 variant="standard"
+                value={itemEdit?.name}
                 onChange={e => setName(e.target.value)}
             />
             <TextField
@@ -53,6 +55,7 @@ const EditItemDialog = ({listId, item, onClose }: Props) => {
                 type="text"
                 fullWidth
                 variant="standard"
+                value={itemEdit?.price}
                 onChange={e => setPrice(parseInt(e.target.value))}
             />
         </DialogContent>
