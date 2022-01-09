@@ -51,7 +51,13 @@ export class EditListDialogStore {
         return true;
     };
 
-    public addUser = (user: EmailWithRole) => this.listEdit?.users.push(user);
+    public addUser = (user: EmailWithRole) => {
+        this.listEdit?.users.push(user);
+
+        const indexToRemove = this.users.relevantEmails.indexOf(user.email);
+
+        this.users.relevantEmails.splice(indexToRemove, 1);
+    }
 
     public removeUser = (user: EmailWithRole) => {
         if (!this.listEdit)
@@ -60,6 +66,8 @@ export class EditListDialogStore {
         const indexToRemove = this.listEdit.users.indexOf(user);
 
         this.listEdit.users.splice(indexToRemove, 1);
+
+        this.users.relevantEmails.push(user.email);
     }
 
     public reset = () => {
