@@ -12,9 +12,11 @@ const App = () => {
 
     const theme = createTheme({
 		palette: {
-			// primary: { main: "#fff" },
-			// secondary: { main: "#fff" },
-            // text: { primary: "#fff" }
+            text: {
+                primary: "#fff",
+                secondary: "#ddd"
+            },
+            background: { paper: "#000" }
 		}
 	});
 
