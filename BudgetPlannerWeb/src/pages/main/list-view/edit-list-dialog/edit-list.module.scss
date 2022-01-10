@@ -1,0 +1,12 @@
+.mainContainer {
+    background-color: #0b0c10;
+
+    .input, .button, .inputLabel, .title {
+        color: white;
+    }
+
+    .input:before {
+        border-bottom: 2px solid rgb(255, 255, 255) !important;
+    }
+
+}

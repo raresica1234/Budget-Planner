@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import MenuIcon from "@mui/icons-material/Menu";
+import React, { useContext, useEffect } from "react";
 import {
 	Tabs,
 	Tab,
@@ -7,7 +6,7 @@ import {
 	AppBar,
 	Toolbar,
 	Typography,
-	IconButton
+	TextField
 } from "@mui/material";
 import Logo from "../../../assets/logo.svg";
 import styles from "./main.module.scss";
@@ -24,7 +23,10 @@ import { UpdateListButtonContext } from "../list-view/update-list-button/update-
 const MainPage = () => {
 	const {
 		tabNumber,
+		searchKeyword,
 		setTabNumber,
+		setSearchKeyword,
+		initialize
 	} = useContext(TabNumberContext);
 
 	const { list, closeDialog } = useContext(UpdateListButtonContext);
@@ -33,31 +35,36 @@ const MainPage = () => {
 		setTabNumber(newValue);
 	};
 
+	useEffect(() => {
+		initialize();
+	}, [initialize]);
+
 	return <>
 		<Box className={styles.mainContainer}>
 			<AppBar
 				position="static"
 				className={styles.appBar}
 			>
-				<Toolbar>
-					<IconButton
-						size="large"
-						edge="start"
-						color="inherit"
-						aria-label="menu"
-						className={styles.menuIconButton}
-					>
-						<MenuIcon />
-					</IconButton>
+				<Toolbar className={styles.toolbarContainer}>
 					<Typography variant="h6" component="div" className={styles.appTitle}>
 						Budget Planner
 					</Typography>
+					<TextField
+						className={styles.searchBar}
+						label="Search"
+						variant="filled"
+						value={searchKeyword}
+						onChange={e => setSearchKeyword(e.target.value)} />
 					<img className={styles.logo} alt="Logo" src={Logo} />
 				</Toolbar>
 			</AppBar>
 
 			<Box className={styles.tabsBar}>
-				<Tabs value={tabNumber} onChange={handleChange} aria-label="tab changer">
+				<Tabs
+					value={tabNumber}
+					onChange={handleChange}
+					aria-label="tab changer"
+					variant="fullWidth">
 					<Tab className={styles.tab} label="Your lists" {...tabProps(0)} />
 					<Tab className={styles.tab} label="Shared lists" {...tabProps(1)} />
 				</Tabs>

@@ -5,9 +5,18 @@ import { useContext, useEffect } from "react";
 import { AuthenticateContext, ToastService } from "./infrastructure";
 import PageRoutes from "./pages/main";
 import { observer } from "mobx-react";
+import { createTheme, ThemeProvider } from "@mui/material";
 
 const App = () => {
     const { isUserLogged, initialize } = useContext(AuthenticateContext);
+
+    const theme = createTheme({
+		palette: {
+			// primary: { main: "#fff" },
+			// secondary: { main: "#fff" },
+            // text: { primary: "#fff" }
+		}
+	});
 
     useEffect(() => {
         initialize();
@@ -16,7 +25,7 @@ const App = () => {
     if (isUserLogged === undefined)
         return null;
 
-    return <>
+    return <ThemeProvider theme={theme}>
         <BrowserRouter>
             {isUserLogged ? (
                 <PageRoutes />
@@ -25,7 +34,7 @@ const App = () => {
             )}
         </BrowserRouter>
         <ToastService />
-    </>;
+    </ThemeProvider>;
 };
 
 

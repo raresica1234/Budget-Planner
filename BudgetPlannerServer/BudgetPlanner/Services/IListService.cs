@@ -1,3 +1,4 @@
+using BudgetPlanner.DTO;
 using BudgetPlanner.DTO.Lists;
 using System;
 using System.Collections.Generic;
@@ -7,14 +8,16 @@ namespace BudgetPlanner.Services
 {
     public interface IListService
     {
-        Task<List<ListWithTimestampsDto>> GetCreated();
+        Task<List<ListWithTimestampsDto>> GetCreated(string searchKeyword);
 
-        Task<List<ListWithTimestampsDto>> GetShared();
+        Task<List<ListWithTimestampsDto>> GetShared(string searchKeyword);
 
         Task<ListWithTimestampsDto?> Create(ListForCreateDto listToAdd);
 
         Task<ListWithTimestampsDto?> Update(ListForUpdateDto listForUpdate);
 
         Task<ListDetailsDto?> GetDetails(Guid listId);
+
+        Task<UsersForListDTO?> GetUsers(Guid listId);
     }
 }

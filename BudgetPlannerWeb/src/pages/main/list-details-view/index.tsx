@@ -33,7 +33,7 @@ const ListDetailsView = () => {
     } = useContext(ListDetailsViewContext);
     const { openDialog, closeDialog, item } = useContext(UpdateItemContext);
     const { id } = useParams();
-    
+
     useEffect(() => {
         fetchListDetails(id || "");
         return reset;
@@ -67,21 +67,30 @@ const ListDetailsView = () => {
                 </Typography>
             </Box>
 
-            <Paper elevation={0}>
+            <Paper elevation={0} className={styles.itemList} square>
                 {isLoading && (
                     <LinearProgress />
                 )}
                 <List>
                     {items.map(item => (
                         <li key={item.id}>
-                            <ListItem 
+                            <ListItem
                                 style={{ cursor: "pointer" }}
                                 onClick={() => handleItemClick(item)}>
-                                <ListItemText primary={item.name} secondary={item.price} />
-                                <ListItemText 
-                                    primary={`Created at: ${item.createdAt.toLocaleString()}`} 
-                                    secondary={`Updated at: ${item.updatedAt.toLocaleString()}`} 
-                                    className={styles.rightSideItem} 
+                                <ListItemText primary={item.name} secondary={item.price} secondaryTypographyProps={{
+                                    classes: {
+                                        root: styles.secondaryText
+                                    }
+                                }} />
+                                <ListItemText
+                                    primary={`Created at: ${item.createdAt.toLocaleString()}`}
+                                    secondary={`Updated at: ${item.updatedAt.toLocaleString()}`}
+                                    secondaryTypographyProps={{
+                                        classes: {
+                                            root: styles.secondaryText
+                                        }
+                                    }} 
+                                    className={styles.rightSideItem}
                                 />
                             </ListItem>
                         </li>
@@ -94,7 +103,7 @@ const ListDetailsView = () => {
                     Total: {sum}
                 </Typography>
             </Box>
-            <AddItemButton className={styles.addButton} listId={id || ""}/>
+            <AddItemButton className={styles.addButton} listId={id || ""} />
             <EditItemDialog
                 listId={id || ""}
                 onClose={closeDialog}

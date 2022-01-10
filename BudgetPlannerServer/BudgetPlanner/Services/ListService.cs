@@ -1,5 +1,6 @@
 using BudgetPlanner.Context;
 using BudgetPlanner.DTO;
+using BudgetPlanner.DTO.Items;
 using BudgetPlanner.DTO.Lists;
 using BudgetPlanner.Extensions;
 using BudgetPlanner.Models;
@@ -26,14 +27,14 @@ namespace BudgetPlanner.Services
             _userManager = userManager;
         }
 
-        public Task<List<ListWithTimestampsDto>> GetCreated()
+        public Task<List<ListWithTimestampsDto>> GetCreated(string searchKeyword)
         {
-            return GetListsForUser(true);
+            return GetListsForUser(true, searchKeyword);
         }
         
-        public Task<List<ListWithTimestampsDto>> GetShared()
+        public Task<List<ListWithTimestampsDto>> GetShared(string searchKeyword)
         {
-            return GetListsForUser(false);
+            return GetListsForUser(false, searchKeyword);
         }
 
         public async Task<ListWithTimestampsDto?> Create(ListForCreateDto listToAdd)
@@ -118,13 +119,15 @@ namespace BudgetPlanner.Services
             return new ListWithTimestampsDto(list);
         }
 
-        private Task<List<ListWithTimestampsDto>> GetListsForUser(bool isOwner)
+        private Task<List<ListWithTimestampsDto>> GetListsForUser(bool isOwner, string searchKeyword)
         {
             var userId = _httpContextAccessor.GetUserId();
+            var lowerKeyword = searchKeyword.ToLower();
 
             return _context.Lists.Where(list =>
                 list.ListUsers.Any(listUser =>
-                    listUser.UserId == userId && listUser.ListUserType == ListUserType.Owner == isOwner))
+                    listUser.UserId == userId && listUser.ListUserType == ListUserType.Owner == isOwner) &&
+                    list.Name.ToLower().Contains(lowerKeyword))
                 .Select(list => new ListWithTimestampsDto(list))
                 .ToListAsync();
         }
@@ -156,24 +159,19 @@ namespace BudgetPlanner.Services
         public async Task<ListDetailsDto?> GetDetails(Guid listId)
         {
             var userId = _httpContextAccessor.GetUserId();
-
             if (userId == null)
-            {
                 return null;
-            }
 
             var list = _context.Lists.FirstOrDefault(list => list.Id == listId);
             if (list == null)
                 return null;
 
-            var userDtos = await _context.ListUsers.Where(listuser => listuser.ListId == listId)
+            var userDtos = await _context.ListUsers.Where(listUser => listUser.ListId == listId)
                 .Select(listUser => new SimpleUserDto(listUser.User))
                 .ToListAsync();
 
             if (!userDtos.Exists(user => user.Id == userId))
-            {
                 return null;
-            }
 
             var itemDtos = await _context.Items.Where(item => item.List.Id == listId)
                 .Select(item => new ItemDetailsDto(item))
@@ -183,5 +181,49 @@ namespace BudgetPlanner.Services
 
             return new ListDetailsDto(list.Name, itemDtos, sum, userDtos);
         }
+
+        public async Task<UsersForListDTO?> GetUsers(Guid listId)
+        {
+            var userId = _httpContextAccessor.GetUserId();
+            if (userId == null)
+                return null;
+
+            if (listId != Guid.Empty && !IsUserOwnerOfList(userId, listId))
+                return null;
+
+            var linkedUsers = listId == Guid.Empty ?
+                new List<UserWithTypeDto>() :
+                await _context.ListUsers
+                    .Where(listUser => listUser.ListId == listId && listUser.UserId != userId)
+                    .Include(listUser => listUser.User)
+                    .Select(listUser => new UserWithTypeDto(listUser))
+                    .ToListAsync();
+
+            var linkedEmails = linkedUsers.Select(user => user.Email);
+
+            var pastListConnections = await _context.ListUsers
+                .Where(listUser => listUser.UserId == userId && listUser.ListId != listId)
+                .Select(listUser => listUser.ListId)
+                .ToListAsync();
+
+            var relevantEmails = await _context.ListUsers.Where(listUser =>
+                    listUser.UserId != userId &&
+                    pastListConnections.Contains(listUser.ListId) &&
+                    !linkedEmails.Contains(listUser.User.Email))
+                .Select(listUser => listUser.User.Email)
+                .Distinct()
+                .ToListAsync();
+
+            return new UsersForListDTO
+            {
+                LinkedUsers = linkedUsers,
+                RelevantEmails = relevantEmails
+            };
+        }
+
+        private bool IsUserOwnerOfList(string userId, Guid listId) => _context.ListUsers.Any(listUser =>
+            listUser.UserId == userId &&
+            listUser.ListId == listId &&
+            listUser.ListUserType == ListUserType.Owner);
     }
 }

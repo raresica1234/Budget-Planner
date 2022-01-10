@@ -3,14 +3,15 @@ import { Dialog, DialogTitle, DialogActions, DialogContent, TextField, Button } 
 import { ItemEdit } from "../../../../accessors/types";
 import { observer } from "mobx-react";
 import { EditItemDialogContext } from "./edit-item-dialog-store";
+import styles from "./edit-item.module.scss";
 
 interface Props {
     listId: string;
-    item?: null| ItemEdit;
+    item?: null | ItemEdit;
     onClose: () => void;
 }
 
-const EditItemDialog = ({listId, item, onClose }: Props) => {
+const EditItemDialog = ({ listId, item, onClose }: Props) => {
     const {
         isAdd,
         itemEdit,
@@ -34,35 +35,57 @@ const EditItemDialog = ({listId, item, onClose }: Props) => {
     }
 
     return (
-        <Dialog open={item !== undefined} onClose={onClose}>
-        <DialogTitle>{dialogTitle}</DialogTitle>
-        <DialogContent>
-            <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="Name"
-                type="text"
-                fullWidth
-                variant="standard"
-                value={itemEdit?.name}
-                onChange={e => setName(e.target.value)}
-            />
-            <TextField
-                margin="dense"
-                id="price"
-                label="Price"
-                type="text"
-                fullWidth
-                variant="standard"
-                value={itemEdit?.price}
-                onChange={e => setPrice(parseInt(e.target.value))}
-            />
-        </DialogContent>
-        <DialogActions>
-            <Button onClick={onClose}>Cancel</Button>
-            <Button onClick={handleSubmit}>Submit</Button>
-        </DialogActions>
+        <Dialog open={item !== undefined} onClose={onClose} disableScrollLock={true}>
+            <div className={styles.mainContainer}>
+                <DialogTitle className={styles.title}>{dialogTitle}</DialogTitle>
+                <DialogContent>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Name"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        InputLabelProps={{
+                            classes: {
+                                root: styles.inputLabel
+                            }
+                        }}
+                        InputProps={{
+                            classes: {
+                                root: styles.input
+                            }
+                        }}
+                        value={itemEdit?.name}
+                        onChange={e => setName(e.target.value)}
+                    />
+                    <TextField
+                        margin="dense"
+                        id="price"
+                        label="Price"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        InputLabelProps={{
+                            classes: {
+                                root: styles.inputLabel
+                            }
+                        }}
+                        InputProps={{
+                            classes: {
+                                root: styles.input
+                            }
+                        }}
+                        value={itemEdit?.price}
+                        onChange={e => setPrice(parseInt(e.target.value))}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={onClose} className={styles.button}>Cancel</Button>
+                    <Button onClick={handleSubmit} className={styles.button}>Submit</Button>
+                </DialogActions>
+            </div>
         </Dialog>
     );
 }

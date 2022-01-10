@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using BudgetPlanner.Context;
-using BudgetPlanner.DTO;
+using BudgetPlanner.DTO.Items;
 using BudgetPlanner.Extensions;
 using BudgetPlanner.Models;
 using Microsoft.AspNetCore.Http;
@@ -45,7 +45,7 @@ namespace BudgetPlanner.Services
             };
         }
         
-        public async Task<ItemDetailsDto> UpdateAsync(ItemUpdateDto itemUpdateDto)
+        public async Task<ItemDetailsDto?> UpdateAsync(ItemUpdateDto itemUpdateDto)
         {
             var initialItem = _context.Items
                 .FirstOrDefault(item => item.Id == itemUpdateDto.Id &&

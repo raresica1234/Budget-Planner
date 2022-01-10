@@ -2,19 +2,35 @@
     width:100%;
 
     .appBar {
-        background-color: #1F2833;
+        background-color: #0B0C10;
 
-        .menuIconButton {
-            margin-right: 0.5em;
-        }
+        .toolbarContainer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-        .appTitle {
-            flex-grow: 1;
+            .searchBar {
+                width: 50%;
+                
+                :global {
+                    label:not(.Mui-focused) {
+                        color: #ddd;
+                    }
+
+                    .MuiFilledInput-underline::before {
+                        border-bottom: 1px solid rgba(255, 255, 255, 0.42);
+                    }
+
+                    input {
+                        color: white;
+                    }
+                }
+            }
         }
     }
 
     .tabsBar {
-        background-color: #0B0C10;
+        background-color: #1f2833;
 
         .tab {
             color: white;

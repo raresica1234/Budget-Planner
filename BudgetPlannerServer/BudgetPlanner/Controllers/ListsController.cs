@@ -20,17 +20,17 @@ namespace BudgetPlanner.Controllers
         }
 
         [HttpGet("created")]
-        public async Task<IActionResult> GetUserCreatedLists()
+        public async Task<IActionResult> GetUserCreatedLists(string? search = null)
         {
-            var userCreatedLists = await _listService.GetCreated();
+            var userCreatedLists = await _listService.GetCreated(search ?? "");
 
             return Ok(userCreatedLists);
         }
         
         [HttpGet("shared")]
-        public async Task<IActionResult> GetUserSharedLists()
+        public async Task<IActionResult> GetUserSharedLists(string? search = null)
         {
-            var userSharedLists = await _listService.GetShared();
+            var userSharedLists = await _listService.GetShared(search ?? "");
 
             return Ok(userSharedLists);
         }
@@ -44,6 +44,17 @@ namespace BudgetPlanner.Controllers
                 return Unauthorized();
 
             return Ok(listDetails);
+        }
+
+        [HttpGet("users/{listId?}")]
+        public async Task<IActionResult> GetUsers(Guid? listId = null)
+        {
+            var users = await _listService.GetUsers(listId ?? Guid.Empty);
+
+            if (users == null)
+                return Unauthorized();
+
+            return Ok(users);
         }
 
         [HttpPost]

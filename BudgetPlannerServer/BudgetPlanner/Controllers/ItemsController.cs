@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using BudgetPlanner.DTO;
+using BudgetPlanner.DTO.Items;
 using BudgetPlanner.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
