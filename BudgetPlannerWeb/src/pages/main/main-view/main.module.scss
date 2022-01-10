@@ -26,6 +26,16 @@
                     }
                 }
             }
+
+            .logoutLogoPack {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                .logoutButton {
+                    margin-right: 0.5em;
+                }
+            }
         }
     }
 

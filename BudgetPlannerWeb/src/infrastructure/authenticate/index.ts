@@ -21,6 +21,11 @@ class AuthenticateStore {
             clearToken();
         }
     }
+
+    public reset = () => {
+        this.isUserLogged = false;
+        clearToken();
+    }
 }
 
 export const authenticateStore = new AuthenticateStore();
