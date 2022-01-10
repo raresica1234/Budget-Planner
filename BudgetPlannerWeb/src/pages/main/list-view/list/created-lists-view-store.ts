@@ -10,7 +10,8 @@ export class CreatedListsViewStore extends ListsViewStore {
     constructor() {
         super();
         makeObservable(this, {
-            addList: action
+            addList: action,
+            updateList: action
         });
     }
 

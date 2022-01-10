@@ -1,7 +1,7 @@
 using System;
 using BudgetPlanner.Models;
 
-namespace BudgetPlanner.DTO
+namespace BudgetPlanner.DTO.Items
 {
     public class ItemDetailsDto
     {

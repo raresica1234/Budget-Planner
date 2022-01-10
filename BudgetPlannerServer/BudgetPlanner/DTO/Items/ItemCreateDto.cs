@@ -1,6 +1,6 @@
 using System;
 
-namespace BudgetPlanner.DTO
+namespace BudgetPlanner.DTO.Items
 {
     public class ItemCreateDto
     {

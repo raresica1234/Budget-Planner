@@ -25,7 +25,7 @@ export const EMPTY_LIST_EDIT: ListEdit = {
 export interface ListEdit {
     id?: string;
     name: string;
-    users: [];
+    users: EmailWithRole[];
 }
 
 export interface List {
@@ -47,7 +47,7 @@ export interface ListDetails {
     listName: string;
     items: Item[];
     sum: number;
-    users: [];
+    users: EmailWithRole[];
 }
 
 export interface TokenResponse {
@@ -65,4 +65,30 @@ export const EMPTY_ITEM_EDIT: ItemEdit = {
     listId: "",
     name: "",
     price: 0
+}
+
+export interface EmailWithRole {
+    email: string;
+    type: UserRole;
+}
+
+export enum UserRole {
+    OWNER = 0,
+    CONTRIBUTOR = 1,
+    VISITOR = 2
+}
+
+export const EMPTY_EMAIL_WITH_ROLE: EmailWithRole = {
+    email: "",
+    type: UserRole.CONTRIBUTOR
+}
+
+export interface ListUsers {
+    linkedUsers: EmailWithRole[];
+    relevantEmails: string[];
+}
+
+export const EMPTY_LIST_USERS: ListUsers = {
+    linkedUsers: [],
+    relevantEmails: []
 }
