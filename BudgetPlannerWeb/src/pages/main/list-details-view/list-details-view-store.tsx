@@ -8,6 +8,7 @@ export class ListDetailsViewStore {
     public items: Item[] = [];
     public sum: number = 0;
     public isLoading: boolean = true;
+    public isVisitor: boolean = true;
 
     constructor() {
         makeAutoObservable(this);
@@ -16,12 +17,13 @@ export class ListDetailsViewStore {
     public fetchListDetails = async (listId: string) => {
         this.isLoading = true;
         
-        const { listName, items, sum } = await getListDetails(listId);
+        const { name, items, sum, isVisitor } = await getListDetails(listId);
 
         runInAction(() => {
-            this.listName = listName;
+            this.listName = name;
             this.items = items;
             this.sum = sum;
+            this.isVisitor = isVisitor;
             this.isLoading = false;
         });
         
@@ -31,6 +33,7 @@ export class ListDetailsViewStore {
         this.listName = "";
         this.items = [];
         this.sum = 0;
+        this.isVisitor = false;
     }
 
     public addItem = (item: Item) => {

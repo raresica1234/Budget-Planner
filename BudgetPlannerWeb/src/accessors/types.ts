@@ -44,10 +44,11 @@ export interface Item {
 }
 
 export interface ListDetails {
-    listName: string;
+    name: string;
     items: Item[];
     sum: number;
-    users: EmailWithRole[];
+    users: [];
+    isVisitor: boolean;
 }
 
 export interface TokenResponse {

@@ -9,13 +9,20 @@ namespace BudgetPlanner.DTO.Lists
         public List<ItemDetailsDto> Items { get; set; } = new ();
         public double Sum { get; set; }
         public List<SimpleUserDto> Users { get; set; } = new ();
+        public bool IsVisitor { get; set; }
 
-        public ListDetailsDto(string name, List<ItemDetailsDto> items, double sum, List<SimpleUserDto> users)
+        public ListDetailsDto(
+            string name,
+            List<ItemDetailsDto> items,
+            double sum,
+            List<SimpleUserDto> users,
+            bool isVisitor)
         {
             Name = name;
             Items = items;
             Sum = sum;
             Users = users;
+            IsVisitor = isVisitor;
         }
     }
 }

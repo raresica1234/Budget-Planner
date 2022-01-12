@@ -15,11 +15,12 @@ export const getSharedLists = (searchKeyword: string) => httpGet<List[]>(`${LIST
 export const getListUsers = (listId: string) => httpGet<ListUsers>(`${LIST_URL}/users/${listId}`);
 
 export const getListDetails = async (listId: string) => {
-    var {listName, items, sum} = await httpGet<ListDetails>(`${LIST_URL}/${listId}`);
+    const { items, ...other } = await httpGet<ListDetails>(`${LIST_URL}/${listId}`);
+
     items.forEach((item) => {
         item.createdAt = new Date(item.createdAt);
         item.updatedAt = new Date(item.updatedAt);
     });
     
-    return {listName, items, sum};
+    return { items, ...other };
 }

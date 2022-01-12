@@ -8,11 +8,13 @@ import {
     List,
     ListItem,
     ListItemText,
-    LinearProgress
+    LinearProgress,
+    IconButton
 } from "@mui/material";
 import { Item } from "../../../accessors/types";
+import ArrowBackIcon from "@mui/icons-material/ArrowBackOutlined";
 import styles from "./list-details.module.scss";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Logo from "../../../assets/logo.svg";
 import { ListDetailsViewContext } from "./list-details-view-store";
 import { observer } from "mobx-react";
@@ -27,11 +29,13 @@ const ListDetailsView = () => {
         listName,
         items,
         sum,
+        isVisitor,
         fetchListDetails,
         reset
     } = useContext(ListDetailsViewContext);
     const { openDialog, closeDialog, item } = useContext(UpdateItemContext);
     const { id } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchListDetails(id || "");
@@ -45,8 +49,17 @@ const ListDetailsView = () => {
         <Box className={styles.mainContainer}>
             <AppBar className={styles.appBar}>
                 <Toolbar className={styles.toolbarContainer}>
+                    <IconButton
+                        size="large"
+                        edge="start"
+                        color="inherit"
+                        aria-label="menu"
+                        className={styles.menuIconButton}
+                        onClick={() => navigate("/")} >
+                        <ArrowBackIcon />
+                    </IconButton>
                     <Typography variant="h6" component="div" className={styles.appTitle}>
-                        Budget Planner
+                        {listName}
                     </Typography>
                     <div className={styles.logoutLogoPack}>
                         <LogoutButton className={styles.logoutButton} />
@@ -54,12 +67,6 @@ const ListDetailsView = () => {
                     </div>
                 </Toolbar>
             </AppBar>
-            <Box className={styles.titleBar}>
-                <Typography variant="h6" component="div" className={styles.listTitle}>
-                    {listName}
-                </Typography>
-            </Box>
-
             <Paper elevation={0} className={styles.itemList} square>
                 {isLoading && (
                     <LinearProgress />
@@ -69,7 +76,7 @@ const ListDetailsView = () => {
                         <li key={item.id}>
                             <ListItem
                                 style={{ cursor: "pointer" }}
-                                onClick={() => handleItemClick(item)}>
+                                onClick={() => isVisitor || handleItemClick(item)}>
                                 <ListItemText primary={item.name} secondary={item.price} secondaryTypographyProps={{
                                     classes: {
                                         root: styles.secondaryText
@@ -96,7 +103,9 @@ const ListDetailsView = () => {
                     Total: {sum}
                 </Typography>
             </Box>
-            <AddItemButton className={styles.addButton} listId={id || ""} />
+            {!isVisitor && (
+                <AddItemButton className={styles.addButton} listId={id || ""} />
+            )}
             <EditItemDialog
                 listId={id || ""}
                 onClose={closeDialog}
