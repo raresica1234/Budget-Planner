@@ -19,6 +19,7 @@ import { CreatedListsViewContext } from "../list-view/list/created-lists-view-st
 import {SharedListsViewContext} from "../list-view/list/shared-lists-view-store";
 import EditListDialog from "../list-view/edit-list-dialog";
 import { UpdateListButtonContext } from "../list-view/update-list-button/update-list-button-store";
+import LogoutButton from "../../accounts/logout";
 
 const MainPage = () => {
 	const {
@@ -55,7 +56,10 @@ const MainPage = () => {
 						variant="filled"
 						value={searchKeyword}
 						onChange={e => setSearchKeyword(e.target.value)} />
-					<img className={styles.logo} alt="Logo" src={Logo} />
+					<div className={styles.logoutLogoPack}>
+						<LogoutButton className={styles.logoutButton} />
+						<img className={styles.logo} alt="Logo" src={Logo} />
+					</div>
 				</Toolbar>
 			</AppBar>
 

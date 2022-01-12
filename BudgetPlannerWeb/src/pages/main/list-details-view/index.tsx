@@ -4,7 +4,6 @@ import {
     AppBar,
     Typography,
     Toolbar,
-    IconButton,
     Paper,
     List,
     ListItem,
@@ -12,7 +11,6 @@ import {
     LinearProgress
 } from "@mui/material";
 import { Item } from "../../../accessors/types";
-import MenuIcon from "@mui/icons-material/Menu";
 import styles from "./list-details.module.scss";
 import { useParams } from "react-router-dom";
 import Logo from "../../../assets/logo.svg";
@@ -21,6 +19,7 @@ import { observer } from "mobx-react";
 import AddItemButton from "../item-view/add-item-button";
 import EditItemDialog from "../item-view/edit-item-dialog";
 import { UpdateItemContext } from "../item-view/update-item-store";
+import LogoutButton from "../../accounts/logout";
 
 const ListDetailsView = () => {
     const {
@@ -45,20 +44,14 @@ const ListDetailsView = () => {
     return (
         <Box className={styles.mainContainer}>
             <AppBar className={styles.appBar}>
-                <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        className={styles.menuIconButton}
-                    >
-                        <MenuIcon />
-                    </IconButton>
+                <Toolbar className={styles.toolbarContainer}>
                     <Typography variant="h6" component="div" className={styles.appTitle}>
                         Budget Planner
                     </Typography>
-                    <img className={styles.logo} alt="Logo" src={Logo} />
+                    <div className={styles.logoutLogoPack}>
+                        <LogoutButton className={styles.logoutButton} />
+                        <img className={styles.logo} alt="Logo" src={Logo} />
+                    </div>
                 </Toolbar>
             </AppBar>
             <Box className={styles.titleBar}>

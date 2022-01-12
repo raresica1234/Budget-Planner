@@ -4,13 +4,21 @@
     .appBar {
         background-color: #0B0C10;
         position: static;
-
-        .menuIconButton {
-            margin-right: 0.5em;
-        }
+        display: flex;
+        justify-content: space-between;
 
         .appTitle {
             flex-grow: 1;
+        }
+
+        .logoutLogoPack {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .logoutButton {
+                margin-right: 0.5em;
+            }
         }
     }
 
