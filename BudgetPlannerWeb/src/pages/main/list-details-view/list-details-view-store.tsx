@@ -17,10 +17,10 @@ export class ListDetailsViewStore {
     public fetchListDetails = async (listId: string) => {
         this.isLoading = true;
         
-        const { listName, items, sum, isVisitor } = await getListDetails(listId);
+        const { name, items, sum, isVisitor } = await getListDetails(listId);
 
         runInAction(() => {
-            this.listName = listName;
+            this.listName = name;
             this.items = items;
             this.sum = sum;
             this.isVisitor = isVisitor;

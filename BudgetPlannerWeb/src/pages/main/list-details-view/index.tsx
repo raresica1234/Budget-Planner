@@ -8,7 +8,8 @@ import {
     List,
     ListItem,
     ListItemText,
-    LinearProgress
+    LinearProgress,
+    IconButton
 } from "@mui/material";
 import { Item } from "../../../accessors/types";
 import ArrowBackIcon from "@mui/icons-material/ArrowBackOutlined";
@@ -58,7 +59,7 @@ const ListDetailsView = () => {
                         <ArrowBackIcon />
                     </IconButton>
                     <Typography variant="h6" component="div" className={styles.appTitle}>
-                        Budget Planner
+                        {listName}
                     </Typography>
                     <div className={styles.logoutLogoPack}>
                         <LogoutButton className={styles.logoutButton} />
@@ -66,12 +67,6 @@ const ListDetailsView = () => {
                     </div>
                 </Toolbar>
             </AppBar>
-            <Box className={styles.titleBar}>
-                <Typography variant="h6" component="div" className={styles.listTitle}>
-                    {listName}
-                </Typography>
-            </Box>
-
             <Paper elevation={0} className={styles.itemList} square>
                 {isLoading && (
                     <LinearProgress />
