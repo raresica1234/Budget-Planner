@@ -51,6 +51,12 @@ export class ListDetailsViewStore {
         this.items[itemToUpdateIndex] = this.mapItemDates(item);
     }
 
+    public removeItem = (item: Item) => {
+        let itemToRemove = this.items.findIndex(element => element.id === item.id);
+
+        this.items.splice(itemToRemove, 1);
+    }
+
     private mapItemDates = (item: Item) => {
         item.createdAt = new Date(item.createdAt);
         item.updatedAt = new Date(item.updatedAt);

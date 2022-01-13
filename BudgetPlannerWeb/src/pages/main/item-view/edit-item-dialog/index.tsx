@@ -19,6 +19,7 @@ const EditItemDialog = ({ listId, item, onClose }: Props) => {
         setItemEdit,
         setName,
         setPrice,
+        removeItem,
         sendItem,
         reset
     } = useContext(EditItemDialogContext);
@@ -33,6 +34,10 @@ const EditItemDialog = ({ listId, item, onClose }: Props) => {
 
     const handleSubmit = async () => {
         if (await sendItem(listId)) onClose();
+    }
+
+    const handleRemove = async () => {
+        if (await removeItem(item)) onClose();
     }
 
     return (
@@ -84,6 +89,7 @@ const EditItemDialog = ({ listId, item, onClose }: Props) => {
                     />
                 </DialogContent>
                 <DialogActions>
+                    <Button onClick={handleRemove} color={"error"}>Delete</Button>
                     <Button onClick={onClose} className={styles.button}>Cancel</Button>
                     <Button onClick={handleSubmit} className={styles.button}>Submit</Button>
                 </DialogActions>
