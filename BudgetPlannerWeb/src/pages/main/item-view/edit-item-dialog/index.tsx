@@ -89,7 +89,10 @@ const EditItemDialog = ({ listId, item, onClose }: Props) => {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleRemove} color={"error"}>Delete</Button>
+                    {
+                        !isAdd &&
+                        <Button onClick={handleRemove} color={"error"}>Delete</Button>
+                    }
                     <Button onClick={onClose} className={styles.button}>Cancel</Button>
                     <Button onClick={handleSubmit} className={styles.button}>Submit</Button>
                 </DialogActions>

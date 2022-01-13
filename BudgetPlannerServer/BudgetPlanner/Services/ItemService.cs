@@ -25,6 +25,7 @@ namespace BudgetPlanner.Services
             var now = DateTime.Now;
             var item = new Item
             {
+                Id = itemCreateDto.Id,
                 Name = itemCreateDto.Name,
                 ListId = itemCreateDto.ListId,
                 Price = itemCreateDto.Price,
@@ -38,6 +39,7 @@ namespace BudgetPlanner.Services
 
             return new ItemDetailsDto
             {
+                Id = item.Id,
                 Name = item.Name,
                 Price = item.Price,
                 CreatedAt = item.CreatedAt,
