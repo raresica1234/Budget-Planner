@@ -21,7 +21,7 @@ const StatisticsDialog = ({ chartData, statisticsOpen, onClose }: StatisticsDial
 
     const computeTotalSum = () => {
         let sum = 0;
-        chartData.forEach((list) => {sum += list.totalSum;});
+        chartData.forEach(({ totalSum }) => sum += totalSum);
         return sum;
     }
 

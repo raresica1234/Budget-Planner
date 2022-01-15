@@ -46,8 +46,6 @@ const MainPage = () => {
 		initialize();
 	}, [initialize]);
 
-	const onStatisticsClick = () => { populateAndOpenStatistics(); };
-
 	return <>
 		<Box className={styles.mainContainer}>
 			<AppBar
@@ -66,7 +64,7 @@ const MainPage = () => {
 						value={searchKeyword}
 						onChange={e => setSearchKeyword(e.target.value)} />
 					<div className={styles.statisticsLogoPack}>
-						<Button onClick={onStatisticsClick}>Statistics</Button>
+						<Button onClick={async () => {await populateAndOpenStatistics()}}>Statistics</Button>
 						<LogoutButton/>
 						<img className={styles.logo} alt="Logo" src={Logo} />
 					</div>
