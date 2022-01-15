@@ -93,3 +93,8 @@ export const EMPTY_LIST_USERS: ListUsers = {
     linkedUsers: [],
     relevantEmails: []
 }
+
+export interface StatisticsEntry {
+    listName: string;
+    totalSum: number;
+}
