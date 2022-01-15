@@ -45,11 +45,11 @@ export class MainViewStore {
         const createdLists = await getCreatedLists("");
         const sharedLists = await getSharedLists("");
         const allLists: List[] = createdLists.concat(sharedLists);
-        Promise.all(allLists.map(this.getListStats)).then(this.openStatistics)
+        Promise.all(allLists.map(this.getListStats)).then(this.openStatistics);
     }
 
     private openStatistics = () => {
-        this.statisticsIsOpen = true
+        this.statisticsIsOpen = true;
     }
     public closeStatistics = () => {
         this.statisticsData = [];
