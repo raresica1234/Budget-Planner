@@ -7,6 +7,7 @@ import { listDetailsViewStore } from "../../list-details-view/list-details-view-
 
 export class EditItemDialogStore {
     public itemEdit: ItemEdit | null = null;
+    public price: number | string = "";
     public isAdd: boolean = false;
 
     constructor() {
@@ -16,6 +17,7 @@ export class EditItemDialogStore {
     public setItemEdit = (itemEdit?: ItemEdit | null) => {
         this.isAdd = !itemEdit;
         this.itemEdit = itemEdit === undefined ? null : toJS(itemEdit) ?? EMPTY_ITEM_EDIT;
+        this.price = this.itemEdit?.price || "";
     }
 
     public setName = (name: string) => {
@@ -23,9 +25,10 @@ export class EditItemDialogStore {
             this.itemEdit.name = name;
     }
 
-    public setPrice = (price: number) => {
+    public setPrice = (price: number | string) => {
+        this.price = price
         if (this.itemEdit)
-            this.itemEdit.price = price;
+            this.itemEdit.price = price === "" ? 0 : Number(price);
     }
 
     public sendItem = async (listId: string) => {
@@ -56,6 +59,7 @@ export class EditItemDialogStore {
 
     public reset = () => {
         this.itemEdit = null;
+        this.price = "";
     }
 
     private handleAdd = async () => {

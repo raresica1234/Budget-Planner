@@ -15,6 +15,7 @@ const EditItemDialog = ({ listId, item, onClose }: Props) => {
     const {
         isAdd,
         itemEdit,
+        price,
         setItemEdit,
         setName,
         setPrice,
@@ -67,6 +68,7 @@ const EditItemDialog = ({ listId, item, onClose }: Props) => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        inputProps={{ type: "number" }}
                         InputLabelProps={{
                             classes: {
                                 root: styles.inputLabel
@@ -77,8 +79,8 @@ const EditItemDialog = ({ listId, item, onClose }: Props) => {
                                 root: styles.input
                             }
                         }}
-                        value={itemEdit?.price}
-                        onChange={e => setPrice(parseInt(e.target.value))}
+                        value={price}
+                        onChange={e => setPrice(e.target.value)}
                     />
                 </DialogContent>
                 <DialogActions>
