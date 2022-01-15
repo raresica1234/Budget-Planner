@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { Button } from "@mui/material";
+import LogoutIcon from '@mui/icons-material/Logout';
 import { observer } from "mobx-react";
 import { useNavigate } from "react-router-dom";
 import { AuthenticateContext } from "../../../infrastructure";
@@ -15,7 +16,7 @@ const LogoutButton = ({ className }: LogoutButtonProps) => {
 
     const onClickNext = () => { reset(); navigate("/"); }
 
-    return <Button onClick={onClickNext} className={className}>Logout</Button>
+    return <Button onClick={onClickNext} className={className}><LogoutIcon /></Button>
 }
 
 export default observer(LogoutButton);

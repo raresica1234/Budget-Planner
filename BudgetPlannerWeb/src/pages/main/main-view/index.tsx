@@ -6,11 +6,12 @@ import {
 	AppBar,
 	Toolbar,
 	Typography,
-	TextField
+	TextField,
+	Button
 } from "@mui/material";
 import Logo from "../../../assets/logo.svg";
 import styles from "./main.module.scss";
-import { TabNumberContext } from "./main-store";
+import { MainViewContext } from "./main-store";
 import { observer } from "mobx-react";
 import { TabPanel, tabProps } from "./tabs";
 import AddListButton from "../list-view/add-list-button";
@@ -20,15 +21,20 @@ import {SharedListsViewContext} from "../list-view/list/shared-lists-view-store"
 import EditListDialog from "../list-view/edit-list-dialog";
 import { UpdateListButtonContext } from "../list-view/update-list-button/update-list-button-store";
 import LogoutButton from "../../accounts/logout";
+import StatisticsDialog from "./statistics-dialog";
 
 const MainPage = () => {
 	const {
 		tabNumber,
 		searchKeyword,
+		statisticsData,
+		statisticsIsOpen,
 		setTabNumber,
 		setSearchKeyword,
+		populateAndOpenStatistics,
+		closeStatistics,
 		initialize
-	} = useContext(TabNumberContext);
+	} = useContext(MainViewContext);
 
 	const { list, closeDialog } = useContext(UpdateListButtonContext);
 
@@ -50,14 +56,16 @@ const MainPage = () => {
 					<Typography variant="h6" component="div" className={styles.appTitle}>
 						Budget Planner
 					</Typography>
+					
 					<TextField
 						className={styles.searchBar}
 						label="Search"
 						variant="filled"
 						value={searchKeyword}
 						onChange={e => setSearchKeyword(e.target.value)} />
-					<div className={styles.logoutLogoPack}>
-						<LogoutButton className={styles.logoutButton} />
+					<div className={styles.statisticsLogoPack}>
+						<Button onClick={async () => {await populateAndOpenStatistics()}}>Statistics</Button>
+						<LogoutButton/>
 						<img className={styles.logo} alt="Logo" src={Logo} />
 					</div>
 				</Toolbar>
@@ -80,6 +88,11 @@ const MainPage = () => {
 				<ListsView listsViewContext={SharedListsViewContext}/>
 			</TabPanel>
 		</Box>
+		<StatisticsDialog
+			chartData={statisticsData}
+			statisticsOpen={statisticsIsOpen}
+			onClose={closeStatistics}
+		/>
         <AddListButton className={styles.addButton} />
 		<EditListDialog list={list} onClose={closeDialog} />
 	</>;
