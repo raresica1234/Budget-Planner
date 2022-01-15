@@ -16,6 +16,7 @@ const ToastService = () => {
 const WrappedToastService = () => (
     <SnackbarProvider
         maxSnack={3}
+        autoHideDuration={3000}
         anchorOrigin={{
             vertical: "bottom",
             horizontal: "center"
