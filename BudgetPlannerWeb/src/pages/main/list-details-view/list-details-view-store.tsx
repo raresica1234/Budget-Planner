@@ -54,6 +54,8 @@ export class ListDetailsViewStore {
     public removeItem = (item: Item) => {
         const itemToRemove = this.items.findIndex(element => element.id === item.id);
 
+        this.sum -= item.price;
+
         this.items.splice(itemToRemove, 1);
     }
 
