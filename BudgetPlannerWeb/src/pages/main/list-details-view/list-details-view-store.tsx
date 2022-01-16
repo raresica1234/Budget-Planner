@@ -43,12 +43,20 @@ export class ListDetailsViewStore {
     }
 
     public updateItem = (item: Item) => {
-        let itemToUpdateIndex = this.items.findIndex(element => element.id === item.id);
+        const itemToUpdateIndex = this.items.findIndex(element => element.id === item.id);
 
         this.sum -= this.items[itemToUpdateIndex].price;
         this.sum += item.price;
 
         this.items[itemToUpdateIndex] = this.mapItemDates(item);
+    }
+
+    public removeItem = (item: Item) => {
+        const itemToRemove = this.items.findIndex(element => element.id === item.id);
+
+        this.sum -= item.price;
+
+        this.items.splice(itemToRemove, 1);
     }
 
     private mapItemDates = (item: Item) => {
