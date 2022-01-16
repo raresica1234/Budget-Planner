@@ -8,4 +8,4 @@ export const addItem = (item: ItemEdit) => httpPost<Item>(ITEM_URL, item);
 
 export const updateItem = (item: ItemEdit) => httpPut<Item>(ITEM_URL, item);
 
-export const deleteItem = (itemId: any) => httpDelete<Item>(`${ITEM_URL}/${itemId}`, itemId);
+export const deleteItem = (itemId: string) => httpDelete<Item>(`${ITEM_URL}/${itemId}`, itemId);

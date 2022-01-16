@@ -25,7 +25,6 @@ namespace BudgetPlanner.Services
             var now = DateTime.Now;
             var item = new Item
             {
-                Id = itemCreateDto.Id,
                 Name = itemCreateDto.Name,
                 ListId = itemCreateDto.ListId,
                 Price = itemCreateDto.Price,
@@ -34,17 +33,9 @@ namespace BudgetPlanner.Services
             };
             
             await _context.Items.AddAsync(item);
-            
             await _context.SaveChangesAsync();
 
-            return new ItemDetailsDto
-            {
-                Id = item.Id,
-                Name = item.Name,
-                Price = item.Price,
-                CreatedAt = item.CreatedAt,
-                UpdatedAt = item.UpdatedAt
-            };
+            return new ItemDetailsDto(item);
         }
         
         public async Task<ItemDetailsDto?> UpdateAsync(ItemUpdateDto itemUpdateDto)
@@ -63,16 +54,7 @@ namespace BudgetPlanner.Services
             _context.Items.Update(initialItem);
             await _context.SaveChangesAsync();
 
-            var itemDetailsDto = new ItemDetailsDto
-            {
-                Id = initialItem.Id,
-                Name = initialItem.Name,
-                Price = initialItem.Price,
-                CreatedAt = initialItem.CreatedAt,
-                UpdatedAt = initialItem.UpdatedAt
-            };
-
-            return itemDetailsDto;
+            return new ItemDetailsDto(initialItem);
         }
 
         public async Task<bool> DeleteAsync(Guid itemId)

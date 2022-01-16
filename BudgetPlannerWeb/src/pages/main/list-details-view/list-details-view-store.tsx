@@ -43,7 +43,7 @@ export class ListDetailsViewStore {
     }
 
     public updateItem = (item: Item) => {
-        let itemToUpdateIndex = this.items.findIndex(element => element.id === item.id);
+        const itemToUpdateIndex = this.items.findIndex(element => element.id === item.id);
 
         this.sum -= this.items[itemToUpdateIndex].price;
         this.sum += item.price;
@@ -52,7 +52,7 @@ export class ListDetailsViewStore {
     }
 
     public removeItem = (item: Item) => {
-        let itemToRemove = this.items.findIndex(element => element.id === item.id);
+        const itemToRemove = this.items.findIndex(element => element.id === item.id);
 
         this.items.splice(itemToRemove, 1);
     }

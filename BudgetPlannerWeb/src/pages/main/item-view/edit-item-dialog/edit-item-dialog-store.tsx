@@ -1,13 +1,14 @@
 import { makeAutoObservable, toJS } from "mobx";
 import { createContext } from "react";
 import {addItem, deleteItem, updateItem} from "../../../../accessors/item-accessor";
-import { EMPTY_ITEM_EDIT, ItemEdit } from "../../../../accessors/types";
+import { EMPTY_ITEM_EDIT, Item, ItemEdit } from "../../../../accessors/types";
 import { toastService } from "../../../../infrastructure";
 import { listDetailsViewStore } from "../../list-details-view/list-details-view-store";
 
 export class EditItemDialogStore {
     public itemEdit: ItemEdit | null = null;
     public price: number | string = "";
+    public isConfirmOpen: boolean = false;
     public isAdd: boolean = false;
 
     constructor() {
@@ -57,7 +58,7 @@ export class EditItemDialogStore {
         return true;
     };
 
-    public removeItem = async (item: any) => {
+    public removeItem = async (item: Item) => {
         try {
             await this.handleRemove(item);
         } catch (error) {
@@ -74,9 +75,14 @@ export class EditItemDialogStore {
         return true;
     }
 
+    public openConfirmDialog = () => this.isConfirmOpen = true;
+    
+    public closeConfirmDialog = () => this.isConfirmOpen = false;
+
     public reset = () => {
         this.itemEdit = null;
         this.price = "";
+        this.isConfirmOpen = false;
     }
 
     private handleAdd = async () => {
@@ -91,8 +97,8 @@ export class EditItemDialogStore {
         listDetailsViewStore.updateItem(updatedItem);
     }
 
-    private handleRemove = async (item: any) => {
-        await deleteItem(item.id);
+    private handleRemove = async (item: Item) => {
+        await deleteItem(item.id || "");
 
         listDetailsViewStore.removeItem(item);
     }
